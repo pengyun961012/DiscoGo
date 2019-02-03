@@ -17,7 +17,7 @@ import com.google.android.gms.tasks.Task;
 public class SignInActivity extends AppCompatActivity implements
         View.OnClickListener {
 
-
+    String TAG = "GOOGLELOGIN";
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     @Override
@@ -48,8 +48,9 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private void signIn() {
+        Log.d(TAG, "signIn: into signin");
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent,RC_SIGN_IN);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
