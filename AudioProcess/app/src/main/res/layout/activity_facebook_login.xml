@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/login_name"
         android:layout_width="match_parent"
-        android:layout_height="21dp"
+        android:layout_height="124dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"

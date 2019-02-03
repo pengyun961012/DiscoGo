@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private MediaRecorder myAudioRecorder;
     private String outputFile;
     private Button facebookButton;
+    private Button googleButton;
     private Button recordButton;
     private Button playButton;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         recordButton = (Button) findViewById(R.id.recordButton);
         playButton = (Button) findViewById(R.id.playButton);
         facebookButton = (Button) findViewById(R.id.FacebookLogin);
+        googleButton = (Button) findViewById(R.id.GoogleLogin);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
 
@@ -108,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        googleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
