@@ -1,6 +1,7 @@
 package com.disco.audioprocess;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -19,6 +20,9 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
     private MediaRecorder myAudioRecorder;
     private String outputFile;
+    private Button facebookButton;
+    private Button recordButton;
+    private Button playButton;
 
 
     @Override
@@ -26,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button recordButton = (Button) findViewById(R.id.recordButton);
-        final Button playButton = (Button) findViewById(R.id.playButton);
+        recordButton = (Button) findViewById(R.id.recordButton);
+        playButton = (Button) findViewById(R.id.playButton);
+        facebookButton = (Button) findViewById(R.id.FacebookLogin);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
 
@@ -92,6 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     // make something
                 }
+            }
+        });
+
+        facebookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FacebookLoginActivity.class);
+                startActivity(intent);
             }
         });
 
