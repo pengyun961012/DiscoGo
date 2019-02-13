@@ -26,6 +26,7 @@ import java.util.Arrays;
 
 
 public class FacebookLoginActivity extends AppCompatActivity {
+    private String TAG = "DISCO_AUDIO-----" + this.getClass().getSimpleName();
 
     private CallbackManager callbackManager;
     private LoginButton loginButton;
