@@ -16,8 +16,8 @@ import com.google.android.gms.tasks.Task;
 
 public class SignInActivity extends AppCompatActivity implements
         View.OnClickListener {
+    private String TAG = "DISCO_AUDIO-----" + this.getClass().getSimpleName();
 
-    String TAG = "GOOGLELOGIN";
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     @Override

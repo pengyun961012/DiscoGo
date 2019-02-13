@@ -7,34 +7,64 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+    private String TAG = "DISCO_AUDIO-----" + this.getClass().getSimpleName();
+
+
     private VisualizerView visualizerView;
-    private MediaRecorder myAudioRecorder = new MediaRecorder();
-    private String outputFile;
+//    private MediaRecorder myAudioRecorder = new MediaRecorder();
+//    private String outputFile;
     private Button facebookButton;
     private Button googleButton;
     private Button recordButton;
     private Button playButton;
+    private static TextView frequencyTextview;
 
-    private Handler handler = new Handler();
+    private static int currentFrequency = 0;
+    private static int currentVolume = 0;
+    private static final int FREQUENCY_CRITICAL = 500;
+
+    public static int SOUND_MESSAGE = 1;
+    private SoundAnalysisThread soundAnalysisThread;
+
+    private final Handler handler = new myHandler();
+    private static class myHandler extends Handler {
+        public void handleMessage(Message msg) {
+            // do cool stuff
+            switch (msg.what) {
+                case 1:
+                    Sound sound = (Sound) msg.obj;
+                    int frequency = (int) sound.mFrequency;
+                    currentVolume = (int) sound.mVolume;
+                    frequencyTextview.setText(String.valueOf(frequency));
+                    if (frequency <= 0) {
+                        return;
+                    } else if (Math.abs(frequency - currentFrequency) < FREQUENCY_CRITICAL) {
+                        return;
+                    } else {
+                        currentFrequency = frequency;
+                    }
+                    break;
+            }
+        }
+    }
+
+
+    private Handler vishandler = new Handler();
     final Runnable updater = new Runnable() {
         public void run() {
-            handler.postDelayed(this, 1);
-            int maxAmplitude = myAudioRecorder.getMaxAmplitude();
-            if (maxAmplitude != 0) {
-                visualizerView.addAmplitude(maxAmplitude);
-            }
+            vishandler.postDelayed(this, 1);
+            visualizerView.addAmplitude(currentFrequency);
         }
     };
 
@@ -47,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         playButton = (Button) findViewById(R.id.playButton);
         facebookButton = (Button) findViewById(R.id.FacebookLogin);
         googleButton = (Button) findViewById(R.id.GoogleLogin);
+        frequencyTextview = (TextView) findViewById(R.id.frequencyTextview);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
 
@@ -61,64 +92,35 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
+//        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
         visualizerView = (VisualizerView) findViewById(R.id.visualizer);
-        try {
-            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            myAudioRecorder.setOutputFile(outputFile);
-            myAudioRecorder.prepare();
-            myAudioRecorder.start();
-        } catch (IllegalStateException | IOException ignored) {
+//        try {
+//            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+//            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+//            myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+//            myAudioRecorder.setOutputFile(outputFile);
+//            myAudioRecorder.prepare();
+//            myAudioRecorder.start();
+//        } catch (IllegalStateException | IOException ignored) {
+//
+//        }
+//
+        recordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soundAnalysisThread = new SoundAnalysisThread(handler);
+                soundAnalysisThread.start();
+            }
+        });
 
-        }
-//
-//        recordButton.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                    // Pressed
-//                    v.performClick();
-//                    try {
-//                        myAudioRecorder.prepare();
-//                        myAudioRecorder.start();
-//                    } catch (IllegalStateException ise) {
-//                        // make something ...
-//                    } catch (IOException ioe) {
-//                        // make something
-//                    }
-//                    Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_SHORT).show();
-//
-//                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-//                    // Released
-//                    try {
-//                        myAudioRecorder.stop();
-////                        myAudioRecorder.release();
-////                        myAudioRecorder = null;
-//                        Toast.makeText(getApplicationContext(), "Audio Recorder stopped", Toast.LENGTH_SHORT).show();
-//                    } catch (RuntimeException stopException) {
-//                        Log.d("recorder", "onTouch: " + stopException.toString());
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-//
-//        playButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MediaPlayer mediaPlayer = new MediaPlayer();
-//                try {
-//                    mediaPlayer.setDataSource(outputFile);
-//                    mediaPlayer.prepare();
-//                    mediaPlayer.start();
-//                    Toast.makeText(getApplicationContext(), "Playing Audio", Toast.LENGTH_SHORT).show();
-//                } catch (Exception e) {
-//                    // make something
-//                }
-//            }
-//        });
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (soundAnalysisThread != null) {
+                    soundAnalysisThread.close();
+                }
+            }
+        });
 
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,10 +143,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        handler.removeCallbacks(updater);
-        myAudioRecorder.stop();
-        myAudioRecorder.reset();
-        myAudioRecorder.release();
+        vishandler.removeCallbacks(updater);
+//        myAudioRecorder.stop();
+//        myAudioRecorder.reset();
+//        myAudioRecorder.release();
     }
 
     @Override

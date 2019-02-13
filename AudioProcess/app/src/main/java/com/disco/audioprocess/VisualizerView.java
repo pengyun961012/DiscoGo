@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 public class VisualizerView extends View {
-    private String TAG = "Visualizer";
+    private String TAG = "DISCO_AUDIO-----"  + this.getClass().getSimpleName();
     private static final int MAX_AMPLITUDE = 32767;
 
     private float[] amplitudes;
