@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">AudioProcess</string>
-    <string name="facebook_app_id">222171932071488</string> <string name="fb_login_protocol_scheme">fb222171932071488</string>
+    <string name="facebook_app_id">222171932071488</string>
+    <string name="fb_login_protocol_scheme">fb222171932071488</string>
     <string name="server_client_id">381295540440-iolgc0mo6oqcaaabft2piiivn4br8mes.apps.googleusercontent.com</string>
 </resources>

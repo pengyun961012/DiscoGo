@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "DISCO_AUDIO-----" + this.getClass().getSimpleName();
@@ -23,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
     private VisualizerView visualizerView;
 //    private MediaRecorder myAudioRecorder = new MediaRecorder();
-//    private String outputFile;
+    private String outputFile;
     private Button facebookButton;
     private Button googleButton;
     private Button recordButton;
     private Button playButton;
+    private Button testButton;
     private static TextView frequencyTextview;
 
     private static int currentFrequency = 0;
@@ -37,34 +40,35 @@ public class MainActivity extends AppCompatActivity {
     public static int SOUND_MESSAGE = 1;
     private SoundAnalysisThread soundAnalysisThread;
 
-    private final Handler handler = new myHandler();
-    private static class myHandler extends Handler {
-        public void handleMessage(Message msg) {
-            // do cool stuff
-            switch (msg.what) {
-                case 1:
-                    Sound sound = (Sound) msg.obj;
-                    int frequency = (int) sound.mFrequency;
-                    currentVolume = (int) sound.mVolume;
-                    frequencyTextview.setText(String.valueOf(frequency));
-                    if (frequency <= 0) {
-                        return;
-                    } else if (Math.abs(frequency - currentFrequency) < FREQUENCY_CRITICAL) {
-                        return;
-                    } else {
-                        currentFrequency = frequency;
-                    }
-                    break;
-            }
-        }
-    }
+//    private final Handler handler = new myHandler();
+//    private static class myHandler extends Handler {
+//        public void handleMessage(Message msg) {
+//            // do cool stuff
+//            switch (msg.what) {
+//                case 1:
+//                    Sound sound = (Sound) msg.obj;
+//                    int frequency = (int) sound.mFrequency;
+//                    currentVolume = (int) sound.mVolume;
+//                    frequencyTextview.setText(String.valueOf(frequency));
+//                    if (frequency <= 0) {
+//                        return;
+//                    } else if (Math.abs(frequency - currentFrequency) < FREQUENCY_CRITICAL) {
+//                        return;
+//                    } else {
+//                        currentFrequency = frequency;
+//                    }
+//                    break;
+//            }
+//        }
+//    }
 
 
     private Handler vishandler = new Handler();
     final Runnable updater = new Runnable() {
         public void run() {
             vishandler.postDelayed(this, 1);
-            visualizerView.addAmplitude(currentFrequency);
+//            currentVolume = myAudioRecorder.getMaxAmplitude();
+            visualizerView.addAmplitude(currentVolume);
         }
     };
 
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         playButton = (Button) findViewById(R.id.playButton);
         facebookButton = (Button) findViewById(R.id.FacebookLogin);
         googleButton = (Button) findViewById(R.id.GoogleLogin);
+        testButton = (Button) findViewById(R.id.testButton);
         frequencyTextview = (TextView) findViewById(R.id.frequencyTextview);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-//        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
         visualizerView = (VisualizerView) findViewById(R.id.visualizer);
 //        try {
 //            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -108,17 +113,17 @@ public class MainActivity extends AppCompatActivity {
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundAnalysisThread = new SoundAnalysisThread(handler);
-                soundAnalysisThread.start();
+//                soundAnalysisThread = new SoundAnalysisThread(handler);
+//                soundAnalysisThread.start();
             }
         });
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (soundAnalysisThread != null) {
-                    soundAnalysisThread.close();
-                }
+//                if (soundAnalysisThread != null) {
+//                    soundAnalysisThread.close();
+//                }
             }
         });
 
@@ -137,6 +142,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TestVisActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -149,10 +162,12 @@ public class MainActivity extends AppCompatActivity {
 //        myAudioRecorder.release();
     }
 
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        handler.post(updater);
+//        handler.post(updater);
+        vishandler.post(updater);
     }
 
 }
