@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import ca.uol.aig.fftpack.RealDoubleFFT;
 
@@ -32,6 +33,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
 
     RecordAudio recordTask;
 
+    TextView maxFreqView;
     ImageView imageView;
     Bitmap bitmap;
     Canvas canvas;
@@ -42,6 +44,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_vis);
         startStopButton = (Button) this.findViewById(R.id.start_stop_btn);
+        maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
         startStopButton.setOnClickListener(this);
 
         transformer = new RealDoubleFFT(blockSize);
@@ -77,6 +80,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
                     transformer.ft(toTransform);
 
                     publishProgress(toTransform);
+                    Thread.sleep(500);
                 }
                 audioRecord.stop();
             } catch (Throwable t) {
@@ -87,11 +91,27 @@ public class TestVisActivity extends Activity implements OnClickListener{
 
         protected void onProgressUpdate(double[]... toTransform) {
             canvas.drawColor(Color.BLACK);
+            double maxfreq = -100;
+            int maxindex = 0;
             for (int i = 0; i < toTransform[0].length; i++) {
                 int x = i;
                 int downy = (int) (100 - (toTransform[0][i] * 10));
                 int upy = 100;
                 canvas.drawLine(x, downy, x, upy, paint);
+                if (toTransform[0][i] > maxfreq){
+                    maxfreq = toTransform[0][i];
+                    maxindex = i;
+                }
+//                Log.d(TAG, "onProgressUpdate: " + String.valueOf(toTransform[0][i]));
+            }
+//            Log.d(TAG, "onProgressUpdate: max index" + String.valueOf(maxindex));
+            Log.d(TAG, "onProgressUpdate: max frequency" + String.valueOf(maxfreq));
+            if (maxfreq < 1){
+                maxFreqView.setText("Only noise");
+            }
+            else {
+                maxindex *= 16;
+                maxFreqView.setText(String.valueOf(maxindex) + " Hz");
             }
             imageView.invalidate();
         }
