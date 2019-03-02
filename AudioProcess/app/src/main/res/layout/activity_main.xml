@@ -65,23 +65,21 @@
         android:id="@+id/GoogleLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Google"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
+        android:text="Google"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/FacebookLogin" />
 
     <Button
         android:id="@+id/testButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="test"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/GoogleLogin"
-        app:layout_constraintStart_toEndOf="@+id/FacebookLogin" />
+        app:layout_constraintStart_toEndOf="@+id/GoogleLogin" />
 
     <TextView
         android:id="@+id/frequencyTextview"
@@ -96,5 +94,14 @@
         app:layout_constraintEnd_toStartOf="@+id/playButton"
         app:layout_constraintStart_toEndOf="@+id/recordButton"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/flappyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Flappy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/testButton" />
 
 </android.support.constraint.ConstraintLayout>

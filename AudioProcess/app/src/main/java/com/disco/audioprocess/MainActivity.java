@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.disco.flappybird.UnityPlayerActivity;
+
 import java.io.IOException;
 
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Button recordButton;
     private Button playButton;
     private Button testButton;
+    private Button flappyButton;
     private static TextView frequencyTextview;
 
     private static int currentFrequency = 0;
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         facebookButton = (Button) findViewById(R.id.FacebookLogin);
         googleButton = (Button) findViewById(R.id.GoogleLogin);
         testButton = (Button) findViewById(R.id.testButton);
+        flappyButton = (Button) this.findViewById(R.id.flappyButton);
         frequencyTextview = (TextView) findViewById(R.id.frequencyTextview);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -148,6 +152,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TestVisActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        flappyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent serviceIntent = new Intent(MainActivity.this, ConnectionService.class);
+                startService(serviceIntent);
+//                Intent intent = new Intent(MainActivity.this, UnityPlayerActivity.class);
+//                startActivity(intent);
             }
         });
     }
