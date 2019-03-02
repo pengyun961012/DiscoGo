@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TestVisActivity"/>
-        <!--<service android:name=".ConnectionService"/>-->
+        <service android:name=".ConnectionService"/>
     </application>
 
 </manifest>

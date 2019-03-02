@@ -1,10 +1,6 @@
 package com.disco.audioprocess;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,19 +10,12 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.disco.flappybird.UnityPlayerActivity;
 
 import ca.uol.aig.fftpack.RealDoubleFFT;
 
@@ -39,7 +28,6 @@ public class TestVisActivity extends Activity implements OnClickListener{
     private RealDoubleFFT transformer;
     int blockSize = 256;
     Button startStopButton;
-    Button flappyButton;
     boolean started = false;
 
     RecordAudio recordTask;
@@ -54,7 +42,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
      * Service
      */
 
-    Messenger mMessenger;
+//    Messenger mMessenger;
 
     /** Called when the activity is first created. */
     @Override
@@ -62,7 +50,6 @@ public class TestVisActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_vis);
         startStopButton = (Button) this.findViewById(R.id.start_stop_btn);
-        flappyButton = (Button) this.findViewById(R.id.flappyButton);
         maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
         startStopButton.setOnClickListener(this);
 
@@ -75,26 +62,18 @@ public class TestVisActivity extends Activity implements OnClickListener{
         paint.setColor(Color.GREEN);
         imageView.setImageBitmap(bitmap);
 
-        bindService(new Intent(this, ConnectionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
-
-        flappyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TestVisActivity.this, UnityPlayerActivity.class);
-                startActivity(intent);
-            }
-        });
+//        bindService(new Intent(this, ConnectionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
-    Messenger messenger;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder iBinder) {
-            messenger = new Messenger(iBinder);
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-        }
-    };
+//    Messenger messenger;
+//    private ServiceConnection serviceConnection = new ServiceConnection() {
+//        public void onServiceConnected(ComponentName className, IBinder iBinder) {
+//            messenger = new Messenger(iBinder);
+//        }
+//
+//        public void onServiceDisconnected(ComponentName className) {
+//        }
+//    };
 
     private class RecordAudio extends AsyncTask<Void, double[], Void> {
         @Override
@@ -150,22 +129,22 @@ public class TestVisActivity extends Activity implements OnClickListener{
             }
             else {
                 maxindex *= 16;
-                sendMessageToService(maxindex);
+//                sendMessageToService(maxindex);
                 maxFreqView.setText(String.valueOf(maxindex) + " Hz");
             }
             imageView.invalidate();
         }
 
-        private void sendMessageToService(int intvaluetosend) {
-            try {
-                Message msg = Message.obtain(null, 1, intvaluetosend, 0);
-//                msg.replyTo = mMessenger;
-                mMessenger.send(msg);
-            }
-            catch (RemoteException e) {
-
-            }
-        }
+//        private void sendMessageToService(int intvaluetosend) {
+//            try {
+//                Message msg = Message.obtain(null, 1, intvaluetosend, 0);
+////                msg.replyTo = mMessenger;
+//                mMessenger.send(msg);
+//            }
+//            catch (RemoteException e) {
+//
+//            }
+//        }
     }
 
 
