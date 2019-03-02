@@ -80,7 +80,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
                     transformer.ft(toTransform);
 
                     publishProgress(toTransform);
-                    Thread.sleep(500);
+                    Thread.sleep(100);
                 }
                 audioRecord.stop();
             } catch (Throwable t) {
@@ -107,7 +107,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
 //            Log.d(TAG, "onProgressUpdate: max index" + String.valueOf(maxindex));
             Log.d(TAG, "onProgressUpdate: max frequency" + String.valueOf(maxfreq));
             if (maxfreq < 1){
-                maxFreqView.setText("Only noise");
+//                maxFreqView.setText("Only noise");
             }
             else {
                 maxindex *= 16;
