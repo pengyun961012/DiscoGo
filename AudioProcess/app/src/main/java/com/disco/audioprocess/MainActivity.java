@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.unity3d.player.*;
 
 import com.disco.flappybird.UnityPlayerActivity;
 
@@ -160,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent serviceIntent = new Intent(MainActivity.this, ConnectionService.class);
                 startService(serviceIntent);
-//                Intent intent = new Intent(MainActivity.this, UnityPlayerActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, UnityPlayerActivity.class);
+                startActivity(intent);
             }
         });
     }

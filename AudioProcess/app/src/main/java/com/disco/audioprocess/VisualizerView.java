@@ -52,8 +52,8 @@ public class VisualizerView extends View {
         vectors[vectorIdx++] = 0;           // y0
         vectors[vectorIdx++] = insertIdx;   // x1
         vectors[vectorIdx] = scaledHeight;  // y1
-        Log.d(TAG, "addAmplitude: insert " + Float.toString(insertIdx));
-        Log.d(TAG, "addAmplitude: width " + Float.toString(width));
+        //Log.d(TAG, "addAmplitude: insert " + Float.toString(insertIdx));
+        //Log.d(TAG, "addAmplitude: width " + Float.toString(width));
         // insert index must be shorter than screen width
 
         if (vectorIdx+1 >= width * 4) {
