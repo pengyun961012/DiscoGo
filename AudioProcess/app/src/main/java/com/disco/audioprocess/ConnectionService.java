@@ -10,6 +10,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import com.unity3d.player.*;
 
 import ca.uol.aig.fftpack.RealDoubleFFT;
 
@@ -48,6 +49,8 @@ public class ConnectionService extends Service {
     @Override
     public void onCreate() {
         // We first start the Handler
+        handler.removeCallbacks(sendData);
+        handler.postDelayed(sendData, 1000);
         super.onCreate();
         Log.d(TAG, "onStartCommand: start service");
         transformer = new RealDoubleFFT(blockSize);
@@ -122,7 +125,17 @@ public class ConnectionService extends Service {
     /**
      * send
      */
+    private final Handler handler = new Handler();
 
+    private Runnable sendData = new Runnable(){
+        //sending data to unity constantly
+        public void run() {
+            UnityPlayer.UnitySendMessage("GameController", "changeData", "ABC");
+            Log.d("unity send message", "ABC");
+            handler.removeCallbacks(this);
+            handler.postDelayed(this, 1000);
+        }
+    };
     // It's the code we want our Handler to execute to send data
 
 }
