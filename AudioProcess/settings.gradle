@@ -1,1 +1,1 @@
-include ':app', ':jnifft-release', ':FlappyBird-release', ':FlappyBird-debug'
+include ':app', ':jnifft-release', ':FlappyBird-debug'
