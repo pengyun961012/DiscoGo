@@ -11,11 +11,16 @@ import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.unity3d.player.UnityPlayer;
 
 import ca.uol.aig.fftpack.RealDoubleFFT;
 
@@ -84,33 +89,51 @@ public class TestVisActivity extends Activity implements OnClickListener{
 //    };
 
     private class RecordAudio extends AsyncTask<Void, double[], Void> {
+        protected AudioRecord audioRecord;
+        protected short[] buffer = new short[sampleBlockSize];
+        protected double[] toTransform = new double[sampleBlockSize];
+        protected Timer timer;
+
+        @Override
+        protected void onCancelled(){
+                timer.cancel();
+                Log.d("timer","stopped");
+                audioRecord.stop();
+                audioRecord.release(); //release resources
+        }
+
         @Override
         protected Void doInBackground(Void... params) {
             try {
                 int bufferSize = 3 * AudioRecord.getMinBufferSize(sampleRate,
                         channelConfiguration, audioEncoding);
                 Log.d(getClass().getName(),"buffer size="+bufferSize);
-                AudioRecord audioRecord = new AudioRecord(
+                audioRecord = new AudioRecord(
                         MediaRecorder.AudioSource.DEFAULT, sampleRate,
                         channelConfiguration, audioEncoding, bufferSize);
 
-                short[] buffer = new short[sampleBlockSize];
-                double[] toTransform = new double[sampleBlockSize];
                 audioRecord.startRecording();
-                while (started) {
-                    int bufferReadResult = audioRecord.read(buffer, 0, sampleBlockSize);
+                // sampling timer
+                Timer timer = new Timer();
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        try{
+                            Log.d("AudioRecord-sampling", "new round of sampling");
+                            int bufferReadResult = audioRecord.read(buffer, 0, sampleBlockSize);
 
-                    for (int i = 0; i < sampleBlockSize && i < bufferReadResult; i++) {
-                        toTransform[i] = (double) buffer[i] / 32768.0; // signed 16 bit
+                            for (int i = 0; i < sampleBlockSize && i < bufferReadResult; i++) {
+                                toTransform[i] = (double) buffer[i] / 32768.0; // signed 16 bit
+                            }
+
+                            transformer.ft(toTransform);
+                            publishProgress(toTransform);
+                        }
+                        catch(Throwable e){
+                            Log.e("AudioRecord-sampling", "Sampling Failed");
+                        }
                     }
-
-                    transformer.ft(toTransform);
-
-                    publishProgress(toTransform);
-                    Thread.sleep(100);
-                }
-                audioRecord.stop();
-                audioRecord.release(); //release resources
+                }, 0 , sampleLength);
 
             } catch (Throwable t) {
                 Log.e("AudioRecord", "Recording Failed");
@@ -142,6 +165,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
                 maxindex *= 16;
 //                sendMessageToService(maxindex);
                 maxFreqView.setText(String.valueOf(maxindex) + " Hz");
+                //UnityPlayer.UnitySendMessage("BirdForeground","receiveData",maxfreq);
             }
             imageView.invalidate();
         }
