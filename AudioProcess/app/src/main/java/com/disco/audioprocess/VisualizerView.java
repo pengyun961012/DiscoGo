@@ -59,7 +59,7 @@ public class VisualizerView extends View {
         if (vectorIdx+1 >= width * 4) {
             amplitudes = new float[this.width * 2];
             vectors = new float[this.width * 4];
-            Log.d(TAG, "addAmplitude: change bool");
+            //Log.d(TAG, "addAmplitude: change bool");
         }
         insertIdx = ++insertIdx >= width ? 0 : insertIdx;
     }

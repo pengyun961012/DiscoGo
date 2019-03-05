@@ -21,12 +21,18 @@ import ca.uol.aig.fftpack.RealDoubleFFT;
 
 public class TestVisActivity extends Activity implements OnClickListener{
     private String TAG = "DISCO_AUDIO-----" + this.getClass().getSimpleName();
-    int frequency = 8000;
-    int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
+    // vocal frequency from 50Hz(G#1) to 850Hz(G#5)
+
+    int sampleRate = 44100; //sample rate in Hz
+    //BUG: this setting may cause compatibility issues
+    int sampleLength = 50;//ms
+    int sampleSize;
+    int sampleBlockSize;
+
+    int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
     int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
 
     private RealDoubleFFT transformer;
-    int blockSize = 256;
     Button startStopButton;
     boolean started = false;
 
@@ -50,10 +56,12 @@ public class TestVisActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_vis);
         startStopButton = (Button) this.findViewById(R.id.start_stop_btn);
-        maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
         startStopButton.setOnClickListener(this);
-
-        transformer = new RealDoubleFFT(blockSize);
+        maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
+        sampleBlockSize = sampleRate * sampleLength / 1000;
+        //sampleBlockSize = 256;
+        sampleSize = sampleBlockSize * 2;
+        transformer = new RealDoubleFFT(sampleBlockSize);
 
         imageView = (ImageView) this.findViewById(R.id.imageView1);
         bitmap = Bitmap.createBitmap((int)256,(int)100,Bitmap.Config.ARGB_8888);
@@ -79,19 +87,20 @@ public class TestVisActivity extends Activity implements OnClickListener{
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                int bufferSize = AudioRecord.getMinBufferSize(frequency,
+                int bufferSize = 3 * AudioRecord.getMinBufferSize(sampleRate,
                         channelConfiguration, audioEncoding);
+                Log.d(getClass().getName(),"buffer size="+bufferSize);
                 AudioRecord audioRecord = new AudioRecord(
-                        MediaRecorder.AudioSource.DEFAULT, frequency,
+                        MediaRecorder.AudioSource.DEFAULT, sampleRate,
                         channelConfiguration, audioEncoding, bufferSize);
 
-                short[] buffer = new short[blockSize];
-                double[] toTransform = new double[blockSize];
+                short[] buffer = new short[sampleBlockSize];
+                double[] toTransform = new double[sampleBlockSize];
                 audioRecord.startRecording();
                 while (started) {
-                    int bufferReadResult = audioRecord.read(buffer, 0, blockSize);
+                    int bufferReadResult = audioRecord.read(buffer, 0, sampleBlockSize);
 
-                    for (int i = 0; i < blockSize && i < bufferReadResult; i++) {
+                    for (int i = 0; i < sampleBlockSize && i < bufferReadResult; i++) {
                         toTransform[i] = (double) buffer[i] / 32768.0; // signed 16 bit
                     }
 
@@ -101,6 +110,8 @@ public class TestVisActivity extends Activity implements OnClickListener{
                     Thread.sleep(100);
                 }
                 audioRecord.stop();
+                audioRecord.release(); //release resources
+
             } catch (Throwable t) {
                 Log.e("AudioRecord", "Recording Failed");
             }
