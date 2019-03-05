@@ -97,7 +97,7 @@ public class FFT {
 
 //        Log.i("xiaozhu----------before", "data==" + dataStr + ", SAMPLE_RATE==" + SAMPLE_RATE + ", FFT_N" + FFT_N);
 
-        f = fft(f);                                        //进行快速福利叶变换
+        f = fft(f);                                        //进行快速傅里叶变换
 
         dataStr = "[";
         for (int i = 0; i < f.length; i++) {

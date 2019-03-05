@@ -1,0 +1,7 @@
+current audio processing problem:
+1. sampling rate at 8000 not compatible with other device
+   need fix audio recording interval and each recording period
+   There is a unavoidable 200ms latency in start recording
+2. Async Task not ready for long term task
+3. reboot, stop start at test activity
+4. get rid of float and dft
