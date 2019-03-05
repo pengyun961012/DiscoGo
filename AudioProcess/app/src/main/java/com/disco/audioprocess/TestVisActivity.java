@@ -94,8 +94,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
         protected double[] toTransform = new double[sampleBlockSize];
         protected Timer timer;
 
-        @Override
-        protected void onCancelled(){
+        protected void onCancelled(boolean p){
                 timer.cancel();
                 Log.d("timer","stopped");
                 audioRecord.stop();
@@ -114,12 +113,12 @@ public class TestVisActivity extends Activity implements OnClickListener{
 
                 audioRecord.startRecording();
                 // sampling timer
-                Timer timer = new Timer();
+                timer = new Timer();
                 timer.scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
                         try{
-                            Log.d("AudioRecord-sampling", "new round of sampling");
+                            //Log.d("AudioRecord-sampling", "new round of sampling");
                             int bufferReadResult = audioRecord.read(buffer, 0, sampleBlockSize);
 
                             for (int i = 0; i < sampleBlockSize && i < bufferReadResult; i++) {
@@ -157,7 +156,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
 //                Log.d(TAG, "onProgressUpdate: " + String.valueOf(toTransform[0][i]));
             }
 //            Log.d(TAG, "onProgressUpdate: max index" + String.valueOf(maxindex));
-            Log.d(TAG, "onProgressUpdate: max frequency" + String.valueOf(maxfreq));
+            //Log.d(TAG, "onProgressUpdate: max frequency" + String.valueOf(maxfreq));
             if (maxfreq < 1){
 //                maxFreqView.setText("Only noise");
             }
@@ -188,11 +187,14 @@ public class TestVisActivity extends Activity implements OnClickListener{
         if (started) {
             started = false;
             startStopButton.setText("Start");
-            recordTask.cancel(true);
+            recordTask.onCancelled(true);
+            boolean p = recordTask.cancel(true);
+            Log.d("recordtask cancel", ""+p);
         } else {
             started = true;
             startStopButton.setText("Stop");
             recordTask = new RecordAudio();
+            Log.e("onclick","pressed start");
             recordTask.execute();
         }
     }
