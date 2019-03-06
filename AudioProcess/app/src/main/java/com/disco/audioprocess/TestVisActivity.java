@@ -31,6 +31,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
     int sampleRate = 44100; //sample rate in Hz
     //BUG: this setting may cause compatibility issues
     int sampleLength = 50;//ms
+    int overSampleRatio = 3;//ms
     int sampleSize;
     int sampleBlockSize;
 
@@ -63,7 +64,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
         startStopButton = (Button) this.findViewById(R.id.start_stop_btn);
         startStopButton.setOnClickListener(this);
         maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
-        sampleBlockSize = 3*sampleRate * sampleLength / 1000;
+        sampleBlockSize = overSampleRatio * sampleRate * sampleLength / 1000;
         sampleSize = sampleBlockSize * 2;
         transformer = new RealDoubleFFT(sampleBlockSize);
 
@@ -73,7 +74,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
 
         bitmap = Bitmap.createBitmap((int)bitmapWidth,(int)bitmapHeight,Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        canvas.scale(1, -1, bitmapWidth, bitmapHeight);
+        canvas.scale(1, -1,bitmapWidth/2, bitmapHeight/2);
         paint = new Paint();
         paint.setColor(Color.GREEN);
         imageView.setImageBitmap(bitmap);
@@ -111,7 +112,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
                         channelConfiguration, audioEncoding);
                 Log.d(getClass().getName(),"buffer size="+bufferSize);
                 audioRecord = new AudioRecord(
-                        MediaRecorder.AudioSource.DEFAULT, sampleRate,
+                        MediaRecorder.AudioSource.UNPROCESSED, sampleRate,
                         channelConfiguration, audioEncoding, bufferSize);
 
                 audioRecord.startRecording();
@@ -149,9 +150,9 @@ public class TestVisActivity extends Activity implements OnClickListener{
             int maxindex = 0;
             for (int i = 0; i < toTransform[0].length; i++) {
                 int x = i;
-                int downy = 100;
-                int upy = (int) (downy - (toTransform[0][i] * 10));
-                if(upy<10) downy = 10;
+                int downy = 0;
+                int upy = (int) ((toTransform[0][i] * 10));
+                //if(upy<10) downy = 10;
                 canvas.drawLine(x, downy, x, upy, paint);
                 if (toTransform[0][i] > maxfreq){
                     maxfreq = toTransform[0][i];
