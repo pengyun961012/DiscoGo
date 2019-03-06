@@ -63,14 +63,17 @@ public class TestVisActivity extends Activity implements OnClickListener{
         startStopButton = (Button) this.findViewById(R.id.start_stop_btn);
         startStopButton.setOnClickListener(this);
         maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
-        sampleBlockSize = sampleRate * sampleLength / 1000;
-        //sampleBlockSize = 256;
+        sampleBlockSize = 3*sampleRate * sampleLength / 1000;
         sampleSize = sampleBlockSize * 2;
         transformer = new RealDoubleFFT(sampleBlockSize);
 
         imageView = (ImageView) this.findViewById(R.id.imageView1);
-        bitmap = Bitmap.createBitmap((int)256,(int)100,Bitmap.Config.ARGB_8888);
+        int bitmapWidth = 256;
+        int bitmapHeight = 300;
+
+        bitmap = Bitmap.createBitmap((int)bitmapWidth,(int)bitmapHeight,Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+        canvas.scale(1, -1, bitmapWidth, bitmapHeight);
         paint = new Paint();
         paint.setColor(Color.GREEN);
         imageView.setImageBitmap(bitmap);
@@ -104,7 +107,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                int bufferSize = 3 * AudioRecord.getMinBufferSize(sampleRate,
+                int bufferSize = 9 * AudioRecord.getMinBufferSize(sampleRate,
                         channelConfiguration, audioEncoding);
                 Log.d(getClass().getName(),"buffer size="+bufferSize);
                 audioRecord = new AudioRecord(
@@ -146,8 +149,9 @@ public class TestVisActivity extends Activity implements OnClickListener{
             int maxindex = 0;
             for (int i = 0; i < toTransform[0].length; i++) {
                 int x = i;
-                int downy = (int) (100 - (toTransform[0][i] * 10));
-                int upy = 100;
+                int downy = 100;
+                int upy = (int) (downy - (toTransform[0][i] * 10));
+                if(upy<10) downy = 10;
                 canvas.drawLine(x, downy, x, upy, paint);
                 if (toTransform[0][i] > maxfreq){
                     maxfreq = toTransform[0][i];
@@ -161,10 +165,10 @@ public class TestVisActivity extends Activity implements OnClickListener{
 //                maxFreqView.setText("Only noise");
             }
             else {
-                maxindex *= 16;
+                maxindex *= 4;
 //                sendMessageToService(maxindex);
                 maxFreqView.setText(String.valueOf(maxindex) + " Hz");
-                //UnityPlayer.UnitySendMessage("BirdForeground","receiveData",maxfreq);
+                UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+maxindex);
             }
             imageView.invalidate();
         }
