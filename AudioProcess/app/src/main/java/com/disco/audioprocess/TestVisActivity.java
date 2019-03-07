@@ -33,6 +33,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
     int sampleLength = 50;//ms
     int overSampleRatio = 3;//ms
     int sampleSize;
+    double sample2freq;
     int sampleBlockSize;
 
     int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
@@ -65,6 +66,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
         startStopButton.setOnClickListener(this);
         maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
         sampleBlockSize = overSampleRatio * sampleRate * sampleLength / 1000;
+        sample2freq = 1000.0/ overSampleRatio /sampleLength/2;
         sampleSize = sampleBlockSize * 2;
         transformer = new RealDoubleFFT(sampleBlockSize);
 
@@ -166,7 +168,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
 //                maxFreqView.setText("Only noise");
             }
             else {
-                maxindex *= 4;
+                maxindex = (int)((maxindex) * sample2freq);
 //                sendMessageToService(maxindex);
                 maxFreqView.setText(String.valueOf(maxindex) + " Hz");
                 UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+maxindex);
