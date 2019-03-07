@@ -22,6 +22,13 @@ import android.widget.TextView;
 
 import com.unity3d.player.UnityPlayer;
 
+import be.tarsos.dsp.AudioDispatcher;
+import be.tarsos.dsp.AudioEvent;
+import be.tarsos.dsp.AudioProcessor;
+import be.tarsos.dsp.io.android.AudioDispatcherFactory;
+import be.tarsos.dsp.pitch.PitchDetectionHandler;
+import be.tarsos.dsp.pitch.PitchDetectionResult;
+import be.tarsos.dsp.pitch.PitchProcessor;
 import ca.uol.aig.fftpack.RealDoubleFFT;
 
 public class TestVisActivity extends Activity implements OnClickListener{
@@ -35,6 +42,22 @@ public class TestVisActivity extends Activity implements OnClickListener{
     int sampleSize;
     double sample2freq;
     int sampleBlockSize;
+
+    //TarsosDSP
+    PitchDetectionHandler pdh = new PitchDetectionHandler(){
+        @Override
+        public void handlePitch(PitchDetectionResult result, AudioEvent e){
+            final float pitchInHz = result.getPitch();
+            runOnUiThread(new Runnable(){
+                @Override
+                public void run(){
+                    TextView text = (TextView) findViewById(R.id.textView3);
+                    UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+(int)pitchInHz);
+                    text.setText(""+pitchInHz);
+                }
+            });
+        }
+    };
 
     int channelConfiguration = AudioFormat.CHANNEL_IN_MONO;
     int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
@@ -81,6 +104,11 @@ public class TestVisActivity extends Activity implements OnClickListener{
         paint.setColor(Color.GREEN);
         imageView.setImageBitmap(bitmap);
 
+        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
+        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 44100, 4096, pdh);
+        dispatcher.addAudioProcessor(p);
+
+        new Thread(dispatcher, "Audio Dispatcher").start();
 //        bindService(new Intent(this, ConnectionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -171,7 +199,7 @@ public class TestVisActivity extends Activity implements OnClickListener{
                 maxindex = (int)((maxindex) * sample2freq);
 //                sendMessageToService(maxindex);
                 maxFreqView.setText(String.valueOf(maxindex) + " Hz");
-                UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+maxindex);
+                //UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+maxindex);
             }
             imageView.invalidate();
         }
