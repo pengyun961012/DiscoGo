@@ -52,8 +52,12 @@ public class TestVisActivity extends Activity implements OnClickListener{
                 @Override
                 public void run(){
                     TextView text = (TextView) findViewById(R.id.textView3);
-                    UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+(int)pitchInHz);
-                    text.setText(""+pitchInHz);
+                    double p  = pitchInHz;
+                    if(p<=-1.0){
+                        p = 150.0;
+                    }
+                    UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+ (int)p);
+                    text.setText(""+p);
                 }
             });
         }
