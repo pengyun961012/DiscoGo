@@ -1,6 +1,7 @@
 package com.disco.skeletalproduct;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,8 @@ import be.tarsos.dsp.pitch.PitchProcessor;
 public class PlayActivity extends AppCompatActivity {
 
     private Button goUnityButton;
+    private FloatingActionButton backButton;
+    private FloatingActionButton homeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
 
         goUnityButton = (Button) findViewById(R.id.go_unity_button);
+        backButton = (FloatingActionButton) findViewById(R.id.backfloatingActionButton);
+        homeButton = (FloatingActionButton) findViewById(R.id.homefloatingActionButton);
 
         goUnityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +49,21 @@ public class PlayActivity extends AppCompatActivity {
                 Intent intent = new Intent(PlayActivity.this,  UnityPlayerActivity.class);
                 startActivity(intent);
                 
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlayActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
