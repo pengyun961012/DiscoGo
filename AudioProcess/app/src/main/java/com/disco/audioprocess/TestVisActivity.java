@@ -37,9 +37,10 @@ public class TestVisActivity extends Activity implements OnClickListener{
 
     int sampleRate = 44100; //sample rate in Hz
     //BUG: this setting may cause compatibility issues
-    int sampleLength = 50;//ms
-    int overSampleRatio = 3;//ms
+    int sampleLength = 20;//ms
+    int overlapRatio = 2;//daoshu
     int sampleSize;
+    int overlapSize ;
     double sample2freq;
     int sampleBlockSize;
 
@@ -92,9 +93,10 @@ public class TestVisActivity extends Activity implements OnClickListener{
         startStopButton = (Button) this.findViewById(R.id.start_stop_btn);
         startStopButton.setOnClickListener(this);
         maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
-        sampleBlockSize = overSampleRatio * sampleRate * sampleLength / 1000;
-        sample2freq = 1000.0/ overSampleRatio /sampleLength/2;
+        sampleBlockSize = sampleRate * sampleLength / 1000;
+        sample2freq = 1000.0/sampleLength/2;
         sampleSize = sampleBlockSize * 2;
+        overlapSize = sampleSize/overlapRatio;
         transformer = new RealDoubleFFT(sampleBlockSize);
 
         imageView = (ImageView) this.findViewById(R.id.imageView1);
@@ -108,8 +110,8 @@ public class TestVisActivity extends Activity implements OnClickListener{
         paint.setColor(Color.GREEN);
         imageView.setImageBitmap(bitmap);
 
-        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
-        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 44100, 4096, pdh);
+        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(sampleRate,8192,2048);
+        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, sampleRate, 8192, pdh);
         dispatcher.addAudioProcessor(p);
 
         new Thread(dispatcher, "Audio Dispatcher").start();
