@@ -30,4 +30,6 @@ dependencies {
     implementation project(":FlappyBird-debug")
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
+
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
 }
