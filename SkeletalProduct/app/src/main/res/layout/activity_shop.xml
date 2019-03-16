@@ -6,28 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".ShopActivity">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/backfloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        app:backgroundTint="@android:color/transparent"
-        app:layout_constraintEnd_toStartOf="@+id/homefloatingActionButton"
+    <GridView
+        android:id="@+id/gridViewItems"
+        android:layout_width="406dp"
+        android:layout_height="325dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="8dp"
+        android:numColumns="3"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="5dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewCurrent"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        app:layout_constraintVertical_bias="0.428" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/homefloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        app:backgroundTint="@android:color/transparent"
+    <ImageView
+        android:id="@+id/imageViewCurrent"
+        android:layout_width="220dp"
+        android:layout_height="325dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+        app:layout_constraintVertical_bias="0.428"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/textViewShop"
+        android:layout_width="627dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Shop"
+        android:textSize="32dp"
+        android:paddingLeft="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewCurrent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
