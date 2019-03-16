@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LeaderboardActivity">
+
+    <RelativeLayout
+        android:layout_width="778dp"
+        android:layout_height="82dp"
+        android:background="@color/bluegrey"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="218dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="18dp"
+            android:text="Friends"
+            android:textSize="32dp"
+            tools:layout_editor_absoluteX="68dp"
+            tools:layout_editor_absoluteY="39dp" />
+
+        <SearchView
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_alignParentRight="true"/>
+
+
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="570dp"
+        android:layout_height="286dp"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="117dp" />
+</android.support.constraint.ConstraintLayout>
