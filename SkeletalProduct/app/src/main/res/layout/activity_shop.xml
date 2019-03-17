@@ -4,19 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/homepage_background"
     tools:context=".ShopActivity">
+
+    <ImageButton
+        android:id="@+id/profileImageButton"
+        android:transitionName="button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/round_avatar"
+        android:adjustViewBounds="true"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:background="?android:selectableItemBackground"/>
+
+    <ImageButton
+        android:id="@+id/playImageButton"
+        android:transitionName="button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/shopImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/resume" />
+
+    <ImageButton
+        android:id="@+id/shopImageButton"
+        android:transitionName="button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/leaderboardImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/star_big_on" />
+
+    <ImageButton
+        android:id="@+id/leaderboardImageButton"
+        android:transitionName="button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/friendImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+
+    <ImageButton
+        android:id="@+id/friendImageButton"
+        android:transitionName="button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_call" />
 
     <GridView
         android:id="@+id/gridViewItems"
-        android:layout_width="406dp"
+        android:layout_width="349dp"
         android:layout_height="325dp"
         android:layout_marginTop="64dp"
         android:layout_marginBottom="8dp"
-        android:numColumns="3"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="5dp"
-        android:stretchMode="columnWidth"
         android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageViewCurrent"
         app:layout_constraintHorizontal_bias="0.98"
@@ -39,14 +115,14 @@
 
     <TextView
         android:id="@+id/textViewShop"
-        android:layout_width="627dp"
+        android:layout_width="574dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        android:paddingLeft="10dp"
         android:text="Shop"
         android:textSize="32dp"
-        android:paddingLeft="10dp"
         app:layout_constraintBottom_toTopOf="@+id/imageViewCurrent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

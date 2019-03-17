@@ -4,12 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/homepage_background"
     tools:context=".LeaderboardActivity">
+    <!--android:background="@color/bluegrey"-->
+
+    <ImageButton
+        android:id="@+id/profileImageButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/round_avatar"
+        android:adjustViewBounds="true"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:background="?android:selectableItemBackground"/>
+
+    <ImageButton
+        android:id="@+id/playImageButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/shopImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/resume" />
+
+    <ImageButton
+        android:id="@+id/shopImageButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/leaderboardImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/star_big_on" />
+
+    <ImageButton
+        android:id="@+id/leaderboardImageButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/friendImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+
+    <ImageButton
+        android:id="@+id/friendImageButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_call" />
 
     <RelativeLayout
         android:layout_width="778dp"
         android:layout_height="82dp"
-        android:background="@color/bluegrey"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
