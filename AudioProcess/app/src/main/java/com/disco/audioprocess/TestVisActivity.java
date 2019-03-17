@@ -46,9 +46,12 @@ public class TestVisActivity extends Activity implements OnClickListener{
     double sample2freq;
     int sampleBlockSize;
     int temp = 0;
-    private int previousFreqLength = 15;
+    private int previousFreqLength = 11;
     int previousFreqIdx = 0;
     int[] previousFreq = new int[previousFreqLength];
+    int[] weightFreq = new int[previousFreqLength];
+    int weightFreqSum;
+    double ratio = 2;
 
 
     //TarsosDSP
@@ -68,9 +71,9 @@ public class TestVisActivity extends Activity implements OnClickListener{
                     if(freq==-1){
                         int sum =0;
                         for(int a = 0; a<previousFreqLength ;a++){
-                           sum += previousFreq[a];
+                           sum += previousFreq[(a+previousFreqIdx)%previousFreqLength] * weightFreq[a];
                         }
-                        freq= sum / previousFreqLength;
+                        freq= sum / previousFreqLength /weightFreqSum;
                         //int[] frequenciesCopy = previousFreq.clone();
                         //Arrays.sort(frequenciesCopy);
                         //freq = previousFreq[previousFreqIdx/2];
@@ -79,8 +82,8 @@ public class TestVisActivity extends Activity implements OnClickListener{
                         freq = 120;
                     }
                     UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+ freq);
-                    long time= System.currentTimeMillis();
-                    Log.e("Time Class ", " Time value in millisecinds "+time);
+                    //long time= System.currentTimeMillis();
+                    //Log.e("Time Class ", " Time value in millisecinds "+time);
                     text.setText(""+freq);
                 }
             });
@@ -121,6 +124,10 @@ public class TestVisActivity extends Activity implements OnClickListener{
         sampleSize = sampleBlockSize * 2;
         overlapSize = sampleSize/overlapRatio;
         transformer = new RealDoubleFFT(sampleBlockSize);
+        for(int i=0; i<previousFreqLength; i++){
+            weightFreq[i] = (int)Math.pow(ratio,(double)i);
+            weightFreqSum += weightFreq[i];
+        }
 
         imageView = (ImageView) this.findViewById(R.id.imageView1);
         int bitmapWidth = 256;
