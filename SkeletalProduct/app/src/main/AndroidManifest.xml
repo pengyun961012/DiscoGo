@@ -31,19 +31,35 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
+            android:noHistory = "true"
             android:theme="@style/Theme.Design.NoActionBar"
             android:screenOrientation="landscape"/>
         <activity
             android:name=".LoginActivity"
+            android:noHistory = "true"
             android:theme="@style/Theme.Design.NoActionBar"
             android:label="@string/title_activity_login"
             android:screenOrientation="landscape"/>
         <activity android:name=".PlayActivity"
+            android:noHistory = "true"
             android:theme="@style/Theme.Design.NoActionBar"
             android:screenOrientation="landscape"/>
         <activity android:name=".ShopActivity"
+            android:noHistory = "true"
             android:theme="@style/Theme.Design.NoActionBar"
             android:screenOrientation="landscape"/>
+        <activity android:name=".LeaderboardActivity"
+            android:noHistory = "true"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".FriendActivity"
+            android:noHistory = "true"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:screenOrientation="landscape"/>
+
+
+
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

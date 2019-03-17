@@ -3,7 +3,6 @@ package com.disco.skeletalproduct;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class PlayActivity extends AppCompatActivity {
 
 //    private Button goUnityButton;
 //    private FloatingActionButton backButton;
-    private FloatingActionButton homeButton;
+    private ImageButton profileButton;
     private List<Song> songList = new ArrayList<>();
     private SongListAdapter songAdapter;
     private ViewPager viewPager;
@@ -52,32 +50,10 @@ public class PlayActivity extends AppCompatActivity {
         viewPager.setAdapter(songAdapter);
         populateList();
 
-//        goUnityButton = (Button) findViewById(R.id.go_unity_button);
-//        backButton = (FloatingActionButton) findViewById(R.id.backfloatingActionButton);
-        homeButton = (FloatingActionButton) findViewById(R.id.homefloatingActionButton);
 
-//        goUnityButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
-//                AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 44100, 4096, pdh);
-//                dispatcher.addAudioProcessor(p);
-//
-//                new Thread(dispatcher, "Audio Dispatcher").start();
-//                Intent intent = new Intent(PlayActivity.this,  UnityPlayerActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
+        profileButton = (ImageButton) findViewById(R.id.profileButton);
 
-//        backButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-//
-        homeButton.setOnClickListener(new View.OnClickListener() {
+        profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PlayActivity.this, MainActivity.class);
@@ -87,9 +63,9 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void populateList(){
-        Song alphabet = new Song("alphabet", R.drawable.background);
-        Song birthday = new Song("birthday", R.drawable.background);
-        Song forever = new Song("forever", R.drawable.background);
+        Song alphabet = new Song("alphabet", R.drawable.homepage_circle1);
+        Song birthday = new Song("birthday", R.drawable.homepage_circle1);
+        Song forever = new Song("forever", R.drawable.homepage_circle1);
         songList.add(alphabet);
         songList.add(birthday);
         songList.add(forever);
