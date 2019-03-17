@@ -35,7 +35,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/shopImageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/resume" />
+        app:srcCompat="@drawable/resume_black" />
 
     <ImageButton
         android:id="@+id/shopImageButton"
@@ -50,7 +50,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/leaderboardImageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/money" />
+        app:srcCompat="@drawable/money_black" />
 
     <ImageButton
         android:id="@+id/leaderboardImageButton"
@@ -65,7 +65,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/friendImageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+        app:srcCompat="@drawable/leaderboard" />
 
     <ImageButton
         android:id="@+id/friendImageButton"
@@ -80,17 +80,30 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_call" />
+        app:srcCompat="@drawable/friend" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/profileRecyclerView"
         android:layout_width="538dp"
-        android:layout_height="318dp"
+        android:layout_height="289dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/leaderboardImageButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="22dp"
+        android:text="Profile"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toTopOf="@+id/profileRecyclerView"
+        app:layout_constraintStart_toEndOf="@+id/profileImageButton"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
