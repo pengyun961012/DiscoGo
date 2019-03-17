@@ -11,6 +11,8 @@ import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,6 +45,11 @@ public class TestVisActivity extends Activity implements OnClickListener{
     int overlapSize ;
     double sample2freq;
     int sampleBlockSize;
+    int temp = 0;
+    private int previousFreqLength = 15;
+    int previousFreqIdx = 0;
+    int[] previousFreq = new int[previousFreqLength];
+
 
     //TarsosDSP
     PitchDetectionHandler pdh = new PitchDetectionHandler(){
@@ -54,11 +61,27 @@ public class TestVisActivity extends Activity implements OnClickListener{
                 public void run(){
                     TextView text = (TextView) findViewById(R.id.textView3);
                     double p  = pitchInHz;
-                    if(p<=-1.0){
-                        p = 150.0;
+                    int freq = (int)p;
+                    previousFreq[previousFreqIdx] = freq;
+                    previousFreqIdx++;
+                    previousFreqIdx %= previousFreqLength;
+                    if(freq==-1){
+                        int sum =0;
+                        for(int a = 0; a<previousFreqLength ;a++){
+                           sum += previousFreq[a];
+                        }
+                        freq= sum / previousFreqLength;
+                        //int[] frequenciesCopy = previousFreq.clone();
+                        //Arrays.sort(frequenciesCopy);
+                        //freq = previousFreq[previousFreqIdx/2];
                     }
-                    UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+ (int)p);
-                    text.setText(""+p);
+                    if(freq<=120){
+                        freq = 120;
+                    }
+                    UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+ freq);
+                    long time= System.currentTimeMillis();
+                    Log.e("Time Class ", " Time value in millisecinds "+time);
+                    text.setText(""+freq);
                 }
             });
         }
@@ -110,8 +133,8 @@ public class TestVisActivity extends Activity implements OnClickListener{
         paint.setColor(Color.GREEN);
         imageView.setImageBitmap(bitmap);
 
-        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(sampleRate,8192,2048);
-        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, sampleRate, 8192, pdh);
+        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(sampleRate,4096,2048);
+        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, sampleRate, 4096, pdh);
         dispatcher.addAudioProcessor(p);
 
         new Thread(dispatcher, "Audio Dispatcher").start();
