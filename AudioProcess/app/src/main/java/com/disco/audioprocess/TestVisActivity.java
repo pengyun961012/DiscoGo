@@ -11,6 +11,8 @@ import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,11 +39,20 @@ public class TestVisActivity extends Activity implements OnClickListener{
 
     int sampleRate = 44100; //sample rate in Hz
     //BUG: this setting may cause compatibility issues
-    int sampleLength = 50;//ms
-    int overSampleRatio = 3;//ms
+    int sampleLength = 20;//ms
+    int overlapRatio = 2;//daoshu
     int sampleSize;
+    int overlapSize ;
     double sample2freq;
     int sampleBlockSize;
+    int temp = 0;
+    private int previousFreqLength = 11;
+    int previousFreqIdx = 0;
+    int[] previousFreq = new int[previousFreqLength];
+    int[] weightFreq = new int[previousFreqLength];
+    int weightFreqSum;
+    double ratio = 2;
+
 
     //TarsosDSP
     PitchDetectionHandler pdh = new PitchDetectionHandler(){
@@ -53,11 +64,27 @@ public class TestVisActivity extends Activity implements OnClickListener{
                 public void run(){
                     TextView text = (TextView) findViewById(R.id.textView3);
                     double p  = pitchInHz;
-                    if(p<=-1.0){
-                        p = 150.0;
+                    int freq = (int)p;
+                    previousFreq[previousFreqIdx] = freq;
+                    previousFreqIdx++;
+                    previousFreqIdx %= previousFreqLength;
+                    if(freq==-1){
+                        int sum =0;
+                        for(int a = 0; a<previousFreqLength ;a++){
+                           sum += previousFreq[(a+previousFreqIdx)%previousFreqLength] * weightFreq[a];
+                        }
+                        freq= sum / previousFreqLength /weightFreqSum;
+                        //int[] frequenciesCopy = previousFreq.clone();
+                        //Arrays.sort(frequenciesCopy);
+                        //freq = previousFreq[previousFreqIdx/2];
                     }
-                    UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+ (int)p);
-                    text.setText(""+p);
+                    if(freq<=120){
+                        freq = 120;
+                    }
+                    UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+ freq);
+                    //long time= System.currentTimeMillis();
+                    //Log.e("Time Class ", " Time value in millisecinds "+time);
+                    text.setText(""+freq);
                 }
             });
         }
@@ -92,10 +119,15 @@ public class TestVisActivity extends Activity implements OnClickListener{
         startStopButton = (Button) this.findViewById(R.id.start_stop_btn);
         startStopButton.setOnClickListener(this);
         maxFreqView = (TextView) this.findViewById(R.id.maxFreqView);
-        sampleBlockSize = overSampleRatio * sampleRate * sampleLength / 1000;
-        sample2freq = 1000.0/ overSampleRatio /sampleLength/2;
+        sampleBlockSize = sampleRate * sampleLength / 1000;
+        sample2freq = 1000.0/sampleLength/2;
         sampleSize = sampleBlockSize * 2;
+        overlapSize = sampleSize/overlapRatio;
         transformer = new RealDoubleFFT(sampleBlockSize);
+        for(int i=0; i<previousFreqLength; i++){
+            weightFreq[i] = (int)Math.pow(ratio,(double)i);
+            weightFreqSum += weightFreq[i];
+        }
 
         imageView = (ImageView) this.findViewById(R.id.imageView1);
         int bitmapWidth = 256;
@@ -108,8 +140,8 @@ public class TestVisActivity extends Activity implements OnClickListener{
         paint.setColor(Color.GREEN);
         imageView.setImageBitmap(bitmap);
 
-        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
-        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 44100, 4096, pdh);
+        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(sampleRate,4096,2048);
+        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, sampleRate, 4096, pdh);
         dispatcher.addAudioProcessor(p);
 
         new Thread(dispatcher, "Audio Dispatcher").start();
