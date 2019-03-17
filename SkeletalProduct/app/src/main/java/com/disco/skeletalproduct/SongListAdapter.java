@@ -29,9 +29,13 @@ public class SongListAdapter extends PagerAdapter {
     Context context;
     private List<Song> songList;
     LayoutInflater layoutInflater;
-    AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
+
+    /** DSP */
+    AudioDispatcher dispatcher;
+
 
     public void stopRecorder() {
+        Log.d(TAG, "stopRecorder: stop");
         dispatcher.stop();
     }
 
@@ -66,6 +70,7 @@ public class SongListAdapter extends PagerAdapter {
             public void onClick(View v) {
                 String songName = songList.get(position).getSongName();
 //                Toast.makeText(context, "you clicked image " + songName, Toast.LENGTH_SHORT).show();
+                dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
                 AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 44100, 4096, pdh);
                 dispatcher.addAudioProcessor(p);
 
