@@ -48,7 +48,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/leaderboardImageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/star_big_on" />
+        app:srcCompat="@drawable/money" />
 
     <ImageButton
         android:id="@+id/leaderboardImageButton"
