@@ -1,31 +1,28 @@
 package com.disco.skeletalproduct;
 
+import android.Manifest;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
-import com.disco.flappybird.UnityPlayerActivity;
-import com.unity3d.player.UnityPlayer;
-
-import be.tarsos.dsp.AudioDispatcher;
-import be.tarsos.dsp.AudioEvent;
-import be.tarsos.dsp.AudioProcessor;
-import be.tarsos.dsp.io.android.AudioDispatcherFactory;
-import be.tarsos.dsp.pitch.PitchDetectionHandler;
-import be.tarsos.dsp.pitch.PitchDetectionResult;
-import be.tarsos.dsp.pitch.PitchProcessor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayActivity extends AppCompatActivity {
 
-    private Button goUnityButton;
-    private FloatingActionButton backButton;
-    private FloatingActionButton homeButton;
+//    private Button goUnityButton;
+//    private FloatingActionButton backButton;
+    private ImageButton profileButton;
+    private List<Song> songList = new ArrayList<>();
+    private SongListAdapter songAdapter;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,32 +31,29 @@ public class PlayActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play);
 
-        goUnityButton = (Button) findViewById(R.id.go_unity_button);
-        backButton = (FloatingActionButton) findViewById(R.id.backfloatingActionButton);
-        homeButton = (FloatingActionButton) findViewById(R.id.homefloatingActionButton);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
 
-        goUnityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
-                AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 44100, 4096, pdh);
-                dispatcher.addAudioProcessor(p);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
+                    10);
 
-                new Thread(dispatcher, "Audio Dispatcher").start();
-                Intent intent = new Intent(PlayActivity.this,  UnityPlayerActivity.class);
-                startActivity(intent);
-                
-            }
-        });
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    10);
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
+        }
+
+        viewPager = (ViewPager) findViewById(R.id.songSelectorViewPager);
+
+        songAdapter = new SongListAdapter(PlayActivity.this, songList);
+        viewPager.setAdapter(songAdapter);
+        populateList();
+
+
+        profileButton = (ImageButton) findViewById(R.id.profileButton);
+
+        profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PlayActivity.this, MainActivity.class);
@@ -68,22 +62,14 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
-    PitchDetectionHandler pdh = new PitchDetectionHandler(){
-        @Override
-        public void handlePitch(PitchDetectionResult result, AudioEvent e){
-            final float pitchInHz = result.getPitch();
-            runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-//                    TextView text = (TextView) findViewById(R.id.textView3);
-                    double p  = pitchInHz;
-                    if(p<=-1.0){
-                        p = 150.0;
-                    }
-                    UnityPlayer.UnitySendMessage("BirdForeground","receiveData",""+ (int)p);
-//                    text.setText(""+p);
-                }
-            });
-        }
-    };
+    private void populateList(){
+        Song alphabet = new Song("alphabet", R.drawable.homepage_circle1);
+        Song birthday = new Song("birthday", R.drawable.homepage_circle1);
+        Song forever = new Song("forever", R.drawable.homepage_circle1);
+        songList.add(alphabet);
+        songList.add(birthday);
+        songList.add(forever);
+        songAdapter.notifyDataSetChanged();
+    }
+
 }

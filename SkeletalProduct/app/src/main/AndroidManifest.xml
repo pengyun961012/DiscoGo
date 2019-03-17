@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_round"
@@ -22,28 +21,41 @@
         tools:replace="android:icon,android:roundIcon,android:theme">
         <activity
             android:name=".SplashScreenActivity"
-            android:theme="@style/SplashScreenTheme"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.Design.NoActionBar"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Design.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.Design.NoActionBar"
             android:label="@string/title_activity_login"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".PlayActivity"
-            android:theme="@style/Theme.Design.NoActionBar"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".ShopActivity"
-            android:theme="@style/Theme.Design.NoActionBar"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
+            android:name=".PlayActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
+            android:name=".ShopActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
+            android:name=".LeaderboardActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
+            android:name=".FriendActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity android:name=".OverrideActivity" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -64,6 +76,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".OverrideActivity"></activity>
     </application>
 
 </manifest>

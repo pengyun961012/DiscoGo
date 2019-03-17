@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/songnameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="33dp"
+        android:text="username"
+        android:textSize="36dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/singerTextView"
+        android:layout_width="153dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="9dp"
+        android:text="BEST SONG"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        tools:layout_editor_absoluteY="43dp" />
+
+    <TextView
+        android:id="@+id/albumTextView"
+        android:layout_width="125dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="20dp"
+        android:text="10000"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toStartOf="@+id/singerTextView"
+        tools:layout_editor_absoluteY="43dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="9dp"
+        app:layout_constraintEnd_toStartOf="@+id/songnameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/albumTextView"
+        app:srcCompat="@android:drawable/btn_star_big_on"
+        tools:layout_editor_absoluteY="43dp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_media_play"
+        tools:layout_editor_absoluteY="43dp" />
+</android.support.constraint.ConstraintLayout>
