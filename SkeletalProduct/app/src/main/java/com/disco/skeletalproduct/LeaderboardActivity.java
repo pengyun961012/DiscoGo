@@ -5,11 +5,17 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeaderboardActivity extends AppCompatActivity {
 
@@ -20,6 +26,10 @@ public class LeaderboardActivity extends AppCompatActivity {
     private ImageButton shopButton;
     private ImageButton leaderBoardButton;
     private ImageButton friendButton;
+    private RecyclerView leaderboardView;
+
+    private LeaderboardListAdapter leaderboardAdapter;
+    private List<Leaderboard> leaderboardList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +39,20 @@ public class LeaderboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard);
 
         ranking = findViewById(R.id.ranking);
-        ranking.setText("Your Rank:" + getRanking());
+        ranking.setText("Your Rank: " + getRanking());
 
         profileButton = (ImageButton) findViewById(R.id.profileImageButton);
         playButton = (ImageButton) findViewById(R.id.playImageButton);
         shopButton = (ImageButton) findViewById(R.id.shopImageButton);
         leaderBoardButton = (ImageButton) findViewById(R.id.leaderboardImageButton);
         friendButton = (ImageButton) findViewById(R.id.friendImageButton);
+        leaderboardView = (RecyclerView) findViewById(R.id.leaderboardRecyclerView);
+
+        leaderboardAdapter = new LeaderboardListAdapter(leaderboardList, getApplicationContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(LeaderboardActivity.this, LinearLayoutManager.VERTICAL, false);
+        leaderboardView.setLayoutManager(layoutManager);
+        leaderboardView.setAdapter(leaderboardAdapter);
+        populateList();
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,5 +106,13 @@ public class LeaderboardActivity extends AppCompatActivity {
      */
     public String getRanking() {
         return "36000";
+    }
+
+    private void populateList(){
+        for (int i = 0; i < 10; i++) {
+            Leaderboard user = new Leaderboard(R.drawable.round_avatar, "Feichi", i+1, (i+1)*10000);
+            leaderboardList.add(user);
+        }
+        leaderboardAdapter.notifyDataSetChanged();
     }
 }

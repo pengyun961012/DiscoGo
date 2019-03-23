@@ -13,8 +13,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class FriendActivity extends AppCompatActivity {
@@ -43,7 +41,7 @@ public class FriendActivity extends AppCompatActivity {
         leaderBoardButton = (ImageButton) findViewById(R.id.leaderboardImageButton);
         friendButton = (ImageButton) findViewById(R.id.friendImageButton);
         friendView = (RecyclerView) findViewById(R.id.friendRecyclerView);
-        
+
         friendAdapter = new FriendListAdapter(friendList, getApplicationContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(FriendActivity.this, LinearLayoutManager.VERTICAL, false);
         friendView.setLayoutManager(layoutManager);
