@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,7 +59,11 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PlayActivity.this, MainActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair1 = Pair.create((View)profileButton, "profileButton");
+                Pair<View, String> pair2 = Pair.create((View)findViewById(R.id.songImage), "playCircle");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(PlayActivity.this, pair1, pair2);
+                startActivity(intent, options.toBundle());
             }
         });
     }

@@ -2,6 +2,7 @@ package com.disco.skeletalproduct;
 
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.text.format.Time;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton leaderBoardButton;
     private ImageButton friendButton;
     private RecyclerView profileView;
+    private Button loginButton;
 
     private List<Profile> profileList = new ArrayList<>();
     private ProfileListAdapter profileAdapter;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         leaderBoardButton = (ImageButton) findViewById(R.id.leaderboardImageButton);
         friendButton = (ImageButton) findViewById(R.id.friendImageButton);
         profileView = (RecyclerView) findViewById(R.id.profileRecyclerView);
+        loginButton = (Button) findViewById(R.id.login_button);
 
 
         profileAdapter = new ProfileListAdapter(profileList, getApplicationContext());
@@ -55,7 +59,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PlayActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)playButton, "playCircle");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(MainActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -63,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ShopActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)shopButton, "shopButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(MainActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -71,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LeaderboardActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)leaderBoardButton, "leaderButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(MainActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -79,7 +92,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, FriendActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)friendButton, "friendButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(MainActivity.this, pair);
+                startActivity(intent, options.toBundle());
+            }
+        });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Pair<View, String> pair = Pair.create((View)loginButton, "loginButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(MainActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
     }
