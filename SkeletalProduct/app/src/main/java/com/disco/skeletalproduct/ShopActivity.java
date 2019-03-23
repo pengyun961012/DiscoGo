@@ -2,6 +2,8 @@ package com.disco.skeletalproduct;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -62,7 +64,10 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShopActivity.this, PlayActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)playButton, "playCircle");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(ShopActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -70,7 +75,10 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShopActivity.this, MainActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)profileButton, "profileButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(ShopActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -78,7 +86,10 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShopActivity.this, LeaderboardActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)leaderBoardButton, "leaderButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(ShopActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -86,7 +97,10 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShopActivity.this, FriendActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)friendButton, "friendButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(ShopActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 

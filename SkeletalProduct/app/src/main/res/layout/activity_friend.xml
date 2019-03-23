@@ -9,6 +9,7 @@
 
     <ImageButton
         android:id="@+id/profileImageButton"
+        android:transitionName="profileButton"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
@@ -23,6 +24,7 @@
 
     <ImageButton
         android:id="@+id/playImageButton"
+        android:transitionName="playCircle"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -37,6 +39,7 @@
 
     <ImageButton
         android:id="@+id/shopImageButton"
+        android:transitionName="shopButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -51,6 +54,7 @@
 
     <ImageButton
         android:id="@+id/leaderboardImageButton"
+        android:transitionName="leaderButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -65,6 +69,7 @@
 
     <ImageButton
         android:id="@+id/friendImageButton"
+        android:transitionName="friendButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -77,38 +82,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/friend_orange" />
 
-    <RelativeLayout
-        android:layout_width="778dp"
-        android:layout_height="82dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="218dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="18dp"
-            android:text="Friends"
-            android:textSize="32dp"
-            tools:layout_editor_absoluteX="68dp"
-            tools:layout_editor_absoluteY="39dp" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Friends"
+        android:textSize="32dp"
+        app:layout_constraintStart_toEndOf="@+id/profileImageButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <SearchView
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_alignParentRight="true"/>
-
-
-    </RelativeLayout>
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="570dp"
-        android:layout_height="286dp"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="117dp" />
+        android:layout_height="295dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/shopImageButton"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.disco.skeletalproduct;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,7 +41,10 @@ public class LeaderboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LeaderboardActivity.this, PlayActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)playButton, "playCircle");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(LeaderboardActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -47,7 +52,10 @@ public class LeaderboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LeaderboardActivity.this, MainActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)profileButton, "profileButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(LeaderboardActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -55,7 +63,10 @@ public class LeaderboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LeaderboardActivity.this, FriendActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)friendButton, "friendButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(LeaderboardActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -63,7 +74,10 @@ public class LeaderboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LeaderboardActivity.this, ShopActivity.class);
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)shopButton, "shopButton");
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(LeaderboardActivity.this, pair);
+                startActivity(intent, options.toBundle());
             }
         });
     }

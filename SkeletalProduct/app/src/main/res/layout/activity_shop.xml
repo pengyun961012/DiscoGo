@@ -9,7 +9,7 @@
 
     <ImageButton
         android:id="@+id/profileImageButton"
-        android:transitionName="button"
+        android:transitionName="profileButton"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
@@ -24,7 +24,7 @@
 
     <ImageButton
         android:id="@+id/playImageButton"
-        android:transitionName="button"
+        android:transitionName="playCircle"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -39,7 +39,7 @@
 
     <ImageButton
         android:id="@+id/shopImageButton"
-        android:transitionName="button"
+        android:transitionName="shopButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -54,7 +54,7 @@
 
     <ImageButton
         android:id="@+id/leaderboardImageButton"
-        android:transitionName="button"
+        android:transitionName="leaderButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -69,7 +69,7 @@
 
     <ImageButton
         android:id="@+id/friendImageButton"
-        android:transitionName="button"
+        android:transitionName="friendButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -115,16 +115,15 @@
 
     <TextView
         android:id="@+id/textViewShop"
-        android:layout_width="574dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:paddingLeft="10dp"
         android:text="Shop"
-        android:textSize="32dp"
+        android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/imageViewCurrent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileImageButton"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
