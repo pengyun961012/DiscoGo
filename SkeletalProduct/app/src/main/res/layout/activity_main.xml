@@ -108,14 +108,15 @@
 
     <Button
         android:id="@+id/login_button"
-        android:transitionName="loginButton"
+        style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        style="?android:textAppearanceSmall"
-        android:text="Sign In"
+        android:layout_marginEnd="16dp"
         android:background="?android:selectableItemBackground"
+        android:text="Sign In"
+        android:textSize="20sp"
+        android:transitionName="loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -98,7 +98,7 @@
     <TextView
         android:id="@+id/ranking"
         style="?android:textAppearanceSmall"
-        android:layout_width="158dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginStart="32dp"
@@ -109,7 +109,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/leaderboardRecyclerView"
         android:layout_width="570dp"
         android:layout_height="309dp"
         android:layout_marginStart="8dp"
