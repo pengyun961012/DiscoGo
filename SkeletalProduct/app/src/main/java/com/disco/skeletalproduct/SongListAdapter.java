@@ -32,13 +32,13 @@ public class SongListAdapter extends PagerAdapter {
 
     /** DSP */
     AudioDispatcher dispatcher;
-    private int prevFreqLength = 11;
+    private int prevFreqLength = 7;
     int prevFreqIdx = 0;
     int [] prevFreq = new int[prevFreqLength];
 
     int[] weightFreq = new int[prevFreqLength];
     int weightFreqSum;
-    double ratio = 2;
+    double ratio = 1.1;
 
 
     public void stopRecorder() {
