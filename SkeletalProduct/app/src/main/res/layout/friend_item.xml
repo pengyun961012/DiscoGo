@@ -7,64 +7,65 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/songnameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="33dp"
-        android:text="username"
-        android:textSize="36dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/singerTextView"
-        android:layout_width="153dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="9dp"
-        android:text="BEST SONG"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        tools:layout_editor_absoluteY="43dp" />
-
-    <TextView
-        android:id="@+id/albumTextView"
-        android:layout_width="125dp"
-        android:layout_height="38dp"
-        android:layout_marginEnd="20dp"
-        android:text="10000"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toStartOf="@+id/singerTextView"
-        tools:layout_editor_absoluteY="43dp" />
-
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="9dp"
-        app:layout_constraintEnd_toStartOf="@+id/songnameTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/userProfileImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/albumTextView"
-        app:srcCompat="@android:drawable/btn_star_big_on"
-        tools:layout_editor_absoluteY="43dp" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="username"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/songNameTextView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="songname"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/albumNameTextView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="albumname"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/playSongImageButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:selectableItemBackground"
         app:srcCompat="@android:drawable/ic_media_play"
-        tools:layout_editor_absoluteY="43dp" />
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
+
+    <ImageButton
+        android:id="@+id/likeImageButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@android:drawable/btn_star"
+        tools:srcCompat="@android:drawable/btn_star" />
+
 </LinearLayout>

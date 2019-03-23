@@ -106,7 +106,7 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/friendRecyclerView"
         android:layout_width="570dp"
         android:layout_height="295dp"
         android:layout_marginStart="8dp"
