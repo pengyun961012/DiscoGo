@@ -5,10 +5,17 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class FriendActivity extends AppCompatActivity {
 
@@ -17,6 +24,10 @@ public class FriendActivity extends AppCompatActivity {
     private ImageButton shopButton;
     private ImageButton leaderBoardButton;
     private ImageButton friendButton;
+    private RecyclerView friendView;
+
+    private List<Friend> friendList = new ArrayList<>();
+    private FriendListAdapter friendAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +42,13 @@ public class FriendActivity extends AppCompatActivity {
         shopButton = (ImageButton) findViewById(R.id.shopImageButton);
         leaderBoardButton = (ImageButton) findViewById(R.id.leaderboardImageButton);
         friendButton = (ImageButton) findViewById(R.id.friendImageButton);
+        friendView = (RecyclerView) findViewById(R.id.friendRecyclerView);
+        
+        friendAdapter = new FriendListAdapter(friendList, getApplicationContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(FriendActivity.this, LinearLayoutManager.VERTICAL, false);
+        friendView.setLayoutManager(layoutManager);
+        friendView.setAdapter(friendAdapter);
+        populateList();
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,5 +93,13 @@ public class FriendActivity extends AppCompatActivity {
                 startActivity(intent, options.toBundle());
             }
         });
+    }
+
+    private void populateList(){
+        for (int i = 0; i < 10; i++) {
+            Friend newf = new Friend("Feichi", "Hengheng", "hhh", R.drawable.round_avatar);
+            friendList.add(newf);
+        }
+        friendAdapter.notifyDataSetChanged();
     }
 }
