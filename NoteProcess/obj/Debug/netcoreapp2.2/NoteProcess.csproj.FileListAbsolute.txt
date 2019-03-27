@@ -1,0 +1,11 @@
+/Users/qiyueyao/Documents/C#/NoteProcess/bin/Debug/netcoreapp2.2/NoteProcess.deps.json
+/Users/qiyueyao/Documents/C#/NoteProcess/bin/Debug/netcoreapp2.2/NoteProcess.runtimeconfig.json
+/Users/qiyueyao/Documents/C#/NoteProcess/bin/Debug/netcoreapp2.2/NoteProcess.runtimeconfig.dev.json
+/Users/qiyueyao/Documents/C#/NoteProcess/bin/Debug/netcoreapp2.2/NoteProcess.dll
+/Users/qiyueyao/Documents/C#/NoteProcess/bin/Debug/netcoreapp2.2/NoteProcess.pdb
+/Users/qiyueyao/Documents/C#/NoteProcess/obj/Debug/netcoreapp2.2/NoteProcess.csprojAssemblyReference.cache
+/Users/qiyueyao/Documents/C#/NoteProcess/obj/Debug/netcoreapp2.2/NoteProcess.csproj.CoreCompileInputs.cache
+/Users/qiyueyao/Documents/C#/NoteProcess/obj/Debug/netcoreapp2.2/NoteProcess.AssemblyInfoInputs.cache
+/Users/qiyueyao/Documents/C#/NoteProcess/obj/Debug/netcoreapp2.2/NoteProcess.AssemblyInfo.cs
+/Users/qiyueyao/Documents/C#/NoteProcess/obj/Debug/netcoreapp2.2/NoteProcess.dll
+/Users/qiyueyao/Documents/C#/NoteProcess/obj/Debug/netcoreapp2.2/NoteProcess.pdb
