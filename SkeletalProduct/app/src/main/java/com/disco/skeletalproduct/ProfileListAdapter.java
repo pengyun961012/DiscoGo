@@ -71,6 +71,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 
             if (v.getId() == songPlayButton.getId()) {
                 Toast.makeText(v.getContext(), "ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                
             } else {
                 Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
             }
