@@ -14,11 +14,18 @@ import android.widget.Toast;
 import com.disco.flappybird.UnityPlayerActivity;
 import com.unity3d.player.UnityPlayer;
 
+import java.io.File;
+import java.io.RandomAccessFile;
+import java.nio.ByteOrder;
+import java.util.Calendar;
 import java.util.List;
+import java.io.IOException;
 
 import be.tarsos.dsp.AudioDispatcher;
+import be.tarsos.dsp.writer.WriterProcessor;
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.AudioProcessor;
+import be.tarsos.dsp.io.TarsosDSPAudioFormat;
 import be.tarsos.dsp.io.android.AudioDispatcherFactory;
 import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
@@ -32,13 +39,13 @@ public class SongListAdapter extends PagerAdapter {
 
     /** DSP */
     AudioDispatcher dispatcher;
-    private int prevFreqLength = 11;
+    private int prevFreqLength = 7;
     int prevFreqIdx = 0;
     int [] prevFreq = new int[prevFreqLength];
 
     int[] weightFreq = new int[prevFreqLength];
     int weightFreqSum;
-    double ratio = 2;
+    double ratio = 1.1;
 
 
     public void stopRecorder() {
@@ -82,9 +89,24 @@ public class SongListAdapter extends PagerAdapter {
             public void onClick(View v) {
                 String songName = songList.get(position).getSongName();
 //                Toast.makeText(context, "you clicked image " + songName, Toast.LENGTH_SHORT).show();
-                dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,2048);
-                AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 44100, 4096, pdh);
-                dispatcher.addAudioProcessor(p);
+                dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
+                TarsosDSPAudioFormat format = new TarsosDSPAudioFormat( TarsosDSPAudioFormat.Encoding.PCM_SIGNED, 44100, 16, 1, 2*1, 44100, ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()));
+                //TarsosDSPAudioFormat format = new TarsosDSPAudioFormat( 44100, 16, 1, true, true);
+                //TarsosDSPAudioFormat(TarsosDSPAudioFormat.Encoding encoding, float sampleRate, int sampleSizeInBits, int channels, int frameSize, float frameRate, boolean bigEndian)
+                //TarsosDSPAudioFormat(float sampleRate, int sampleSizeInBits, int channels, boolean signed, boolean bigEndian)
+                //File wavfile = new File(context.getFilesDir(), String.format("W%s.wav", Calendar.getInstance().getTime()));
+                File wavfile = new File(context.getFilesDir(), "lrz");
+                Log.e("file created at",context.getFilesDir().getAbsolutePath());
+                try{
+                    RandomAccessFile recordFile = new RandomAccessFile(wavfile, "rw");
+                    AudioProcessor p1 = new WriterProcessor(format, recordFile);
+                    dispatcher.addAudioProcessor(p1);
+                }
+                catch(Throwable e){
+                    e.printStackTrace();
+                }
+                AudioProcessor p2 = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN, 44100, 4096, pdh);
+                dispatcher.addAudioProcessor(p2);
 
                 new Thread(dispatcher, "Audio Dispatcher").start();
                 Intent intent = new Intent(context,  UnityPlayerActivity.class);
