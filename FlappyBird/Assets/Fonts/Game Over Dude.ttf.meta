@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 3a0a95cc78d6ec0469435f722a9fa2ff
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Game Over Dude
+  fontNames:
+  - Game Over Dude
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 0051ef70b1a960a488dc39b0d085ccc9, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
