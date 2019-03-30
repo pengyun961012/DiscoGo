@@ -94,8 +94,8 @@ public class SongListAdapter extends PagerAdapter {
                 //TarsosDSPAudioFormat format = new TarsosDSPAudioFormat( 44100, 16, 1, true, true);
                 //TarsosDSPAudioFormat(TarsosDSPAudioFormat.Encoding encoding, float sampleRate, int sampleSizeInBits, int channels, int frameSize, float frameRate, boolean bigEndian)
                 //TarsosDSPAudioFormat(float sampleRate, int sampleSizeInBits, int channels, boolean signed, boolean bigEndian)
-                //File wavfile = new File(context.getFilesDir(), String.format("W%s.wav", Calendar.getInstance().getTime()));
-                File wavfile = new File(context.getFilesDir(), "lrz");
+                File wavfile = new File(context.getFilesDir(), String.format("Testuser_%s.wav", Calendar.getInstance().getTime()));
+                //File wavfile = new File(context.getFilesDir(), "lrz");
                 Log.e("file created at",context.getFilesDir().getAbsolutePath());
                 try{
                     RandomAccessFile recordFile = new RandomAccessFile(wavfile, "rw");
