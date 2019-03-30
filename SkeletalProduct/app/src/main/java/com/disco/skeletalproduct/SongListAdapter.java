@@ -89,9 +89,13 @@ public class SongListAdapter extends PagerAdapter {
             public void onClick(View v) {
                 String songName = songList.get(position).getSongName();
 //                Toast.makeText(context, "you clicked image " + songName, Toast.LENGTH_SHORT).show();
-                dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,2048);
-                TarsosDSPAudioFormat format = new TarsosDSPAudioFormat(TarsosDSPAudioFormat.Encoding.PCM_SIGNED, 44100, 8, 1, 1, 44100, ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()));
-                File wavfile = new File(context.getFilesDir(), String.format("W%s.wav", Calendar.getInstance().getTime()));
+                dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
+                TarsosDSPAudioFormat format = new TarsosDSPAudioFormat( TarsosDSPAudioFormat.Encoding.PCM_SIGNED, 44100, 16, 1, 2*1, 44100, ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()));
+                //TarsosDSPAudioFormat format = new TarsosDSPAudioFormat( 44100, 16, 1, true, true);
+                //TarsosDSPAudioFormat(TarsosDSPAudioFormat.Encoding encoding, float sampleRate, int sampleSizeInBits, int channels, int frameSize, float frameRate, boolean bigEndian)
+                //TarsosDSPAudioFormat(float sampleRate, int sampleSizeInBits, int channels, boolean signed, boolean bigEndian)
+                //File wavfile = new File(context.getFilesDir(), String.format("W%s.wav", Calendar.getInstance().getTime()));
+                File wavfile = new File(context.getFilesDir(), "lrz");
                 Log.e("file created at",context.getFilesDir().getAbsolutePath());
                 try{
                     RandomAccessFile recordFile = new RandomAccessFile(wavfile, "rw");
