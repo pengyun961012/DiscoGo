@@ -14,11 +14,9 @@ public class ButtonHandler : MonoBehaviour
 
     public void mainPage()
     {
-        CallAndroidMethod("stopRecorder");
         Application.Quit();
-
     }
-    public static void CallAndroidMethod(string methodName)
+    /*public static void CallAndroidMethod(string methodName)
     {
         using (var clsUnityPlayer = new AndroidJavaClass("com.unity2d.player.UnityPlayer"))
         {
@@ -27,5 +25,5 @@ public class ButtonHandler : MonoBehaviour
                 objActivity.Call(methodName);
             }
         }
-    }
+    }*/
 }

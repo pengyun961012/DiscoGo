@@ -15,6 +15,8 @@ public class BirdForeground : MonoBehaviour
     public GameObject pauseScreen;
     public GameObject pauseText;
     public GameObject pauseButton;
+    public GameObject pauseResume;
+    public GameObject pauseHome;
     public Text CountdownText;
     public Text CoinText;
     public Text DataText;
@@ -28,6 +30,8 @@ public class BirdForeground : MonoBehaviour
     {
         pauseScreen.SetActive(false);
         pauseText.SetActive(false);
+        pauseHome.SetActive(false);
+        pauseResume.SetActive(false);
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -48,29 +52,13 @@ public class BirdForeground : MonoBehaviour
                 anim.SetTrigger("Flap");
             }
         }
-        else if(pause && !isDead)
-        {
-            //Vector2 position = rb2d.transform.position;
-            if (Input.GetMouseButtonDown(0))
-            {
-                pause = !pause;
-                StartCoroutine(getReady());
-                /*pauseScreen.SetActive(false);
-                pauseText.SetActive(false);
-                pauseButton.SetActive(true);
-                CountdownText.text = "3";
-                WaitForRealSeconds(1f);
-                CountdownText.text = "2";
-                WaitForRealSeconds(1f);
-                CountdownText.text = "1";
-                WaitForRealSeconds(1f);
-                CountdownText.text = "";
-                Time.timeScale = 1f;*/
-                //rb2d.velocity = Vector2.zero;
-                //rb2d.position = position;
-            }
-        }
     }
+    
+    public void unPause(){
+        pause = !pause;
+        StartCoroutine(getReady());
+    }
+
     void OnCollisionEnter2D()
     {
         Debug.Log("Collide!");
@@ -91,6 +79,8 @@ public class BirdForeground : MonoBehaviour
             pauseScreen.SetActive(true);
             pauseText.SetActive(true);
             pauseButton.SetActive(false);
+            pauseHome.SetActive(true);
+            pauseResume.SetActive(true);
 
         }
     }
@@ -104,6 +94,8 @@ public class BirdForeground : MonoBehaviour
         //rb2d.velocity = Vector2.zero;
         pauseScreen.SetActive(false);
         pauseText.SetActive(false);
+        pauseHome.SetActive(false);
+        pauseResume.SetActive(false);
         CountdownText.text = "3";
         yield return StartCoroutine(WaitForRealSeconds(1f));
         CountdownText.text = "2";

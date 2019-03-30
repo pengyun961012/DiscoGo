@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NoteProcess": {
+      "commandName": "Project",
+      "commandLineArgs": ">output.txt"
+    }
+  }
+}
