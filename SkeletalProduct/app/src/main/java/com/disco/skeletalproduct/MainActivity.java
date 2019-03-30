@@ -49,7 +49,12 @@ public class MainActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.login_button);
 
 
-        profileAdapter = new ProfileListAdapter(profileList, getApplicationContext());
+        profileAdapter = new ProfileListAdapter(profileList, getApplicationContext(),new ClickListener() {
+            @Override public void onPositionClicked(int position) {
+                // callback performed on click
+            } @Override public void onLongClicked(int position) {
+                // callback performed on click
+            }});
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
         profileView.setLayoutManager(layoutManager);
         profileView.setAdapter(profileAdapter);
