@@ -17,6 +17,8 @@ public class BirdForeground : MonoBehaviour
     public GameObject pauseButton;
     public GameObject pauseResume;
     public GameObject pauseHome;
+    public GameObject AudioSource;
+    public AudioSource music;
     public Text CountdownText;
     public Text CoinText;
     public Text DataText;
@@ -34,6 +36,7 @@ public class BirdForeground : MonoBehaviour
         pauseResume.SetActive(false);
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        music = AudioSource.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -75,6 +78,7 @@ public class BirdForeground : MonoBehaviour
         pause = !pause;
         if (pause)
         {
+            music.Pause();
             Time.timeScale = 0;
             pauseScreen.SetActive(true);
             pauseText.SetActive(true);
@@ -104,6 +108,7 @@ public class BirdForeground : MonoBehaviour
         yield return StartCoroutine(WaitForRealSeconds(1f));
         CountdownText.text = "";
         pauseButton.SetActive(true);
+        music.UnPause();
         Time.timeScale = 1f;
     }
 

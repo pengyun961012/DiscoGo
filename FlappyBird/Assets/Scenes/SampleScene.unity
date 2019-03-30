@@ -1714,6 +1714,8 @@ MonoBehaviour:
   pauseButton: {fileID: 934823148}
   pauseResume: {fileID: 1915302155}
   pauseHome: {fileID: 90948971}
+  AudioSource: {fileID: 1869286200}
+  music: {fileID: 0}
   CountdownText: {fileID: 114489006}
   CoinText: {fileID: 902677620}
   DataText: {fileID: 680916905}
@@ -3375,6 +3377,8 @@ MonoBehaviour:
   pauseButton: {fileID: 0}
   pauseResume: {fileID: 0}
   pauseHome: {fileID: 0}
+  AudioSource: {fileID: 0}
+  music: {fileID: 0}
   CountdownText: {fileID: 0}
   CoinText: {fileID: 0}
   DataText: {fileID: 0}
