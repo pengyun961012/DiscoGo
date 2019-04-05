@@ -19,9 +19,17 @@ allprojects {
     repositories {
         google()
         jcenter()
+        apply plugin: 'maven'
+        maven {
+            url "http://dl.bintray.com/piasy/maven"
+        }
     }
 }
 
+
+/*
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+*/
+
