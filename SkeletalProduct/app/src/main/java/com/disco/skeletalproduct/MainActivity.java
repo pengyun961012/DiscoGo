@@ -156,10 +156,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void populateList(){
         Date today = Calendar.getInstance().getTime();
-        for (int i = 0; i < 10; i++) {
-            Profile alphabet = new Profile("alphabet", i*10, 5,i+5, today);
-            profileList.add(alphabet);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            Profile alphabet = new Profile("alphabet", i*10, 5,i+5, today);
+//            profileList.add(alphabet);
+//        }
+        Profile alphabet = new Profile("alphabet", 43734, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 41112, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 30881, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 0, 2,30, today);
+        profileList.add(alphabet);
         profileAdapter.notifyDataSetChanged();
     }
 }

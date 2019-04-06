@@ -105,14 +105,28 @@ public class LeaderboardActivity extends AppCompatActivity {
      * Should pass a user id to it
      */
     public String getRanking() {
-        return "36000";
+        return "1";
     }
 
     private void populateList(){
-        for (int i = 0; i < 10; i++) {
-            Leaderboard user = new Leaderboard(R.drawable.round_avatar, "Feichi", i+1, (i+1)*10000);
-            leaderboardList.add(user);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            Leaderboard user = new Leaderboard(R.drawable.round_avatar, "Feichi", i+1, (i+1)*10000);
+//            leaderboardList.add(user);
+//        }
+        Leaderboard user1 = new Leaderboard(R.drawable.usericon, "Feichi", 1, 43734);
+        leaderboardList.add(user1);
+        Leaderboard user2 = new Leaderboard(R.drawable.usericon, "Pengyun", 2, 41753);
+        leaderboardList.add(user2);
+        Leaderboard user3 = new Leaderboard(R.drawable.usericonfemale, "Jialin", 3, 40113);
+        leaderboardList.add(user3);
+        Leaderboard user4 = new Leaderboard(R.drawable.usericonfemale, "Qiyue", 4, 39998);
+        leaderboardList.add(user4);
+        Leaderboard user5 = new Leaderboard(R.drawable.usericonfemale, "Mengmeng", 5, 39887);
+        leaderboardList.add(user5);
+        Leaderboard user6 = new Leaderboard(R.drawable.usericonfemale, "Leiwei", 6, 38886);
+        leaderboardList.add(user6);
+        Leaderboard user7 = new Leaderboard(R.drawable.usericon, "Renzhong", 7, 10000);
+        leaderboardList.add(user7);
         leaderboardAdapter.notifyDataSetChanged();
     }
 }
