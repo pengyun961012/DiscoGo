@@ -5,6 +5,7 @@ import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.media.MediaPlayer;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,8 +30,8 @@ import java.util.List;
 
 public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.ViewHolder> {
 
-    private List<Profile> items;
-    Context context;
+    private static List<Profile> items;
+    private Context context;
     private final ClickListener listener;
 
     public ProfileListAdapter(List<Profile> items, Context context, ClickListener listener) {
@@ -84,21 +85,53 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         public void onClick(View v) {
 
             if (v.getId() == songPlayButton.getId()) {
-                Toast.makeText(v.getContext(), "ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                int index = getAdapterPosition();
+                if (items.get(index).isPlayed()) {
+                    Toast.makeText(v.getContext(), "Pause ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                    songPlayButton.setImageResource(R.drawable.resume);
+                }else{
+                    Toast.makeText(v.getContext(), "Play ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                    songPlayButton.setImageResource(R.drawable.pause_black);
+                }
+                items.get(index).setPlayed(!items.get(index).isPlayed());
+//                MediaPlayer mp = new MediaPlayer();
+//
+//                try {
+//                    mp.setDataSource(context.getFilesDir() + "/"+ "lrz");
+//                } catch (IllegalArgumentException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                } catch (IllegalStateException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    mp.prepare();
+//                } catch (IllegalStateException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//                mp.start();
                 // set up files here
 
             } else {
                 Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
             }
 
-            listenerRef.get().onPositionClicked(getAdapterPosition());
-            File rawdata = new File(v.getContext().getFilesDir(), "lrz");
-            File wavdata = new File(v.getContext().getFilesDir(), "lrz.wav");
-            try {
-                rawToWave(rawdata, wavdata);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            listenerRef.get().onPositionClicked(getAdapterPosition());
+//            File rawdata = new File(v.getContext().getFilesDir(), "lrz");
+//            File wavdata = new File(v.getContext().getFilesDir(), "lrz.wav");
+//            try {
+//                rawToWave(rawdata, wavdata);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
     }
