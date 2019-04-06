@@ -38,7 +38,7 @@ public class SongListAdapter extends PagerAdapter {
     LayoutInflater layoutInflater;
 
     /** DSP */
-    AudioDispatcher dispatcher;
+    public static AudioDispatcher dispatcher;
     private int prevFreqLength = 7;
     int prevFreqIdx = 0;
     int [] prevFreq = new int[prevFreqLength];
@@ -109,7 +109,7 @@ public class SongListAdapter extends PagerAdapter {
                 dispatcher.addAudioProcessor(p2);
 
                 new Thread(dispatcher, "Audio Dispatcher").start();
-                Intent intent = new Intent(context,  UnityPlayerActivity.class);
+                Intent intent = new Intent(context,  OverrideActivity.class);
                 context.startActivity(intent);
             }
         });

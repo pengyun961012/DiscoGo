@@ -9,6 +9,7 @@ import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class PlayActivity extends AppCompatActivity {
 
+    private String TAG = "DISCO_SKELETAL-----" + this.getClass().getSimpleName();
 //    private Button goUnityButton;
 //    private FloatingActionButton backButton;
     private ImageButton profileButton;

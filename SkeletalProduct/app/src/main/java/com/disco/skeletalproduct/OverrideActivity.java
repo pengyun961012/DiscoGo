@@ -6,6 +6,8 @@ import android.util.Log;
 import com.unity3d.player.UnityPlayerActivity;
 
 public class OverrideActivity extends UnityPlayerActivity {
+    private String TAG = "DISCO_SKELETAL-----" + this.getClass().getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // call UnityPlayerActivity.onCreate()
@@ -20,5 +22,12 @@ public class OverrideActivity extends UnityPlayerActivity {
         // instead of calling UnityPlayerActivity.onBackPressed() we just ignore the back button event
 //        super.onBackPressed();
 //        Log.d("OverrideActivity_", "onBackPressed: ");
+    }
+
+    public void stopRecorder(){
+        SongListAdapter.dispatcher.stop();
+        if (SongListAdapter.dispatcher.isStopped()){
+            Log.d(TAG, "testMethod: unity function called in override");
+        }
     }
 }
