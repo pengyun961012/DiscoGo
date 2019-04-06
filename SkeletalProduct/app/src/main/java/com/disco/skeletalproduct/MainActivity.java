@@ -166,6 +166,12 @@ public class MainActivity extends AppCompatActivity {
         profileList.add(alphabet);
         alphabet = new Profile("alphabet", 30881, 2,30, today);
         profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 29867, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 23110, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 10002, 2,30, today);
+        profileList.add(alphabet);
         alphabet = new Profile("alphabet", 0, 2,30, today);
         profileList.add(alphabet);
         profileAdapter.notifyDataSetChanged();

@@ -9,10 +9,10 @@
     <TextView
         android:textSize="20sp"
         android:id="@+id/profileSongNametextView"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="Songname"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,11 +20,11 @@
     <TextView
         android:textSize="20sp"
         android:id="@+id/profileScoretextView"
-        android:layout_width="50dp"
+        android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="Score"
         android:gravity="center"
         app:layout_constraintStart_toEndOf="@+id/profileSongNametextView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="Duration"
         android:gravity="center"
         app:layout_constraintStart_toEndOf="@+id/profileScoretextView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,21 +48,21 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="Time"
         android:gravity="center"
         app:layout_constraintStart_toEndOf="@+id/profileDurationtextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/playMusicImageButton"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toEndOf="@+id/profileTimetextView"
         android:background="?android:selectableItemBackground"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_media_play"
+        android:src="@drawable/resume"
         android:padding="2dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
