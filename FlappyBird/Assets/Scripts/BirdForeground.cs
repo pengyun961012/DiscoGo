@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BirdForeground : MonoBehaviour
 {
+    public static BirdForeground instance;
     // Start is called before the first frame update
     public float deltaTime;
     private bool isDead = false;
@@ -18,6 +19,7 @@ public class BirdForeground : MonoBehaviour
     public GameObject pauseResume;
     public GameObject pauseHome;
     public GameObject AudioSource;
+    public Dictionary<int, double> frequency_Table;
     public AudioSource music;
     public Text CountdownText;
     public Text CoinText;
@@ -26,8 +28,8 @@ public class BirdForeground : MonoBehaviour
     public float sky = 4.7f;
     private int pitch = 350;
     public int coins = 0;
-    public readonly int MAXIMUM = 600;
-    public readonly int MINIMUM = 100;
+    public readonly int MAXIMUM = 650;
+    public readonly int MINIMUM = 50;
     void Start()
     {
         pauseScreen.SetActive(false);
@@ -37,6 +39,14 @@ public class BirdForeground : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         music = AudioSource.GetComponent<AudioSource>();
+        //If we don't currently have a game control...
+        if (instance == null)
+            //...set this one to be it...
+            instance = this;
+        //...otherwise...
+        else if (instance != this)
+            //...destroy this one because it is a duplicate.
+            Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -64,11 +74,11 @@ public class BirdForeground : MonoBehaviour
 
     void OnCollisionEnter2D()
     {
-        Debug.Log("Collide!");
         rb2d.angularVelocity = 0f;
         rb2d.velocity = Vector2.zero;
         isDead = true;
         anim.SetTrigger("Die");
+        music.Stop();
         GameController.instance.BirdDied();
         GameOverScreen.instance.appearWindow();
     }
@@ -130,7 +140,6 @@ public class BirdForeground : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger Collision");
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);

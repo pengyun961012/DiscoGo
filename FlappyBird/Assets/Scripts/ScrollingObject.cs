@@ -27,11 +27,11 @@ public class ScrollingObject : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    /*void OnEnable()
     {
         rb2d = GetComponent<Rigidbody2D>();
 
         //Start the object moving.
         rb2d.velocity = new Vector2(GameController.instance.scrollSpeed, 0);
-    }
+    }*/
 }

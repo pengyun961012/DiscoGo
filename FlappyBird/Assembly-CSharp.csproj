@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameOverScreen.cs" />
     <Compile Include="Assets\Scripts\RepeatingBackground.cs" />
+    <Compile Include="Assets\Scripts\Scrolling_Object_2.cs" />
     <Compile Include="Assets\Scripts\ScrollingObject.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/peter/Documents/FlappyBird/FlappyBird/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -281,6 +282,9 @@
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="Melanchall.DryWetMidi">
+      <HintPath>C:/Users/peter/Documents/FlappyBird/FlappyBird/Assets/Melanchall.DryWetMidi.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
       <HintPath>C:/Users/peter/Documents/FlappyBird/FlappyBird/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>

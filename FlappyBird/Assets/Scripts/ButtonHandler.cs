@@ -15,15 +15,16 @@ public class ButtonHandler : MonoBehaviour
     public void mainPage()
     {
         Application.Quit();
+        CallAndroidMethod("stopRecorder",GameController.instance.score, BirdForeground.instance.coins);
     }
-    /*public static void CallAndroidMethod(string methodName)
+    public static void CallAndroidMethod(string methodName, int score, int coins)
     {
-        using (var clsUnityPlayer = new AndroidJavaClass("com.unity2d.player.UnityPlayer"))
+        using (var clsUnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
         {
             using (var objActivity = clsUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
             {
-                objActivity.Call(methodName);
+                objActivity.Call(methodName, score, coins);
             }
         }
-    }*/
+    }
 }
