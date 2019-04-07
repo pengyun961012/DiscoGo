@@ -8,7 +8,8 @@ A repository for eecs441 project front-end application. We use Android and Unity
 -AudioProcess/ . 
 -SkeletalProduct/ . 
 -FlappyBird/ . 
--src/
+-src/ . 
+-MVP/ 
 
 ## Project Run and Build
 ### StarterApp
@@ -25,3 +26,6 @@ Built in Unity. This is a simple Flappy bird game that can be played on Android 
 
 ### Source
 UI/UX and icon source of the front end app.
+
+### MVP
+Built in Android Studio. Includes all MVP code check features.
