@@ -21,13 +21,13 @@
         android:id="@+id/userProfileImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/usernameTextView"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="username"
         android:gravity="center"
@@ -49,7 +49,7 @@
         android:id="@+id/followImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:adjustViewBounds="true"
         android:background="?android:selectableItemBackground"

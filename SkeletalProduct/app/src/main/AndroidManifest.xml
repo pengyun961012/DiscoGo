@@ -58,7 +58,8 @@
             android:noHistory="true"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.Design.NoActionBar" />
-        <activity android:name=".OverrideActivity" />
+        <activity android:name=".OverrideActivity"
+            android:screenOrientation="landscape"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -80,7 +81,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".OverrideActivity"></activity>
+
     </application>
 
 </manifest>

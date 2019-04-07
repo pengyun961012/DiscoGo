@@ -94,10 +94,16 @@ public class FriendActivity extends AppCompatActivity {
     }
 
     private void populateList(){
-        for (int i = 0; i < 10; i++) {
-            Friend newf = new Friend("Feichi", "Hengheng", "hhh", R.drawable.round_avatar);
-            friendList.add(newf);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            Friend newf = new Friend("Feichi", "Hengheng", "hhh", R.drawable.round_avatar);
+//            friendList.add(newf);
+//        }
+        Friend newf = new Friend("Feichi", "Alphabet", "ABC", R.drawable.usericon);
+        friendList.add(newf);
+        newf = new Friend("Jialin", "Alphabet", "ABC", R.drawable.usericonfemale);
+        friendList.add(newf);
+        newf = new Friend("Pengyun", "Alphabet", "ABC", R.drawable.usericon);
+        friendList.add(newf);
         friendAdapter.notifyDataSetChanged();
     }
 }

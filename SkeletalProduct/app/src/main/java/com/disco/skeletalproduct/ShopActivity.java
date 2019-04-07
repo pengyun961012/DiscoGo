@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ public class ShopActivity extends AppCompatActivity {
     private ImageButton shopButton;
     private ImageButton leaderBoardButton;
     private ImageButton friendButton;
+    private ImageView shopItemImage;
+    private Button buyButton;
 
 
     public String[] imageIDs = new String [] {
@@ -46,6 +49,8 @@ public class ShopActivity extends AppCompatActivity {
         shopButton = (ImageButton) findViewById(R.id.shopImageButton);
         leaderBoardButton = (ImageButton) findViewById(R.id.leaderboardImageButton);
         friendButton = (ImageButton) findViewById(R.id.friendImageButton);
+        shopItemImage = (ImageView) findViewById(R.id.imageViewCurrent);
+        buyButton = (Button) findViewById(R.id.buyButton);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, imageIDs);
@@ -55,8 +60,24 @@ public class ShopActivity extends AppCompatActivity {
         gridViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),
+//                        ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+                switch (position){
+                    case (0):
+                        shopItemImage.setImageResource(R.drawable.cutebird);
+                        break;
+                    case (1):
+                        shopItemImage.setImageResource(R.drawable.eagle);
+                        break;
+                    case(2):
+                        shopItemImage.setImageResource(R.drawable.hat);
+                        break;
+                    case(3):
+                        shopItemImage.setImageResource(R.drawable.sunglasses);
+                        break;
+                        default:
+                        break;
+                }
             }
         });
 
@@ -101,6 +122,13 @@ public class ShopActivity extends AppCompatActivity {
                 ActivityOptionsCompat options = ActivityOptionsCompat.
                         makeSceneTransitionAnimation(ShopActivity.this, pair);
                 startActivity(intent, options.toBundle());
+            }
+        });
+
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ShopActivity.this.getApplicationContext(), "Buy", Toast.LENGTH_SHORT).show();
             }
         });
 

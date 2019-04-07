@@ -29,9 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton friendButton;
     private RecyclerView profileView;
     private Button loginButton;
+    private TextView profileTextView;
 
     private List<Profile> profileList = new ArrayList<>();
     private ProfileListAdapter profileAdapter;
+
+    private String username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
         friendButton = (ImageButton) findViewById(R.id.friendImageButton);
         profileView = (RecyclerView) findViewById(R.id.profileRecyclerView);
         loginButton = (Button) findViewById(R.id.login_button);
+        profileTextView = (TextView) findViewById(R.id.profileTextView);
 
+        profileTextView.setText(username + " Profile");
 
         profileAdapter = new ProfileListAdapter(profileList, getApplicationContext(),new ClickListener() {
             @Override public void onPositionClicked(int position) {
@@ -111,17 +116,64 @@ public class MainActivity extends AppCompatActivity {
                 Pair<View, String> pair = Pair.create((View)loginButton, "loginButton");
                 ActivityOptionsCompat options = ActivityOptionsCompat.
                         makeSceneTransitionAnimation(MainActivity.this, pair);
-                startActivity(intent, options.toBundle());
+                startActivityForResult(intent, 1, options.toBundle());
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+
+                // Get String data from Intent
+                String returnString = "";
+                returnString = data.getStringExtra("userName");
+                username = returnString;
+                profileTextView.setText(returnString + " Profile");
+            }
+        }
+    }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle savedInstanceState) {
+//        super.onSaveInstanceState(savedInstanceState);
+//        // Save UI state changes to the savedInstanceState.
+//        // This bundle will be passed to onCreate if the process is
+//        // killed and restarted.
+//        savedInstanceState.putString("userName", username);
+//        // etc.
+//    }
+//
+//    @Override
+//    public void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        // Restore UI state from the savedInstanceState.
+//        // This bundle has also been passed to onCreate.
+//        String username = savedInstanceState.getString("userName");
+//    }
+
     private void populateList(){
         Date today = Calendar.getInstance().getTime();
-        for (int i = 0; i < 10; i++) {
-            Profile alphabet = new Profile("alphabet", i*10, 5,i+5, today);
-            profileList.add(alphabet);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            Profile alphabet = new Profile("alphabet", i*10, 5,i+5, today);
+//            profileList.add(alphabet);
+//        }
+        Profile alphabet = new Profile("alphabet", 43734, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 41112, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 30881, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 29867, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 23110, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 10002, 2,30, today);
+        profileList.add(alphabet);
+        alphabet = new Profile("alphabet", 0, 2,30, today);
+        profileList.add(alphabet);
         profileAdapter.notifyDataSetChanged();
     }
 }
