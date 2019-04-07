@@ -31,8 +31,10 @@ import java.util.List;
 public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.ViewHolder> {
 
     private static List<Profile> items;
-    private Context context;
+    private static Context context;
     private final ClickListener listener;
+    private static MediaPlayer mp = new MediaPlayer();
+    private static int clicked = -1;
 
     public ProfileListAdapter(List<Profile> items, Context context, ClickListener listener) {
         this.items = items;
@@ -51,7 +53,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         holder.songScoreView.setText(Integer.toString(item.getSongScore()));
         String duration = Integer.toString(item.getSongDurationMinute()) + " : " + Integer.toString(item.getSongDurationSecond());
         holder.songDurationView.setText(duration);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         holder.songTimeView.setText(dateFormat.format(item.getSongTime()));
         holder.itemView.setTag(item);
     }
@@ -83,45 +85,56 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 
         @Override
         public void onClick(View v) {
-
             if (v.getId() == songPlayButton.getId()) {
                 int index = getAdapterPosition();
-                if (items.get(index).isPlayed()) {
-                    Toast.makeText(v.getContext(), "Pause ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-                    songPlayButton.setImageResource(R.drawable.resume);
-                }else{
-                    Toast.makeText(v.getContext(), "Play ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-                    songPlayButton.setImageResource(R.drawable.pause_black);
-                }
-                items.get(index).setPlayed(!items.get(index).isPlayed());
-//                MediaPlayer mp = new MediaPlayer();
-//
-//                try {
-//                    mp.setDataSource(context.getFilesDir() + "/"+ "lrz");
-//                } catch (IllegalArgumentException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                } catch (IllegalStateException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//                try {
-//                    mp.prepare();
-//                } catch (IllegalStateException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//                mp.start();
-                // set up files here
+                if (clicked == index || clicked == -1) {
+                    clicked = index;
+                    try {
+                        String songName = songNameView.getText().toString();
+                        String time = songTimeView.getText().toString();
+                        String filename = songName + "_" + time;
+                        mp.setDataSource(context.getFilesDir() + "/" + filename);
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        mp.prepare();
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+//                if (items.get(index).isPlayed()) {
+                    if (mp.isPlaying()) {
+//                    Toast.makeText(v.getContext(), "Pause ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                        songPlayButton.setImageResource(R.drawable.resume);
+                        mp.pause();
+                    } else {
+//                    Toast.makeText(v.getContext(), "Play ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                        songPlayButton.setImageResource(R.drawable.pause_black);
+                        mp.start();
+                    }
+//                items.get(index).setPlayed(!items.get(index).isPlayed());
 
-            } else {
-                Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                    // set up files here
+                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            try {
+                                mp.stop();
+                                songPlayButton.setImageResource(R.drawable.resume);
+                                clicked = -1;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } else {
+//                    Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                }
             }
 
 //            listenerRef.get().onPositionClicked(getAdapterPosition());

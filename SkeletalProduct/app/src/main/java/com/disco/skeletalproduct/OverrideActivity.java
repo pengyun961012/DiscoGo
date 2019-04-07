@@ -1,5 +1,6 @@
 package com.disco.skeletalproduct;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -7,13 +8,17 @@ import com.unity3d.player.UnityPlayerActivity;
 
 public class OverrideActivity extends UnityPlayerActivity {
     private String TAG = "DISCO_SKELETAL-----" + this.getClass().getSimpleName();
+    private String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // call UnityPlayerActivity.onCreate()
         super.onCreate(savedInstanceState);
         // print debug message to logcat
-        Log.d("OverrideActivity_", "onCreate called!");
+        Log.d(TAG, "onCreate called!");
+        Intent intent = getIntent();
+        fileName = intent.getStringExtra("fileName");
+        Log.d(TAG, "onCreate: filename " + fileName);
     }
 
     @Override
