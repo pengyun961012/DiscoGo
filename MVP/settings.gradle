@@ -1,0 +1,1 @@
+include ':app', ':FlappyBird-debug', ':TarsosDSP-Android-latest'
