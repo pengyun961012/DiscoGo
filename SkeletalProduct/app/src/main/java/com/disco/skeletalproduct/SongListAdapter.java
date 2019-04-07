@@ -17,7 +17,9 @@ import com.unity3d.player.UnityPlayer;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.ByteOrder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.io.IOException;
 
@@ -36,6 +38,7 @@ public class SongListAdapter extends PagerAdapter {
     Context context;
     private List<Song> songList;
     LayoutInflater layoutInflater;
+    private String fileName;
 
     /** DSP */
     public static AudioDispatcher dispatcher;
@@ -48,10 +51,10 @@ public class SongListAdapter extends PagerAdapter {
     double ratio = 1.1;
 
 
-    public void stopRecorder() {
-        Log.d(TAG, "stopRecorder: stop");
-        dispatcher.stop();
-    }
+//    public void stopRecorder() {
+//        Log.d(TAG, "stopRecorder: stop");
+//        dispatcher.stop();
+//    }
 
     public SongListAdapter(Context context, List<Song> songList) {
         this.context = context;
@@ -88,6 +91,8 @@ public class SongListAdapter extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 String songName = songList.get(position).getSongName();
+                Date today = Calendar.getInstance().getTime();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //                Toast.makeText(context, "you clicked image " + songName, Toast.LENGTH_SHORT).show();
                 dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
                 TarsosDSPAudioFormat format = new TarsosDSPAudioFormat( TarsosDSPAudioFormat.Encoding.PCM_SIGNED, 44100, 16, 1, 2*1, 44100, ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()));
@@ -95,7 +100,8 @@ public class SongListAdapter extends PagerAdapter {
                 //TarsosDSPAudioFormat(TarsosDSPAudioFormat.Encoding encoding, float sampleRate, int sampleSizeInBits, int channels, int frameSize, float frameRate, boolean bigEndian)
                 //TarsosDSPAudioFormat(float sampleRate, int sampleSizeInBits, int channels, boolean signed, boolean bigEndian)
                 //File wavfile = new File(context.getFilesDir(), String.format("Testuser_%s.wav", Calendar.getInstance().getTime()));
-                File wavfile = new File(context.getFilesDir(), "lrz");
+                fileName = songName + "_" + dateFormat.format(today);
+                File wavfile = new File(context.getFilesDir(), fileName);
                 Log.e("file created at",context.getFilesDir().getAbsolutePath());
                 try{
                     RandomAccessFile recordFile = new RandomAccessFile(wavfile, "rw");
@@ -110,6 +116,7 @@ public class SongListAdapter extends PagerAdapter {
 
                 new Thread(dispatcher, "Audio Dispatcher").start();
                 Intent intent = new Intent(context,  OverrideActivity.class);
+                intent.putExtra("fileName", fileName);
                 context.startActivity(intent);
             }
         });

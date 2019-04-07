@@ -164,15 +164,15 @@ public class MainActivity extends AppCompatActivity {
         profileList.add(alphabet);
         alphabet = new Profile("alphabet", 41112, 2,30, today);
         profileList.add(alphabet);
-        alphabet = new Profile("alphabet", 30881, 2,30, today);
+        alphabet = new Profile("beta", 30881, 2,30, today);
         profileList.add(alphabet);
-        alphabet = new Profile("alphabet", 29867, 2,30, today);
+        alphabet = new Profile("sigma", 29867, 2,30, today);
         profileList.add(alphabet);
-        alphabet = new Profile("alphabet", 23110, 2,30, today);
+        alphabet = new Profile("tictok", 23110, 2,30, today);
         profileList.add(alphabet);
-        alphabet = new Profile("alphabet", 10002, 2,30, today);
+        alphabet = new Profile("gamma", 10002, 2,30, today);
         profileList.add(alphabet);
-        alphabet = new Profile("alphabet", 0, 2,30, today);
+        alphabet = new Profile("delta", 0, 2,30, today);
         profileList.add(alphabet);
         profileAdapter.notifyDataSetChanged();
     }
