@@ -10,7 +10,8 @@ A repository for eecs441 project front-end application. We use Android and Unity
 -FlappyBird/ . 
 -src/ . 
 -MVP/ .  
--Backend/
+-Backend/ . 
+-Noteprocessing/
 
 ## Project Run and Build
 ### StarterApp
@@ -32,5 +33,8 @@ UI/UX and icon source of the front end app.
 Built in Android Studio. Includes all MVP code check features. Updates in UI/UX design, user interact logic and game.
 
 ### Backend
-Backend server developed in python.
+Backend server developed in python. Should be deployed on digitalocean server. Works together with django database.
+
+### Noteprocessing
+Use C#. Extract note identity from a midi file. Use it for game obstracle placement.
 
