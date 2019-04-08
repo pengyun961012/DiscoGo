@@ -71,9 +71,9 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void populateList(){
-        Song alphabet = new Song("alphabet", R.drawable.homepage_circle1);
-        Song birthday = new Song("birthday", R.drawable.homepage_circle1);
-        Song forever = new Song("forever", R.drawable.homepage_circle1);
+        Song alphabet = new Song("alphabet", R.drawable.circle);
+        Song birthday = new Song("birthday", R.drawable.circle_level2);
+        Song forever = new Song("forever", R.drawable.circle_level3);
         songList.add(alphabet);
         songList.add(birthday);
         songList.add(forever);

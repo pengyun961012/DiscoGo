@@ -69,14 +69,14 @@
 
     <ImageButton
         android:id="@+id/deleteButton"
-        android:layout_width="33dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="?android:selectableItemBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/playMusicImageButton"
-        android:src="@drawable/cross"
+        android:src="@drawable/delete"
         android:padding="2dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
