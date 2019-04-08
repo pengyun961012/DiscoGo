@@ -81,7 +81,7 @@ public class SongListAdapter extends PagerAdapter {
 
         View itemView = layoutInflater.inflate(R.layout.song_item, container, false);
 
-        ImageView imageView = itemView.findViewById(R.id.songImage);
+        final ImageView imageView = itemView.findViewById(R.id.songImage);
         imageView.setImageResource(songList.get(position).getSongImage());
 
         container.addView(itemView);
@@ -90,6 +90,10 @@ public class SongListAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (position != 0){
+                    Toast.makeText(context,"Not Available Now", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String songName = songList.get(position).getSongName();
                 Date today = Calendar.getInstance().getTime();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
