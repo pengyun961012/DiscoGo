@@ -13,6 +13,13 @@ CREATE TABLE Friends (
     FOREIGN KEY (u1_id) REFERENCES users(u_id),
     FOREIGN KEY (u2_id) REFERENCES users(u_id));
 
+CREATE TABLE Pending_friends (
+    u1_id INTEGER,
+    u2_id INTEGER,
+    PRIMARY KEY (u1_id, u2_id),
+    FOREIGN KEY (u1_id) REFERENCES users(u_id),
+    FOREIGN KEY (u2_id) REFERENCES users(u_id));
+
 -- Table:
 -- u_id, sing_time, score, link, song_name
 CREATE TABLE Songs (
