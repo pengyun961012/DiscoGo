@@ -301,7 +301,7 @@ def Search_song(request):
                     " Users WHERE u_id = %d and sing_time = %s;"
                     (user_id, sing_time))
     user_info = cursor1.fetchall()
-    if(!user_info):
+    if(not user_info):
         return JsonResponse(result)
 
     user_info = cursor1.fetchall()[0]
