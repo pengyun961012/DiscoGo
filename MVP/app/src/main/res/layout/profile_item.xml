@@ -81,4 +81,12 @@
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
+    <TextView
+        android:id="@+id/realtimeTextView"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:visibility="invisible" />
+
 </LinearLayout>

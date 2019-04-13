@@ -176,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
         if (files != null && files.length > 1) {
             Arrays.sort(files, new Comparator<File>() {
                 @Override
-                public int compare(File object1, File object2) {
-                    return (int) ((object1.lastModified() > object2.lastModified()) ? object1.lastModified(): object2.lastModified());
+                public int compare(File f1, File f2) {
+                    return -Long.compare(f1.lastModified(), f2.lastModified());
                 }
             });
         }

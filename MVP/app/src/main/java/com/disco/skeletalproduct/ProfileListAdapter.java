@@ -75,6 +75,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                 0L, DateUtils.FORMAT_ABBREV_ALL);
         holder.songTimeView.setText(niceDateStr);
 
+        holder.realTimeView.setText(item.getSongTime());
 
         holder.itemView.setTag(item);
     }
@@ -88,6 +89,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         public TextView songScoreView;
         public TextView songDurationView;
         public TextView songTimeView;
+        public TextView realTimeView;
         public ImageButton songPlayButton;
         public ImageButton songDeleteButton;
         private WeakReference<ClickListener> listenerRef;
@@ -102,6 +104,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             songTimeView = itemView.findViewById(R.id.profileTimetextView);
             songPlayButton = itemView.findViewById(R.id.playMusicImageButton);
             songDeleteButton = itemView.findViewById(R.id.deleteButton);
+            realTimeView = itemView.findViewById(R.id.realtimeTextView);
 
             songPlayButton.setOnClickListener(this);
             songDeleteButton.setOnClickListener(this);
@@ -116,9 +119,10 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                     try {
                         String songName = songNameView.getText().toString();
 ////                        Log.d(TAG, "onClick: songname " + songName);
-                        String time = songTimeView.getText().toString();
-                        String filename = songName + "_" + time;
-//                        Log.d(TAG, "onClick: " + filename);
+                        String time = realTimeView.getText().toString();
+                        String score = songScoreView.getText().toString();
+                        String filename = songName + "_" + time + "_" + score;
+                        Log.d(TAG, "onClick: playsong " + filename);
                         mp.setDataSource(context.getFilesDir() + "/" + filename);
                     } catch (IllegalStateException e) {
                         e.printStackTrace();
@@ -136,7 +140,11 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                     if (mp.isPlaying()) {
 //                    Toast.makeText(v.getContext(), "Pause ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
                         songPlayButton.setImageResource(R.drawable.resume);
-                        mp.pause();
+                        mp.stop();
+                        mp.reset();
+                        clicked = -1;
+//                        mp = null;
+//                        mp = new MediaPlayer();
                     } else {
 //                    Toast.makeText(v.getContext(), "Play ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
                         songPlayButton.setImageResource(R.drawable.pause_black);
@@ -150,6 +158,9 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                         public void onCompletion(MediaPlayer mp) {
                             try {
                                 mp.stop();
+                                mp.reset();
+//                                mp = null;
+//                                mp = new MediaPlayer();
                                 songPlayButton.setImageResource(R.drawable.resume);
                                 clicked = -1;
                             } catch (Exception e) {
@@ -163,9 +174,11 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             else if (v.getId() == songDeleteButton.getId()){
                 int index = getAdapterPosition();
                 String songName = songNameView.getText().toString();
-                String time = songTimeView.getText().toString();
-                String filename = songName + "_" + time;
+                String time = realTimeView.getText().toString();
+                String score = songScoreView.getText().toString();
+                String filename = songName + "_" + time + "_" + score;
                 File fdelete = new File(context.getFilesDir(), filename);
+                Log.d(TAG, "onClick: deleted file name " + fdelete);
                 if (fdelete.exists()) {
                     if (fdelete.delete()) {
                         Log.d(TAG, "onClick: file Deleted :" + filename);
