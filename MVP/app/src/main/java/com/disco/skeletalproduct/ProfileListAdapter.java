@@ -8,6 +8,7 @@ import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,10 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.ViewHolder> {
@@ -55,8 +59,23 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         holder.songScoreView.setText(Integer.toString(item.getSongScore()));
         String duration = Integer.toString(item.getSongDurationMinute()) + " : " + Integer.toString(item.getSongDurationSecond());
         holder.songDurationView.setText(duration);
+
+        /**Time*/
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
-        holder.songTimeView.setText(dateFormat.format(item.getSongTime()));
+        Date mDate = Calendar.getInstance().getTime();
+        try{
+            mDate = dateFormat.parse(item.getSongTime());
+        }
+        catch (ParseException e){
+            e.printStackTrace();
+        }
+        long fileTime = mDate.getTime();
+        long now = System.currentTimeMillis();
+        CharSequence niceDateStr = DateUtils.getRelativeTimeSpanString(fileTime, now,
+                0L, DateUtils.FORMAT_ABBREV_ALL);
+        holder.songTimeView.setText(niceDateStr);
+
+
         holder.itemView.setTag(item);
     }
 

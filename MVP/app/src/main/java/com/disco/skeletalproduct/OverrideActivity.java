@@ -6,9 +6,13 @@ import android.util.Log;
 
 import com.unity3d.player.UnityPlayerActivity;
 
+import java.io.File;
+
 public class OverrideActivity extends UnityPlayerActivity {
     private String TAG = "DISCO_SKELETAL-----" + this.getClass().getSimpleName();
     private String fileName;
+    private int score;
+    private int token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +38,18 @@ public class OverrideActivity extends UnityPlayerActivity {
         if (SongListAdapter.dispatcher.isStopped()){
             Log.d(TAG, "testMethod: unity function called in override");
         }
+        this.score = score;
+        this.token = token;
+        changeFileName();
+    }
+
+    private void changeFileName(){
+        String currentFileName = "temp";
+        Log.i("Current file name", currentFileName);
+
+        File directory = getFilesDir();
+        File from      = new File(directory, currentFileName);
+        File to        = new File(directory, fileName + "_" + Integer.toString(score));
+        from.renameTo(to);
     }
 }
