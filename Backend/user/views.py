@@ -207,20 +207,20 @@ def addfriend(request):
     return JsonResponse({})
 
 
-# Post: ["token": ?, "score": ?, "date": ? ]
+# Post: ["u_id":  "token": ?, "score": ?]
 @csrf_exempt
-def update_all(request, user_id):
+def update_all(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
+    user_id = int(json_data['u_id'])
 
     print "1"
-
 
     cursor1 = connection.cursor()
     cursor1.execute(" SELECT * FROM "
                     " Users WHERE u_id = %d;"
-                    user_id)
+                    (user_id, ))
     user_info = cursor1.fetchall()[0]
     past_token = int(user_info['token'])
     past_score = int(user_info['score'])
@@ -239,24 +239,74 @@ def update_all(request, user_id):
                     (token, score, user_id))
 
     print token, score
-
-    cursor2 = connection.cursor()
-    cursor2.execute( " SELECT MAX(s_id) FROM "
-                     " Songs ")
-    maxid = cursor2.fetchone()['MAX(s_id)']+1
-    print maxid
-
-    sing_time = arrow.get(json_data['date'], 'YYYY-MM-DD HH:mm:ss')
-    sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
-    print sing_time
-
-
-    cursor4 = connection.cursor()
-    cursor4.execute(" INSERT Songs (s_id, u_id, sing_time, duration, score, album_name) VALUES"
-                    "(%d, %d, %s, %d, %d, %s);",
-                    (maxid, u_id, sing_time, 10, new_score, 'Alphabet Song')
-                    )
     result = {}
 
     print("Success!")
     return JsonResponse(result)
+
+
+
+#Table:
+#u_id, time, score, link, song_name
+
+#Post: [ u_id: xxx sing_time: xxx score: xxx link: xxx song_name: xxx]
+@csrf_exempt
+def Update_Link(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    u_id = int(json_data['u_id'])
+    sing_time = json_data['sing_time']
+    sing_time = arrow.get(sing_time, 'YYYY-MM-DD HH:mm:ss')
+    sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
+
+    score = int(json_data['score'])
+    link = json_data['link']
+    song_name = json_data['song_name']
+
+    cursor = connection.cursor()
+    cursor.execute('INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES '
+                    '(%d, %s, %d, %s, %s);', 
+                    (u_id, sing_time, score, link, song_name))
+    result = {}
+    return JsonResponse(result)
+
+
+
+# Post: [u_id: sing_time: ]
+# return json:
+# {'link': 'xxxx' } or { }
+@csrf_exempt
+def Search_song(request):
+    '''
+    When user press the share button for a song,
+    He needs a link for this song.
+    If he hasn't uploaded to the cloud before,
+    return empty result
+    Else return the link for this song.
+    '''
+
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    u_id = json_data['u_id']
+    songtime = json_data['sing_time']
+
+    result = {};
+
+    sing_time = arrow.get(songtime, 'YYYY-MM-DD HH:mm:ss')
+    sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
+    cursor1 = connection.cursor()
+    cursor1.execute(" SELECT * FROM "
+                    " Users WHERE u_id = %d and sing_time = %s;"
+                    (user_id, sing_time))
+    user_info = cursor1.fetchall()
+    if(!user_info):
+        return JsonResponse(result)
+
+    user_info = cursor1.fetchall()[0]
+    link = user_info['link']
+
+    result['link'] = link
+    return JsonResponse(result)
+
