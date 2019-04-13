@@ -59,8 +59,9 @@ public class LeaderboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LeaderboardActivity.this, PlayActivity.class);
                 Pair<View, String> pair = Pair.create((View)playButton, "playCircle");
+                Pair<View, String> pair2 = Pair.create((View)profileButton, "profileButton");
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(LeaderboardActivity.this, pair);
+                        makeSceneTransitionAnimation(LeaderboardActivity.this, pair, pair2);
                 startActivity(intent, options.toBundle());
             }
         });

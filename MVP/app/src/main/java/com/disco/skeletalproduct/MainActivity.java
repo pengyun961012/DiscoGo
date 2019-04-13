@@ -20,7 +20,9 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -74,8 +76,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PlayActivity.class);
                 Pair<View, String> pair = Pair.create((View)playButton, "playCircle");
+                Pair<View, String> pair2 = Pair.create((View)profileButton, "profileButton");
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(MainActivity.this, pair);
+                        makeSceneTransitionAnimation(MainActivity.this, pair, pair2);
                 startActivity(intent, options.toBundle());
             }
         });
@@ -170,6 +173,14 @@ public class MainActivity extends AppCompatActivity {
         File directory = new File(path);
         File[] files = directory.listFiles();
 //        Log.d("Files", "Size: "+ files.length);
+        if (files != null && files.length > 1) {
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File object1, File object2) {
+                    return (int) ((object1.lastModified() > object2.lastModified()) ? object1.lastModified(): object2.lastModified());
+                }
+            });
+        }
         for (int i = 0; i < files.length; i++)
         {
             Log.d("Files", "FileName:" + files[i].getName());
@@ -178,29 +189,17 @@ public class MainActivity extends AppCompatActivity {
             if (splited.length <=1 ){
                 continue;
             }
-            Date date = today;
-            try{
-                date = dateFormat.parse(splited[1]);
-            }
-            catch (ParseException e){
-                e.printStackTrace();
-            }
-            Profile alphabet = new Profile(splited[0], 43734, 2,30, date);
+//            Date date = today;
+//            try{
+//                date = dateFormat.parse(splited[1]);
+//            }
+//            catch (ParseException e){
+//                e.printStackTrace();
+//            }
+            Profile alphabet = new Profile(splited[0], Integer.parseInt(splited[2]), 2,30, splited[1]);
             profileList.add(alphabet);
         }
 
-//        alphabet = new Profile("alphabet", 41112, 2,30, today);
-//        profileList.add(alphabet);
-//        alphabet = new Profile("alphabet", 30881, 2,30, today);
-//        profileList.add(alphabet);
-//        alphabet = new Profile("alphabet", 29867, 2,30, today);
-//        profileList.add(alphabet);
-//        alphabet = new Profile("alphabet", 23110, 2,30, today);
-//        profileList.add(alphabet);
-//        alphabet = new Profile("alphabet", 10002, 2,30, today);
-//        profileList.add(alphabet);
-//        alphabet = new Profile("alphabet", 0, 2,30, today);
-//        profileList.add(alphabet);
         profileAdapter.notifyDataSetChanged();
     }
 }

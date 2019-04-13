@@ -67,13 +67,13 @@
             android:layout_height="80dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:src="@drawable/round_avatar"
+            android:src="@drawable/disk"
             android:adjustViewBounds="true"
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:id="@+id/profileButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
