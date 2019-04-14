@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerActivity;
 
 import java.io.File;
@@ -11,6 +12,7 @@ import java.io.File;
 public class OverrideActivity extends UnityPlayerActivity {
     private String TAG = "DISCO_SKELETAL-----" + this.getClass().getSimpleName();
     private String fileName;
+    private String[] levelList;
     private int score;
     private int token;
 
@@ -23,6 +25,11 @@ public class OverrideActivity extends UnityPlayerActivity {
         Intent intent = getIntent();
         fileName = intent.getStringExtra("fileName");
         Log.d(TAG, "onCreate: filename " + fileName);
+
+        levelList = new String[3];
+        levelList[0] = "alphabet";
+        levelList[1] = "JustTheWayYouAre";
+        levelList[2] = "birthday";
     }
 
     @Override
@@ -41,6 +48,13 @@ public class OverrideActivity extends UnityPlayerActivity {
         this.score = score;
         this.token = token;
         changeFileName();
+    }
+
+    public void levelUp(int level){
+        if (level + 1 >= levelList.length){
+            return;
+        }
+        UnityPlayer.UnitySendMessage("GameController","receiveData", levelList[level + 1]);
     }
 
     private void changeFileName(){

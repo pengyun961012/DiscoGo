@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.login_button);
         profileTextView = (TextView) findViewById(R.id.profileTextView);
 
-        profileTextView.setText(username + " Profile");
+//        profileTextView.setText(username + " Profile");
 
         profileAdapter = new ProfileListAdapter(profileList, getApplicationContext(),new ClickListener() {
             @Override public void onPositionClicked(int position) {
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 Pair<View, String> pair = Pair.create((View)playButton, "playCircle");
                 Pair<View, String> pair2 = Pair.create((View)profileButton, "profileButton");
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(MainActivity.this, pair, pair2);
+                        makeSceneTransitionAnimation(MainActivity.this, pair2);
                 startActivity(intent, options.toBundle());
             }
         });
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 String returnString = "";
                 returnString = data.getStringExtra("userName");
                 username = returnString;
-                profileTextView.setText(returnString + " Profile");
+//                profileTextView.setText(returnString + " Profile");
             }
         }
     }
