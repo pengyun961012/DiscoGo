@@ -33,11 +33,11 @@
             android:id="@+id/homeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Return to Home"
+            android:text="Cancel"
             style="?android:textAppearanceSmall"
-            android:background="?android:selectableItemBackground"
+            android:background="@drawable/button_select"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="450dp"
+            android:layout_marginLeft="500dp"
             android:layout_gravity="right"
             android:textStyle="bold"/>
     </LinearLayout>
@@ -116,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="?android:selectableItemBackground"
+                android:background="@drawable/button_select"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
