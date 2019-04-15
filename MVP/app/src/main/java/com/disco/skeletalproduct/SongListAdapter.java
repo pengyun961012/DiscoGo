@@ -104,7 +104,7 @@ public class SongListAdapter extends PagerAdapter {
                         .setPositiveBtnText("Start")
                         .setNegativeBtnText("Cancel")
                         .setNegativeBtnBackground("#FFA9A7A8")
-                        .setGifResource(R.drawable.gif1)
+                        .setGifResource(R.drawable.tutorial_new)
                         .isCancellable(true)
                         .OnPositiveClicked(new FancyGifDialogListener() {
                             @Override

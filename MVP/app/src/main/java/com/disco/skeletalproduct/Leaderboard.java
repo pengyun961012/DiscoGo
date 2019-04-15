@@ -5,12 +5,14 @@ public class Leaderboard {
     private String userName;
     private int rank;
     private int score;
+    private boolean is_friend;
 
-    public Leaderboard(int image, String userName, int rank, int score){
+    public Leaderboard(int image, String userName, int rank, int score, boolean is_friend){
         this.userProfileImageUrl = image;
         this.userName = userName;
         this.rank = rank;
         this.score = score;
+        this.is_friend = is_friend;
     }
 
     public void setUserName(String userName) {
@@ -43,5 +45,13 @@ public class Leaderboard {
 
     public void setUserProfileImageUrl(int userProfileImageUrl) {
         this.userProfileImageUrl = userProfileImageUrl;
+    }
+
+    public boolean isIs_friend() {
+        return is_friend;
+    }
+
+    public void setIs_friend(boolean is_friend) {
+        this.is_friend = is_friend;
     }
 }
