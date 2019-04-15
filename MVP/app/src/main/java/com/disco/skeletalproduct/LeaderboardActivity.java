@@ -20,7 +20,6 @@ import java.util.List;
 public class LeaderboardActivity extends AppCompatActivity {
 
     // UI reference.
-    private TextView ranking;
     private ImageButton profileButton;
     private ImageButton playButton;
     private ImageButton shopButton;
@@ -38,9 +37,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_leaderboard);
 
-        ranking = findViewById(R.id.ranking);
-        ranking.setText("Your Rank: " + getRanking());
-
         profileButton = (ImageButton) findViewById(R.id.profileImageButton);
         playButton = (ImageButton) findViewById(R.id.playImageButton);
         shopButton = (ImageButton) findViewById(R.id.shopImageButton);
@@ -48,7 +44,12 @@ public class LeaderboardActivity extends AppCompatActivity {
         friendButton = (ImageButton) findViewById(R.id.friendImageButton);
         leaderboardView = (RecyclerView) findViewById(R.id.leaderboardRecyclerView);
 
-        leaderboardAdapter = new LeaderboardListAdapter(leaderboardList, getApplicationContext());
+        leaderboardAdapter = new LeaderboardListAdapter(leaderboardList, getApplicationContext(), new ClickListener() {
+            @Override public void onPositionClicked(int position) {
+                // callback performed on click
+            } @Override public void onLongClicked(int position) {
+                // callback performed on click
+            }});
         LinearLayoutManager layoutManager = new LinearLayoutManager(LeaderboardActivity.this, LinearLayoutManager.VERTICAL, false);
         leaderboardView.setLayoutManager(layoutManager);
         leaderboardView.setAdapter(leaderboardAdapter);
@@ -114,19 +115,21 @@ public class LeaderboardActivity extends AppCompatActivity {
 //            Leaderboard user = new Leaderboard(R.drawable.round_avatar, "Feichi", i+1, (i+1)*10000);
 //            leaderboardList.add(user);
 //        }
-        Leaderboard user1 = new Leaderboard(R.drawable.usericon, "Feichi", 1, 43734);
+        Leaderboard user0 = new Leaderboard(R.drawable.usericon, "You", 100, 4, false);
+        leaderboardList.add(user0);
+        Leaderboard user1 = new Leaderboard(R.drawable.usericon, "Feichi", 1, 43734, false);
         leaderboardList.add(user1);
-        Leaderboard user2 = new Leaderboard(R.drawable.usericon, "Pengyun", 2, 41753);
+        Leaderboard user2 = new Leaderboard(R.drawable.usericon, "Pengyun", 2, 41753, false);
         leaderboardList.add(user2);
-        Leaderboard user3 = new Leaderboard(R.drawable.usericonfemale, "Jialin", 3, 40113);
+        Leaderboard user3 = new Leaderboard(R.drawable.usericonfemale, "Jialin", 3, 40113, false);
         leaderboardList.add(user3);
-        Leaderboard user4 = new Leaderboard(R.drawable.usericonfemale, "Qiyue", 4, 39998);
+        Leaderboard user4 = new Leaderboard(R.drawable.usericonfemale, "Qiyue", 4, 39998,false);
         leaderboardList.add(user4);
-        Leaderboard user5 = new Leaderboard(R.drawable.usericonfemale, "Mengmeng", 5, 39887);
+        Leaderboard user5 = new Leaderboard(R.drawable.usericonfemale, "Mengmeng", 5, 39887,false);
         leaderboardList.add(user5);
-        Leaderboard user6 = new Leaderboard(R.drawable.usericonfemale, "Leiwei", 6, 38886);
+        Leaderboard user6 = new Leaderboard(R.drawable.usericonfemale, "Leiwei", 6, 38886,false);
         leaderboardList.add(user6);
-        Leaderboard user7 = new Leaderboard(R.drawable.usericon, "Renzhong", 7, 10000);
+        Leaderboard user7 = new Leaderboard(R.drawable.usericon, "Renzhong", 7, 10000,false);
         leaderboardList.add(user7);
         leaderboardAdapter.notifyDataSetChanged();
     }
