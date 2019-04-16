@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/usernameTextView"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="username"
         android:gravity="center"
@@ -40,7 +40,7 @@
         android:id="@+id/playSongImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="?android:selectableItemBackground"
         app:srcCompat="@drawable/resume"
