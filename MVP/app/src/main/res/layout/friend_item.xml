@@ -48,17 +48,17 @@
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
-    <ImageButton
-        android:id="@+id/addFriendButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:adjustViewBounds="true"
-        android:background="?android:selectableItemBackground"
-        android:padding="2dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/add_friend"/>
+    <!--<ImageButton-->
+        <!--android:id="@+id/addFriendButton"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:background="?android:selectableItemBackground"-->
+        <!--android:padding="2dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--app:srcCompat="@drawable/add_friend"/>-->
 
     <TextView
         android:id="@+id/songLinkView"

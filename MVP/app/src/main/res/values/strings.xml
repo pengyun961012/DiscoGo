@@ -22,4 +22,5 @@
     <string name="url">http://165.227.98.119/</string>
     <string name="send_request">Send Request</string>
     <string name="my_user_id">1</string>
+    <string name="remove">remove</string>
 </resources>

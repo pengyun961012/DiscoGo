@@ -50,6 +50,8 @@ public class LeaderboardListAdapter extends RecyclerView.Adapter<LeaderboardList
         holder.userNameView.setText(item.getUserName());
         holder.rankView.setText(String.valueOf(item.getRank()));
         holder.scoreView.setText(String.valueOf(item.getScore()));
+        holder.isFriendView.setText(String.valueOf(item.isIs_friend()));
+        holder.userIdView.setText(String.valueOf(item.getUserId()));
         holder.itemView.setTag(item);
     }
 
@@ -63,6 +65,8 @@ public class LeaderboardListAdapter extends RecyclerView.Adapter<LeaderboardList
         public TextView userNameView;
         public TextView scoreView;
         public TextView rankView;
+        public TextView isFriendView;
+        public TextView userIdView;
         public ImageButton addFriendButton;
         private WeakReference<ClickListener> listenerRef;
 
@@ -74,6 +78,8 @@ public class LeaderboardListAdapter extends RecyclerView.Adapter<LeaderboardList
             userNameView = itemView.findViewById(R.id.usernameTextView);
             rankView = itemView.findViewById(R.id.rankTextView);
             scoreView = itemView.findViewById(R.id.scoreTextView);
+            isFriendView = itemView.findViewById(R.id.leaderIsFriend);
+            userIdView = itemView.findViewById(R.id.leaderUserIdView);
             addFriendButton = itemView.findViewById(R.id.followImageButton);
 
             addFriendButton.setOnClickListener(this);
@@ -82,17 +88,25 @@ public class LeaderboardListAdapter extends RecyclerView.Adapter<LeaderboardList
         @Override
         public void onClick(View v) {
             if (v.getId() == addFriendButton.getId()){
-                Log.d(TAG, "onClick: add friend");
-                int index = getAdapterPosition();
-//                int friendId = Integer.valueOf(userIdView.getText().toString());
-                String url = context.getResources().getString(R.string.url) + "addpending/";
-                int myId = Integer.valueOf(context.getResources().getString(R.string.my_user_id));
-//                sendAddFriendRequest(url, myId, friendId);
+                boolean isFriend = Boolean.valueOf(isFriendView.getText().toString());
+                String friendName = userNameView.getText().toString();
+                if (isFriend){
+                    Log.d(TAG, "onClick: add friend: already friend");
+                    Toast.makeText(context, friendName + " is already your friend!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Log.d(TAG, "onClick: send request");
+                    int index = getAdapterPosition();
+                    int friendId = Integer.valueOf(userIdView.getText().toString());
+                    String url = context.getResources().getString(R.string.url) + "addpending/";
+                    int myId = Integer.valueOf(context.getResources().getString(R.string.my_user_id));
+                    sendAddFriendRequest(url, myId, friendId, friendName);
+                }
             }
         }
     }
 
-    private void sendAddFriendRequest(String url, int myId, int friendId){
+    private void sendAddFriendRequest(String url, int myId, int friendId, final String friendName){
         Log.d(TAG, "sendAddFriendRequest: enter add friend process");
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -105,6 +119,8 @@ public class LeaderboardListAdapter extends RecyclerView.Adapter<LeaderboardList
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, "onResponse: success add pending request");
+                        Toast.makeText(context, "Friend request is sent to " + friendName, Toast.LENGTH_SHORT).show();
+
                     }
                 }, new Response.ErrorListener() {
             @Override
