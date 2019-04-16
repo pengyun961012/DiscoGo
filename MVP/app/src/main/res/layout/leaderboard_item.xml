@@ -56,4 +56,15 @@
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/add_friend" />
+
+    <TextView
+        android:id="@+id/leaderIsFriend"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/leaderUserIdView"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"/>
 </LinearLayout>

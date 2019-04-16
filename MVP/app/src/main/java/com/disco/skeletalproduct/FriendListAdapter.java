@@ -83,10 +83,10 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             songLinkView = itemView.findViewById(R.id.songLinkView);
             userIdView = itemView.findViewById(R.id.userIdView);
             songPlayButton = itemView.findViewById(R.id.playSongImageButton);
-            addFriendButton = itemView.findViewById(R.id.addFriendButton);
+//            addFriendButton = itemView.findViewById(R.id.addFriendButton);
 
             songPlayButton.setOnClickListener(this);
-            addFriendButton.setOnClickListener(this);
+//            addFriendButton.setOnClickListener(this);
         }
 
         @Override
@@ -95,13 +95,13 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 Toast.makeText(context, "play song", Toast.LENGTH_SHORT).show();
 
             }
-            else if (v.getId() == addFriendButton.getId()){
-                int index = getAdapterPosition();
-                int friendId = Integer.valueOf(userIdView.getText().toString());
-                String url = context.getResources().getString(R.string.url) + "addpending/";
-                int myId = Integer.valueOf(context.getResources().getString(R.string.my_user_id));
-                sendAddFriendRequest(url, myId, friendId);
-            }
+//            else if (v.getId() == addFriendButton.getId()){
+//                int index = getAdapterPosition();
+//                int friendId = Integer.valueOf(userIdView.getText().toString());
+//                String url = context.getResources().getString(R.string.url) + "addpending/";
+//                int myId = Integer.valueOf(context.getResources().getString(R.string.my_user_id));
+//                sendAddFriendRequest(url, myId, friendId);
+//            }
         }
     }
 
