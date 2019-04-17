@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,13 +15,24 @@ import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class LeaderboardActivity extends AppCompatActivity {
+    private String TAG = "DISCO_SKELETAL-----" + this.getClass().getSimpleName();
 
     // UI reference.
-    private TextView ranking;
     private ImageButton profileButton;
     private ImageButton playButton;
     private ImageButton shopButton;
@@ -38,9 +50,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_leaderboard);
 
-        ranking = findViewById(R.id.ranking);
-        ranking.setText("Your Rank: " + getRanking());
-
         profileButton = (ImageButton) findViewById(R.id.profileImageButton);
         playButton = (ImageButton) findViewById(R.id.playImageButton);
         shopButton = (ImageButton) findViewById(R.id.shopImageButton);
@@ -48,7 +57,12 @@ public class LeaderboardActivity extends AppCompatActivity {
         friendButton = (ImageButton) findViewById(R.id.friendImageButton);
         leaderboardView = (RecyclerView) findViewById(R.id.leaderboardRecyclerView);
 
-        leaderboardAdapter = new LeaderboardListAdapter(leaderboardList, getApplicationContext());
+        leaderboardAdapter = new LeaderboardListAdapter(leaderboardList, getApplicationContext(), new ClickListener() {
+            @Override public void onPositionClicked(int position) {
+                // callback performed on click
+            } @Override public void onLongClicked(int position) {
+                // callback performed on click
+            }});
         LinearLayoutManager layoutManager = new LinearLayoutManager(LeaderboardActivity.this, LinearLayoutManager.VERTICAL, false);
         leaderboardView.setLayoutManager(layoutManager);
         leaderboardView.setAdapter(leaderboardAdapter);
@@ -110,24 +124,66 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     private void populateList(){
-//        for (int i = 0; i < 10; i++) {
-//            Leaderboard user = new Leaderboard(R.drawable.round_avatar, "Feichi", i+1, (i+1)*10000);
-//            leaderboardList.add(user);
-//        }
-        Leaderboard user1 = new Leaderboard(R.drawable.usericon, "Feichi", 1, 43734);
-        leaderboardList.add(user1);
-        Leaderboard user2 = new Leaderboard(R.drawable.usericon, "Pengyun", 2, 41753);
-        leaderboardList.add(user2);
-        Leaderboard user3 = new Leaderboard(R.drawable.usericonfemale, "Jialin", 3, 40113);
-        leaderboardList.add(user3);
-        Leaderboard user4 = new Leaderboard(R.drawable.usericonfemale, "Qiyue", 4, 39998);
-        leaderboardList.add(user4);
-        Leaderboard user5 = new Leaderboard(R.drawable.usericonfemale, "Mengmeng", 5, 39887);
-        leaderboardList.add(user5);
-        Leaderboard user6 = new Leaderboard(R.drawable.usericonfemale, "Leiwei", 6, 38886);
-        leaderboardList.add(user6);
-        Leaderboard user7 = new Leaderboard(R.drawable.usericon, "Renzhong", 7, 10000);
-        leaderboardList.add(user7);
-        leaderboardAdapter.notifyDataSetChanged();
+//        Leaderboard user0 = new Leaderboard(R.drawable.usericon, "You", 100, 4, false);
+//        leaderboardList.add(user0);
+//        Leaderboard user1 = new Leaderboard(R.drawable.usericon, "Feichi", 1, 43734, false);
+//        leaderboardList.add(user1);
+//        Leaderboard user2 = new Leaderboard(R.drawable.usericon, "Pengyun", 2, 41753, false);
+//        leaderboardList.add(user2);
+//        Leaderboard user3 = new Leaderboard(R.drawable.usericonfemale, "Jialin", 3, 40113, false);
+//        leaderboardList.add(user3);
+//        Leaderboard user4 = new Leaderboard(R.drawable.usericonfemale, "Qiyue", 4, 39998,false);
+//        leaderboardList.add(user4);
+//        Leaderboard user5 = new Leaderboard(R.drawable.usericonfemale, "Mengmeng", 5, 39887,false);
+//        leaderboardList.add(user5);
+//        Leaderboard user6 = new Leaderboard(R.drawable.usericonfemale, "Leiwei", 6, 38886,false);
+//        leaderboardList.add(user6);
+//        Leaderboard user7 = new Leaderboard(R.drawable.usericon, "Renzhong", 7, 10000,false);
+//        leaderboardList.add(user7);
+//        leaderboardAdapter.notifyDataSetChanged();
+        String myId = getResources().getString(R.string.my_user_id);
+        String url = getResources().getString(R.string.url) + "leaderboard/" + myId;
+        getAllLeaderboard(url);
+    }
+
+    private void getAllLeaderboard(String url){
+        RequestQueue queue = Volley.newRequestQueue(LeaderboardActivity.this);
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response)  {
+                        Log.d(TAG, response.toString());
+                        try {
+                            JSONArray array = response.getJSONArray("leaderboard");
+                            for (int i = 0; i < array.length(); i++) {
+                                int userId = array.getJSONObject(i).getInt("u_id");
+                                String leaderUsername = array.getJSONObject(i).getString("username");
+                                int imageId = array.getJSONObject(i).getInt("img_id");
+                                int tokenNum = array.getJSONObject(i).getInt("token");
+                                int rank = array.getJSONObject(i).getInt("rank");
+                                boolean is_friend = array.getJSONObject(i).getBoolean("if_friend");
+                                Leaderboard user0 = new Leaderboard(userId, R.drawable.usericon, leaderUsername, rank, tokenNum, is_friend);
+                                leaderboardList.add(user0);
+                            }
+                            leaderboardAdapter.notifyDataSetChanged();
+                            Log.d(TAG, "onResponse: refresh success");
+                        }
+                        catch (JSONException e) {
+                            Log.d(TAG, "onResponse: refresh error" + e);
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "onErrorResponse: error receive request error!");
+                    }
+                }
+        );
+
+        queue.add(getRequest);
     }
 }
