@@ -52,6 +52,14 @@ public class LeaderboardListAdapter extends RecyclerView.Adapter<LeaderboardList
         holder.scoreView.setText(String.valueOf(item.getScore()));
         holder.isFriendView.setText(String.valueOf(item.isIs_friend()));
         holder.userIdView.setText(String.valueOf(item.getUserId()));
+        if (item.isIs_friend()){
+            holder.addFriendButton.setVisibility(View.INVISIBLE);
+        }
+        else if (item.getUserId() == Integer.valueOf(context.getResources().getString(R.string.my_user_id))){
+            holder.addFriendButton.setVisibility(View.INVISIBLE);
+            holder.userNameView.setText("You");
+            holder.userNameView.setTextColor(context.getResources().getColor(R.color.orangelight));
+        }
         holder.itemView.setTag(item);
     }
 

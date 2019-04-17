@@ -58,7 +58,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         holder.songNameView.setText(item.getSongName());
         holder.songScoreView.setText(Integer.toString(item.getSongScore()));
         String duration = Integer.toString(item.getSongDurationMinute()) + " : " + Integer.toString(item.getSongDurationSecond());
-        holder.songDurationView.setText(duration);
+//        holder.songDurationView.setText(duration);
 
         /**Time*/
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
@@ -87,7 +87,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView songNameView;
         public TextView songScoreView;
-        public TextView songDurationView;
+//        public TextView songDurationView;
         public TextView songTimeView;
         public TextView realTimeView;
         public ImageButton songPlayButton;
@@ -100,7 +100,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 
             songNameView = itemView.findViewById(R.id.profileSongNametextView);
             songScoreView = itemView.findViewById(R.id.profileScoretextView);
-            songDurationView = itemView.findViewById(R.id.profileDurationtextView);
+//            songDurationView = itemView.findViewById(R.id.profileDurationtextView);
             songTimeView = itemView.findViewById(R.id.profileTimetextView);
             songPlayButton = itemView.findViewById(R.id.playMusicImageButton);
             songDeleteButton = itemView.findViewById(R.id.deleteButton);
