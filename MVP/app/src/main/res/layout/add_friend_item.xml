@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_centerInParent="true"
+    android:layout_centerVertical="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/addUserProfileImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp" />
+
+
+    <TextView
+        android:id="@+id/addUsernameTextView"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="username"
+        android:gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tokenNumTextView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="token"
+        android:gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/addUserIdTextView"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"/>
+
+</LinearLayout>

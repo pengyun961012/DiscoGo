@@ -1,5 +1,7 @@
 package com.disco.skeletalproduct;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,11 +13,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -64,7 +70,12 @@ public class FriendActivity extends AppCompatActivity {
         requestButton = (Button) findViewById(R.id.requestButton);
         searchFriend = (SearchView) findViewById(R.id.friendSearchView);
 
-        friendAdapter = new FriendListAdapter(friendList, getApplicationContext());
+        friendAdapter = new FriendListAdapter(friendList, getApplicationContext(), new ClickListener() {
+            @Override public void onPositionClicked(int position) {
+                // callback performed on click
+            } @Override public void onLongClicked(int position) {
+                // callback performed on click
+            }});
         LinearLayoutManager layoutManager = new LinearLayoutManager(FriendActivity.this, LinearLayoutManager.VERTICAL, false);
         friendView.setLayoutManager(layoutManager);
         friendView.setAdapter(friendAdapter);
@@ -118,42 +129,8 @@ public class FriendActivity extends AppCompatActivity {
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(FriendActivity.this);
-                builder.setTitle("Add or ignore a friend");
-
-                String[] animals = {"horse", "cow", "camel", "sheep", "goat"};
-                final int checkedItem = 1; // cow
-                builder.setSingleChoiceItems(animals, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-//                        checkedItem = which;
-                    }
-                });
-
-                builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // user clicked OK
-//                        String url = "http://165.227.98.119/searchuser/";
-//                        sendRequest(url, "llw");
-                    }
-                });
-                builder.setNegativeButton("Remove", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-//                        checkedItem = which;
-                    }
-                });
-
-                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                Intent intent = new Intent(FriendActivity.this, PendingListActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -163,8 +140,11 @@ public class FriendActivity extends AppCompatActivity {
 //                Toast.makeText(FriendActivity.this, "search " + searchFriend.getQuery(), Toast.LENGTH_SHORT ).show();
                 String username = searchFriend.getQuery().toString();
                 Log.d(TAG, "onQueryTextSubmit: " + username);
-                String url = "http://165.227.98.119/searchuser/";
-                sendRequest(url, username);
+                String myId = getResources().getString(R.string.my_user_id);
+//                String url = getResources().getString(R.string.url) + "searchuser/" + myId +"/";
+                String url = getResources().getString(R.string.url) + "searchuser";
+                Log.d(TAG, "onQueryTextSubmit: url " + url);
+                sendSearchRequest(url, username, myId);
                 return false;
             }
 
@@ -175,38 +155,228 @@ public class FriendActivity extends AppCompatActivity {
         });
     }
 
-    private void populateList(){
-//        for (int i = 0; i < 10; i++) {
-//            Friend newf = new Friend("Feichi", "Hengheng", "hhh", R.drawable.round_avatar);
-//            friendList.add(newf);
-//        }
-        Friend newf = new Friend("Feichi", "Alphabet", "ABC", R.drawable.usericon);
-        friendList.add(newf);
-        newf = new Friend("Jialin", "Alphabet", "ABC", R.drawable.usericonfemale);
-        friendList.add(newf);
-        newf = new Friend("Pengyun", "Alphabet", "ABC", R.drawable.usericon);
-        friendList.add(newf);
-        friendAdapter.notifyDataSetChanged();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+            final int userId = data.getIntExtra("userId", -1);
+            final String returnName = data.getStringExtra("userName");
+//            Toast.makeText(this, "userid " + String.valueOf(userId), Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(FriendActivity.this)
+                    .setTitle("Accept Friend Request?")
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage("Accept friend request from " + returnName + "?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            String url = getResources().getString(R.string.url) + "addfriend/";
+                            int myId = Integer.valueOf(getResources().getString(R.string.my_user_id));
+                            sendAcceptFriend(url, myId, userId, returnName);
+                        }})
+                    .setNegativeButton(R.string.remove, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            String url = getResources().getString(R.string.url) + "deletepending/";
+                            int myId = Integer.valueOf(getResources().getString(R.string.my_user_id));
+                            sendDeletePending(url, myId, userId, returnName);
+                        }})
+                    .setNeutralButton(android.R.string.cancel, null)
+                    .show();
+        }
     }
 
-    private void sendRequest(String url, String username) {
+    private void populateList(){
+//        Friend newf = new Friend(1,"Feichi", "Alphabet", "ABC", R.drawable.usericon);
+//        friendList.add(newf);
+//        newf = new Friend(8,"Jialin", "Alphabet", "ABC", R.drawable.usericonfemale);
+//        friendList.add(newf);
+//        newf = new Friend(3,"Pengyun", "Alphabet", "ABC", R.drawable.usericon);
+//        friendList.add(newf);
+//        friendAdapter.notifyDataSetChanged();
+        String myId = getResources().getString(R.string.my_user_id);
+        String url = getResources().getString(R.string.url) + "profile/friends/" + myId;
+        getAllFriends(url);
+    }
+
+    private void sendSearchRequest(String url, final String username, String selfId) {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("username", "llw");
+        params.put("self_u_id", selfId);
+        params.put("username", username);
+
 
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, "onResponse: " + response);
-                        finish();
+                        try {
+                            final String searchname = response.getString("username");
+                            int imgId = response.getInt("img_id");
+                            int tokenNum = response.getInt("token");
+                            final int addId = response.getInt("u_id");
+                            final String friendstatus = response.getString("friend_status");
+                            AlertDialog.Builder dBuilder = new AlertDialog.Builder(FriendActivity.this);
+
+                            LayoutInflater inflater = FriendActivity.this.getLayoutInflater();
+                            View dialogView = inflater.inflate(R.layout.add_friend_item, null);
+                            ImageView userImage = (ImageView) dialogView.findViewById(R.id.addUserProfileImageView);
+                            TextView usernameView = (TextView) dialogView.findViewById(R.id.addUsernameTextView);
+                            TextView tokenView = (TextView) dialogView.findViewById(R.id.tokenNumTextView);
+                            userImage.setImageResource(R.drawable.usericon);
+                            usernameView.setText("Username: " + searchname);
+                            tokenView.setText("Tokens: " + String.valueOf(tokenNum));
+
+                            dBuilder.setTitle("Search Result");
+                            dBuilder.setView(dialogView);
+                            dBuilder.setPositiveButton(R.string.send_request, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Log.d(TAG, "onClick: send add friend request from search");
+                                    if (friendstatus.equals('n')){
+                                        String url = getResources().getString(R.string.url) + "addpending/";
+                                        int myId = Integer.valueOf(getResources().getString(R.string.my_user_id));
+                                        sendAddFriendRequest(url, myId, addId, searchname);
+                                    }
+                                    else{
+                                        Toast.makeText(FriendActivity.this,searchname + "is already your friend.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            dBuilder.setNegativeButton(android.R.string.cancel, null);
+                            dBuilder.show();
+                        }
+                        catch (JSONException e){
+                            Log.d(TAG, "onResponse: wrong msg in response" + e);
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse: " + error);
-                finish();
+                new AlertDialog.Builder(FriendActivity.this)
+                        .setTitle("Search Result")
+                        .setMessage("No user with name " + username)
+                        .setPositiveButton(android.R.string.yes, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+
+        queue.add(postRequest);
+    }
+
+    private void sendAddFriendRequest(String url, int myId, int friendId, final String friendName){
+        Log.d(TAG, "sendAddFriendRequest: enter add friend process");
+        RequestQueue queue = Volley.newRequestQueue(FriendActivity.this);
+
+        HashMap<String, Integer> params = new HashMap<String, Integer>();
+        params.put("wantFollower", myId);
+        params.put("beFollowed", friendId);
+
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, "onResponse: success add pending request");
+                        Toast.makeText(FriendActivity.this,"Friend request is sent to " + friendName, Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error);
+            }
+        });
+
+        queue.add(postRequest);
+    }
+
+    private void getAllFriends(String url){
+        RequestQueue queue = Volley.newRequestQueue(FriendActivity.this);
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response)  {
+                        Log.d(TAG, response.toString());
+                        try {
+                            JSONArray array = response.getJSONArray("friends");
+                            for (int i = 0; i < array.length(); i++) {
+                                int userId = array.getJSONObject(i).getInt("u_id");
+                                String friendUsername = array.getJSONObject(i).getString("username");
+                                int imageId = array.getJSONObject(i).getInt("img_id");
+                                String bestSong= array.getJSONObject(i).getString("best_song");
+                                String link = array.getJSONObject(i).getString("link");
+                                Log.d(TAG, "onResponse: " + friendUsername);
+                                Friend newf = new Friend(userId, friendUsername, bestSong, link, R.drawable.usericon);
+                                friendList.add(newf);
+                            }
+                            friendAdapter.notifyDataSetChanged();
+                            Log.d(TAG, "onResponse: refresh success");
+                        }
+                        catch (JSONException e) {
+                            Log.d(TAG, "onResponse: refresh error" + e);
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "onErrorResponse: error receive request error!");
+                    }
+                }
+        );
+
+        queue.add(getRequest);
+    }
+
+    private void sendAcceptFriend(String url, int myId, int friendId, final String friendName){
+        Log.d(TAG, "sendAddFriendRequest: enter accept friend process");
+        RequestQueue queue = Volley.newRequestQueue(FriendActivity.this);
+
+        HashMap<String, Integer> params = new HashMap<String, Integer>();
+        params.put("wantFollower", myId);
+        params.put("beFollowed", friendId);
+
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, "onResponse: success accept friend request");
+                        Toast.makeText(FriendActivity.this,"Friend request is accepted with " + friendName, Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error);
+            }
+        });
+
+        queue.add(postRequest);
+    }
+
+    private void sendDeletePending(String url, int myId, int friendId, final String friendName){
+        Log.d(TAG, "sendAddFriendRequest: enter delete pending process");
+        RequestQueue queue = Volley.newRequestQueue(FriendActivity.this);
+
+        HashMap<String, Integer> params = new HashMap<String, Integer>();
+        params.put("u2_id", myId);
+        params.put("u1_id", friendId);
+
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, "onResponse: success delete friend request");
+                        Toast.makeText(FriendActivity.this,"Friend request is deleted with " + friendName, Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error);
             }
         });
 
