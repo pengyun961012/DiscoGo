@@ -142,7 +142,7 @@ public class FriendActivity extends AppCompatActivity {
                 Log.d(TAG, "onQueryTextSubmit: " + username);
                 String myId = getResources().getString(R.string.my_user_id);
 //                String url = getResources().getString(R.string.url) + "searchuser/" + myId +"/";
-                String url = getResources().getString(R.string.url) + "searchuser";
+                String url = getResources().getString(R.string.url) + "searchuser/";
                 Log.d(TAG, "onQueryTextSubmit: url " + url);
                 sendSearchRequest(url, username, myId);
                 return false;
