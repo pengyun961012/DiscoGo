@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "237559341414",
+    "firebase_url": "https://final-1cf6f.firebaseio.com",
+    "project_id": "final-1cf6f",
+    "storage_bucket": "final-1cf6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237559341414:android:68f68170736190e4",
+        "android_client_info": {
+          "package_name": "com.disco.skeletalproduct"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237559341414-ds41ejf03274eg0gtffrmnds6omfn0u6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.disco.skeletalproduct",
+            "certificate_hash": "ca03b9a07249c9f5d12a213bd35bb78fe1d70769"
+          }
+        },
+        {
+          "client_id": "237559341414-g2ucvsub6emi06813q1849f92t0nffmp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV613c3AUnh2IB0FHeJYO3n53xtlTPzno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237559341414-g2ucvsub6emi06813q1849f92t0nffmp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
