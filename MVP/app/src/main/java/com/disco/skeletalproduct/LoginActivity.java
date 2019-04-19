@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     // UI references.
     private FirebaseAuth mAuth;
+    private static final int RC_SIGN_IN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
            //already signed in
         } else{
            //not signed in
+            startActivityForResult(
+                    //get an instance of AuthUI based on the default app
+                    AuthUI.getInstance().createSignInIntentBuilder().build(),
+                    RC_SIGN_IN);
         }
+
     }
 
     @Override
