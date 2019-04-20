@@ -36,6 +36,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     // UI references.
     private FirebaseAuth mAuth;
-    private static final int RC_SIGN_IN = 123;
+    private static final int RC_SIGN_IN = 996;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +71,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
            //already signed in
+            /*
+            AuthUI.getInstance()
+                    .signOut(this);
+                    */
+            //currentUser.sendEmailVerification();
         } else{
-           //not signed in
             startActivityForResult(
-                    //get an instance of AuthUI based on the default app
+                    // Get an instance of AuthUI based on the default app
                     AuthUI.getInstance().createSignInIntentBuilder().build(),
                     RC_SIGN_IN);
         }
