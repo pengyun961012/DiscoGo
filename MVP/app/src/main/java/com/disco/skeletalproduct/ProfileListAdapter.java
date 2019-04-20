@@ -6,7 +6,9 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -17,11 +19,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -41,11 +51,14 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
     private final ClickListener listener;
     private static MediaPlayer mp = new MediaPlayer();
     private static int clicked = -1;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference recordingFolder = storage.getReference().child("recording");
 
     public ProfileListAdapter(List<Profile> items, Context context, ClickListener listener) {
         this.items = items;
         this.context = context;
         this.listener = listener;
+
     }
 
     @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -200,6 +213,39 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                 String score = songScoreView.getText().toString();
                 String filename = songName + "_" + time + "_" + score;
                 Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
+                try {
+                    InputStream stream = new FileInputStream(new File(context.getFilesDir()+"/"+filename));
+                    final StorageReference songRef = recordingFolder.child(filename);
+                    UploadTask upTask = songRef.putStream(stream);
+                    upTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("upload task","failed!");
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //share url
+                            songRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    // Got the download URL for 'users/me/profile.png'
+                                    Log.d(TAG, "onSuccess: "+String.valueOf(uri));
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
+                            //Log.d("upload task" ,String.valueOf(songRef.getDownloadUrl()));
+                            Log.e("upload task", "success!");
+
+                        }
+                    });
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
 
 //            listenerRef.get().onPositionClicked(getAdapterPosition());
