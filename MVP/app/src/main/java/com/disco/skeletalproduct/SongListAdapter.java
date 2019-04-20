@@ -94,7 +94,7 @@ public class SongListAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (position != 0){
+                if (position >= 2){
                     Toast.makeText(context,"Not Available Now", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -112,7 +112,7 @@ public class SongListAdapter extends PagerAdapter {
 //                                Toast.makeText(context,"Ok",Toast.LENGTH_SHORT).show();
                                 String songName = songList.get(position).getSongName();
                                 Date today = Calendar.getInstance().getTime();
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 //                Toast.makeText(context, "you clicked image " + songName, Toast.LENGTH_SHORT).show();
                                 dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(44100,4096,0);
                                 TarsosDSPAudioFormat format = new TarsosDSPAudioFormat( TarsosDSPAudioFormat.Encoding.PCM_SIGNED, 44100, 16, 1, 2*1, 44100, ByteOrder.BIG_ENDIAN.equals(ByteOrder.nativeOrder()));
@@ -137,6 +137,7 @@ public class SongListAdapter extends PagerAdapter {
                                 new Thread(dispatcher, "Audio Dispatcher").start();
                                 Intent intent = new Intent(context,  OverrideActivity.class);
                                 intent.putExtra("fileName", fileName);
+                                intent.putExtra("level", String.valueOf(position));
                                 context.startActivity(intent);
                             }
                         })

@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void populateList(){
         Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 //        for (int i = 0; i < 10; i++) {
 //            Profile alphabet = new Profile("alphabet", i*10, 5,i+5, today);
 //            profileList.add(alphabet);
