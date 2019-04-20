@@ -134,11 +134,11 @@ public class ShopActivity extends AppCompatActivity {
     }
 
     private void populateList(){
-        Shop nitem = new Shop(R.drawable.cutebird, "Cute Bird", 10);
+        Shop nitem = new Shop(R.drawable.alive_bird1_hat, "Hat Bird", 90);
         shopItemList.add(nitem);
         nitem = new Shop(R.drawable.alive_bird2_glasses, "Sunglasses Bird", 50);
         shopItemList.add(nitem);
-        nitem = new Shop(R.drawable.eagle, "Eagle", 10);
-        shopItemList.add(nitem);
+//        nitem = new Shop(R.drawable.eagle, "Eagle", 10);
+//        shopItemList.add(nitem);
     }
 }
