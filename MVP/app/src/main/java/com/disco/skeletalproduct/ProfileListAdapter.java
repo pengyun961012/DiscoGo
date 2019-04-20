@@ -71,8 +71,10 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         }
         long fileTime = mDate.getTime();
         long now = System.currentTimeMillis();
+        Log.d(TAG, "onBindViewHolder: " + String.valueOf(now));
         CharSequence niceDateStr = DateUtils.getRelativeTimeSpanString(fileTime, now,
                 0L, DateUtils.FORMAT_ABBREV_ALL);
+        Log.d(TAG, "onBindViewHolder: " + niceDateStr);
         holder.songTimeView.setText(niceDateStr);
 
         holder.realTimeView.setText(item.getSongTime());
