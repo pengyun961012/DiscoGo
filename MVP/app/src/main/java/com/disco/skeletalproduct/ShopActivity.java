@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,9 +19,12 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ShopActivity extends AppCompatActivity {
+    private String TAG = "DISCO_SKELETAL-----" + this.getClass().getSimpleName();
 
     private GridView gridViewItems;
     private ImageButton profileButton;
@@ -31,10 +35,9 @@ public class ShopActivity extends AppCompatActivity {
     private ImageView shopItemImage;
     private Button buyButton;
 
-
-    public String[] imageIDs = new String [] {
-            "Cute Bird", "Eagle", "Hat", "Sunglasses", "Both"
-    };
+    private List<Shop> shopItemList = new ArrayList<>();
+    private ShopListAdapter shopAdapter;
+    private int chosenPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,32 +55,19 @@ public class ShopActivity extends AppCompatActivity {
         shopItemImage = (ImageView) findViewById(R.id.imageViewCurrent);
         buyButton = (Button) findViewById(R.id.buyButton);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, imageIDs);
+        populateList();
+        shopAdapter = new ShopListAdapter(shopItemList, ShopActivity.this);
 
-        gridViewItems.setAdapter(adapter);
+        gridViewItems.setAdapter(shopAdapter);
 
         gridViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 //                Toast.makeText(getApplicationContext(),
 //                        ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-                switch (position){
-                    case (0):
-                        shopItemImage.setImageResource(R.drawable.cutebird);
-                        break;
-                    case (1):
-                        shopItemImage.setImageResource(R.drawable.eagle);
-                        break;
-                    case(2):
-                        shopItemImage.setImageResource(R.drawable.hat);
-                        break;
-                    case(3):
-                        shopItemImage.setImageResource(R.drawable.sunglasses);
-                        break;
-                        default:
-                        break;
-                }
+                Shop item = shopItemList.get(position);
+                shopItemImage.setImageResource(item.getImageId());
+                chosenPosition = position;
             }
         });
 
@@ -88,7 +78,7 @@ public class ShopActivity extends AppCompatActivity {
                 Pair<View, String> pair = Pair.create((View)playButton, "playCircle");
                 Pair<View, String> pair2 = Pair.create((View)profileButton, "profileButton");
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(ShopActivity.this, pair, pair2);
+                        makeSceneTransitionAnimation(ShopActivity.this, pair2);
                 startActivity(intent, options.toBundle());
             }
         });
@@ -129,9 +119,26 @@ public class ShopActivity extends AppCompatActivity {
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ShopActivity.this.getApplicationContext(), "Buy", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ShopActivity.this.getApplicationContext(), "Buy", Toast.LENGTH_SHORT).show();
+                Shop item = shopItemList.get(chosenPosition);
+                new AlertDialog.Builder(ShopActivity.this)
+                        .setTitle("Buy it?")
+                        .setMessage("Are you sure you want to buy " + item.getItemName() + " with " + String.valueOf(item.getItemPrice()) + " coins?")
+                        .setPositiveButton(android.R.string.yes, null)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
             }
         });
 
+    }
+
+    private void populateList(){
+        Shop nitem = new Shop(R.drawable.cutebird, "Cute Bird", 10);
+        shopItemList.add(nitem);
+        nitem = new Shop(R.drawable.alive_bird2_glasses, "Sunglasses Bird", 50);
+        shopItemList.add(nitem);
+        nitem = new Shop(R.drawable.eagle, "Eagle", 10);
+        shopItemList.add(nitem);
     }
 }

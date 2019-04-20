@@ -84,6 +84,13 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".PendingListActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
+            android:noHistory="true"
+            android:label="Friend Requests">
+        </activity>
+
     </application>
 
 </manifest>

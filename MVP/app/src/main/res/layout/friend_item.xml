@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/usernameTextView"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="username"
         android:gravity="center"
@@ -36,39 +36,44 @@
         android:layout_marginTop="8dp"
         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/albumNameTextView"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="albumname"
-        android:gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp" />
-
     <ImageButton
         android:id="@+id/playSongImageButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="?android:selectableItemBackground"
-        app:srcCompat="@android:drawable/ic_media_play"
+        app:srcCompat="@drawable/resume"
         android:padding="2dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
-    <ImageButton
-        android:id="@+id/likeImageButton"
-        android:layout_width="50dp"
+    <!--<ImageButton-->
+        <!--android:id="@+id/addFriendButton"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:background="?android:selectableItemBackground"-->
+        <!--android:padding="2dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--app:srcCompat="@drawable/add_friend"/>-->
+
+    <TextView
+        android:id="@+id/songLinkView"
+        android:layout_width="1dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:adjustViewBounds="true"
-        android:background="?android:selectableItemBackground"
-        android:padding="2dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@android:drawable/btn_star"
-        tools:srcCompat="@android:drawable/btn_star" />
+        android:visibility="invisible"
+        android:gravity="center"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/userIdView"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

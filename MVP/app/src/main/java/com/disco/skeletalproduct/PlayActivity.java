@@ -47,6 +47,12 @@ public class PlayActivity extends AppCompatActivity {
                     10);
 
         }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET},
+                    10);
+
+        }
 
         viewPager = (ViewPager) findViewById(R.id.songSelectorViewPager);
 
@@ -64,7 +70,7 @@ public class PlayActivity extends AppCompatActivity {
                 Pair<View, String> pair1 = Pair.create((View)profileButton, "profileButton");
                 Pair<View, String> pair2 = Pair.create((View)findViewById(R.id.songImage), "playCircle");
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(PlayActivity.this, pair1, pair2);
+                        makeSceneTransitionAnimation(PlayActivity.this, pair1);
                 startActivity(intent, options.toBundle());
             }
         });
@@ -72,7 +78,7 @@ public class PlayActivity extends AppCompatActivity {
 
     private void populateList(){
         Song alphabet = new Song("alphabet", R.drawable.circle);
-        Song birthday = new Song("birthday", R.drawable.circle_level2);
+        Song birthday = new Song("JustTheWayYouAre", R.drawable.circle_level2);
         Song forever = new Song("forever", R.drawable.circle_level3);
         songList.add(alphabet);
         songList.add(birthday);

@@ -128,14 +128,15 @@
 
     <Button
         android:id="@+id/buyButton"
+        style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="?android:selectableItemBackground"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_select"
         android:text="Buy"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@+id/gridViewItems"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewCurrent" />
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
