@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     // user is now signed out
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, PlayActivity.class);
                                     Pair<View, String> pair = Pair.create((View)loginView, "loginButton");
                                     ActivityOptionsCompat options = ActivityOptionsCompat.
                                             makeSceneTransitionAnimation(LoginActivity.this, pair);
