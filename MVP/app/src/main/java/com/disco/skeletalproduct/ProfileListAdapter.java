@@ -1,7 +1,10 @@
 package com.disco.skeletalproduct;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -9,6 +12,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ShareCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -208,11 +213,11 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             }
             else if (v.getId() == songShareButton.getId()){
                 int index = getAdapterPosition();
-                String songName = songNameView.getText().toString();
+                final String songName = songNameView.getText().toString();
                 String time = realTimeView.getText().toString();
                 String score = songScoreView.getText().toString();
                 String filename = songName + "_" + time + "_" + score;
-                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
                 try {
                     InputStream stream = new FileInputStream(new File(context.getFilesDir()+"/"+filename));
                     final StorageReference songRef = recordingFolder.child(filename);
@@ -229,8 +234,13 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                             songRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    // Got the download URL for 'users/me/profile.png'
-                                    Log.d(TAG, "onSuccess: "+String.valueOf(uri));
+                                    final String url = String.valueOf(uri);
+                                    Log.d(TAG, "onSuccess: " + url);
+                                    Intent intent = new Intent(Intent.ACTION_SEND);
+                                    intent.putExtra(Intent.EXTRA_TEXT, "Here is my song "
+                                            + songName + "\n" + url);
+                                    intent.setType("text/plain");
+                                    context.startActivity(Intent.createChooser(intent, "Send To"));
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
