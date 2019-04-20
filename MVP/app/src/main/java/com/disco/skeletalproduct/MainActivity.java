@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.login_button);
         profileTextView = (TextView) findViewById(R.id.profileTextView);
 
-        profileTextView.setText(username + " Profile");
+//        profileTextView.setText(username + " Profile");
 
         profileAdapter = new ProfileListAdapter(profileList, getApplicationContext(),new ClickListener() {
             @Override public void onPositionClicked(int position) {
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 Pair<View, String> pair = Pair.create((View)playButton, "playCircle");
                 Pair<View, String> pair2 = Pair.create((View)profileButton, "profileButton");
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(MainActivity.this, pair, pair2);
+                        makeSceneTransitionAnimation(MainActivity.this, pair2);
                 startActivity(intent, options.toBundle());
             }
         });
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 String returnString = "";
                 returnString = data.getStringExtra("userName");
                 username = returnString;
-                profileTextView.setText(returnString + " Profile");
+//                profileTextView.setText(returnString + " Profile");
             }
         }
     }
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void populateList(){
         Date today = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 //        for (int i = 0; i < 10; i++) {
 //            Profile alphabet = new Profile("alphabet", i*10, 5,i+5, today);
 //            profileList.add(alphabet);
@@ -176,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
         if (files != null && files.length > 1) {
             Arrays.sort(files, new Comparator<File>() {
                 @Override
-                public int compare(File object1, File object2) {
-                    return (int) ((object1.lastModified() > object2.lastModified()) ? object1.lastModified(): object2.lastModified());
+                public int compare(File f1, File f2) {
+                    return -Long.compare(f1.lastModified(), f2.lastModified());
                 }
             });
         }

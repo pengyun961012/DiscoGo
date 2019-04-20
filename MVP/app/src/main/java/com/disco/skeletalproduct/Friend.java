@@ -1,15 +1,17 @@
 package com.disco.skeletalproduct;
 
 public class Friend {
+    private int userId;
     private String userName;
     private String songName;
-    private String albumName;
     private int userImageUrl;
+    private String songLink;
 
-    public Friend(String userName, String songName, String albumName, int imageUrl) {
+    public Friend(int userId, String userName, String songName, String songLink, int imageUrl) {
+        this.userId = userId;
         this.userName = userName;
         this.songName = songName;
-        this.albumName = albumName;
+        this.songLink = songLink;
         this.userImageUrl = imageUrl;
     }
 
@@ -25,16 +27,8 @@ public class Friend {
         return userImageUrl;
     }
 
-    public String getAlbumName() {
-        return albumName;
-    }
-
     public String getUserName() {
         return userName;
-    }
-
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
     }
 
     public void setUserImageUrl(int userImageUrl) {
@@ -43,5 +37,21 @@ public class Friend {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getSongLink() {
+        return songLink;
+    }
+
+    public void setSongLink(String songLink) {
+        this.songLink = songLink;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

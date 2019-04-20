@@ -66,4 +66,5 @@ public class Profile {
     public void setPlayed(boolean played) {
         isPlayed = played;
     }
+
 }

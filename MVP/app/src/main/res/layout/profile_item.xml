@@ -29,17 +29,17 @@
         app:layout_constraintStart_toEndOf="@+id/profileSongNametextView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:textSize="20sp"
-        android:id="@+id/profileDurationtextView"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Duration"
-        android:gravity="center"
-        app:layout_constraintStart_toEndOf="@+id/profileScoretextView"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--<TextView-->
+        <!--android:textSize="20sp"-->
+        <!--android:id="@+id/profileDurationtextView"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="Duration"-->
+        <!--android:gravity="center"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/profileScoretextView"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <TextView
         android:textSize="20sp"
@@ -50,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:text="Time"
         android:gravity="center"
-        app:layout_constraintStart_toEndOf="@+id/profileDurationtextView"
+        app:layout_constraintStart_toEndOf="@+id/profileScoretextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -80,5 +80,13 @@
         android:padding="2dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
+
+    <TextView
+        android:id="@+id/realtimeTextView"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:visibility="invisible" />
 
 </LinearLayout>
