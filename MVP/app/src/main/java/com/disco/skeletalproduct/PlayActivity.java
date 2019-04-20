@@ -9,7 +9,6 @@ import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -77,9 +76,9 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void populateList(){
-        Song alphabet = new Song("alphabet", R.drawable.circle);
-        Song birthday = new Song("JustTheWayYouAre", R.drawable.circle_level2);
-        Song forever = new Song("forever", R.drawable.circle_level3);
+        Song alphabet = new Song("alphabet", R.drawable.circlelevel1_arrow);
+        Song birthday = new Song("JustTheWayYouAre", R.drawable.circlelevel2_arrow);
+        Song forever = new Song("forever", R.drawable.circlelevel3_arrow);
         songList.add(alphabet);
         songList.add(birthday);
         songList.add(forever);
