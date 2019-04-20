@@ -107,7 +107,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView songNameView;
         public TextView songScoreView;
-//        public TextView songDurationView;
+        //        public TextView songDurationView;
         public TextView songTimeView;
         public TextView realTimeView;
         public ImageButton songPlayButton;
@@ -219,40 +219,58 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                 String filename = songName + "_" + time + "_" + score;
 //                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
                 try {
-                    InputStream stream = new FileInputStream(new File(context.getFilesDir()+"/"+filename));
+                    final InputStream stream = new FileInputStream(new File(context.getFilesDir()+"/"+filename));
                     final StorageReference songRef = recordingFolder.child(filename);
-                    UploadTask upTask = songRef.putStream(stream);
-                    upTask.addOnFailureListener(new OnFailureListener() {
+                    songRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("upload task","failed!");
+                        public void onSuccess(Uri uri) {
+                            final String url = String.valueOf(uri);
+                            Log.d(TAG, "onSuccess: " + url);
+                            Intent intent = new Intent(Intent.ACTION_SEND);
+                            intent.putExtra(Intent.EXTRA_TEXT, "Here is my song "
+                                    + songName + "\n" + url);
+                            intent.setType("text/plain");
+                            context.startActivity(Intent.createChooser(intent, "Send To"));
                         }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //share url
-                            songRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
                                 @Override
-                                public void onSuccess(Uri uri) {
-                                    final String url = String.valueOf(uri);
-                                    Log.d(TAG, "onSuccess: " + url);
-                                    Intent intent = new Intent(Intent.ACTION_SEND);
-                                    intent.putExtra(Intent.EXTRA_TEXT, "Here is my song "
-                                            + songName + "\n" + url);
-                                    intent.setType("text/plain");
-                                    context.startActivity(Intent.createChooser(intent, "Send To"));
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    // Handle any errors
+                                public void onFailure(@NonNull Exception e) {
+
+                                    UploadTask upTask = songRef.putStream(stream);
+                                    upTask.addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e("upload task","failed!");
+                                        }
+                                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            //share url
+                                            songRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    final String url = String.valueOf(uri);
+                                                    Log.d(TAG, "onSuccess: " + url);
+                                                    Intent intent = new Intent(Intent.ACTION_SEND);
+                                                    intent.putExtra(Intent.EXTRA_TEXT, "Here is my song "
+                                                            + songName + "\n" + url);
+                                                    intent.setType("text/plain");
+                                                    context.startActivity(Intent.createChooser(intent, "Send To"));
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+                                                    // Handle any errors
+                                                }
+                                            });
+                                            //Log.d("upload task" ,String.valueOf(songRef.getDownloadUrl()));
+                                            Log.e("upload task", "success!");
+
+                                        }
+                                    });
                                 }
                             });
-                            //Log.d("upload task" ,String.valueOf(songRef.getDownloadUrl()));
-                            Log.e("upload task", "success!");
-
-                        }
-                    });
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
