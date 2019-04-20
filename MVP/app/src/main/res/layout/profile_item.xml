@@ -81,6 +81,20 @@
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
+    <ImageButton
+        android:id="@+id/shareButton"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:selectableItemBackground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/deleteButton"
+        android:src="@drawable/share_orange"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
+
     <TextView
         android:id="@+id/realtimeTextView"
         android:layout_width="1dp"
