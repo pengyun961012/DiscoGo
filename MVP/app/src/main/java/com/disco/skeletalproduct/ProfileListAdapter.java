@@ -61,7 +61,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 //        holder.songDurationView.setText(duration);
 
         /**Time*/
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
         Date mDate = Calendar.getInstance().getTime();
         try{
             mDate = dateFormat.parse(item.getSongTime());
