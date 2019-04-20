@@ -94,6 +94,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         public TextView realTimeView;
         public ImageButton songPlayButton;
         public ImageButton songDeleteButton;
+        public ImageButton songShareButton;
         private WeakReference<ClickListener> listenerRef;
 
         public ViewHolder(View itemView, ClickListener listener) {
@@ -106,10 +107,12 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             songTimeView = itemView.findViewById(R.id.profileTimetextView);
             songPlayButton = itemView.findViewById(R.id.playMusicImageButton);
             songDeleteButton = itemView.findViewById(R.id.deleteButton);
+            songShareButton = itemView.findViewById(R.id.shareButton);
             realTimeView = itemView.findViewById(R.id.realtimeTextView);
 
             songPlayButton.setOnClickListener(this);
             songDeleteButton.setOnClickListener(this);
+            songShareButton.setOnClickListener(this);
         }
 
         @Override
@@ -189,6 +192,14 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                     }
                 }
                 removeFile(index);
+            }
+            else if (v.getId() == songShareButton.getId()){
+                int index = getAdapterPosition();
+                String songName = songNameView.getText().toString();
+                String time = realTimeView.getText().toString();
+                String score = songScoreView.getText().toString();
+                String filename = songName + "_" + time + "_" + score;
+                Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
             }
 
 //            listenerRef.get().onPositionClicked(getAdapterPosition());
