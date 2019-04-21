@@ -1,3 +1,4 @@
 .DS_Store
 *.ser
 AudioProcess/.idea/misc.xml
+FlappyBird/Library/*
