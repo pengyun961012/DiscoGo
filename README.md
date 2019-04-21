@@ -24,7 +24,7 @@ Built in Android Studio. This is an testing app for the audio processing and log
 Built in Android Studio. This is a fulling funtional skeletal product. Includes all the UI/UX design for Main, Profile, Shop, Leaderboard and Friends page. Linked with Flappy Bird Unity Product. Enable the message transfer between Android and Unity. Able to play a simple game on this product.
 
 ### Flappy Bird
-Built in Unity. This is a simple Flappy bird game that can be played on Android phone. It receives message from the Audio Process App and adjust the height of the brid accordingly. When the game ends it will send statistics back to the android app to be processed. The game is close to completion except for the completion of UIs , the implementation of the game clear page and its communication with the android app.
+Built in Unity. This is a simple Flappy bird game that can be played on Android phone. It receives message from the Audio Process App and adjust the height of the brid accordingly. When the game ends it will send statistics back to the android app to be processed. It also has a corresponding game clear and game over page. When the user clicks on the proceed to next level button on the game clear page Unity will communicate with Android to send current game statistics and receive next level information and start the next level. The game also has a synchronized lyrics that appears with the song going implemented for level 2.
 
 ### Source
 UI/UX and icon source of the front end app.
