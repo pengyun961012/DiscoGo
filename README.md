@@ -29,8 +29,8 @@ Built in Unity. This is a simple Flappy bird game that can be played on Android 
 ### Source
 UI/UX and icon source of the front end app.
 
-### MVP
-Built in Android Studio. Includes all MVP code check features. Updates in UI/UX design, user interact logic and game.
+### MVP (Final Version for Release)
+Built in Android Studio. Includes all MVP code check features. Updates in UI/UX design, user interact logic and game. We keep update this version to the final product release. Include a second level song, friend, leaderboard, login, share songs functions.
 
 ### Backend
 Backend server developed in python. Should be deployed on digitalocean server. Works together with django database.
