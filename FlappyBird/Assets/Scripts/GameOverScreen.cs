@@ -31,5 +31,10 @@ public class GameOverScreen : MonoBehaviour
     {
         anim.SetTrigger("GameOver");
     }
+
+    public void appearClearWindow()
+    {
+        anim.SetTrigger("GameClear");
+    }
     
 }

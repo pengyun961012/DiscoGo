@@ -11,11 +11,17 @@ public class ButtonHandler : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    
+    public void proceedtoNextStage()
+    {
+        GameController.level++;
+        CallAndroidMethod2("levelUp", GameController.level);
+    }
 
     public void mainPage()
     {
-        Application.Quit();
         CallAndroidMethod("stopRecorder",GameController.instance.score, BirdForeground.instance.coins);
+        Application.Quit();
     }
     public static void CallAndroidMethod(string methodName, int score, int coins)
     {
@@ -24,6 +30,17 @@ public class ButtonHandler : MonoBehaviour
             using (var objActivity = clsUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
             {
                 objActivity.Call(methodName, score, coins);
+            }
+        }
+    }
+
+    public static void CallAndroidMethod2(string methodName, int level)
+    {
+        using (var clsUnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+        {
+            using (var objActivity = clsUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+            {
+                objActivity.Call(methodName, level);
             }
         }
     }

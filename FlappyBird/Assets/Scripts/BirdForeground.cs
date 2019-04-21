@@ -19,14 +19,16 @@ public class BirdForeground : MonoBehaviour
     public GameObject pauseResume;
     public GameObject pauseHome;
     public GameObject AudioSource;
+    public GameObject AudioSource2;
     public Dictionary<int, double> frequency_Table;
     public AudioSource music;
     public Text CountdownText;
     public Text CoinText;
+    public Text CoinText2;
     public Text DataText;
     public float ground = -2.3f;
     public float sky = 4.7f;
-    private int pitch = 350;
+    private int pitch = 300;
     public int coins = 0;
     public readonly int MAXIMUM = 650;
     public readonly int MINIMUM = 50;
@@ -38,7 +40,12 @@ public class BirdForeground : MonoBehaviour
         pauseResume.SetActive(false);
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        music = AudioSource.GetComponent<AudioSource>();
+        if (GameController.level == 0)
+        {
+            music = AudioSource.GetComponent<AudioSource>();
+            Debug.Log("playing alphabet song");
+        }
+        else music = AudioSource2.GetComponent<AudioSource>();
         //If we don't currently have a game control...
         if (instance == null)
             //...set this one to be it...
@@ -47,12 +54,20 @@ public class BirdForeground : MonoBehaviour
         else if (instance != this)
             //...destroy this one because it is a duplicate.
             Destroy(gameObject);
+        Time.timeScale = 0f;
+        StartCoroutine(getReady());
+    }
+
+    public void GameClear()
+    {
+        GameController.instance.gameClear = true;
+        GameOverScreen.instance.appearClearWindow();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!pause && !isDead)
+        if (!pause && !isDead && !GameController.instance.gameClear)
         {
             if (pitch > MAXIMUM) pitch = MAXIMUM;
             else if (pitch < MINIMUM) pitch = MINIMUM;
@@ -66,6 +81,7 @@ public class BirdForeground : MonoBehaviour
             }
         }
     }
+
     
     public void unPause(){
         pause = !pause;
@@ -118,7 +134,7 @@ public class BirdForeground : MonoBehaviour
         yield return StartCoroutine(WaitForRealSeconds(1f));
         CountdownText.text = "";
         pauseButton.SetActive(true);
-        music.UnPause();
+        music.Play();
         Time.timeScale = 1f;
     }
 
@@ -135,7 +151,6 @@ public class BirdForeground : MonoBehaviour
     public void receiveData(string data)
     {
         pitch = Int32.Parse(data);
-        DataText.text = pitch.ToString();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -145,10 +160,21 @@ public class BirdForeground : MonoBehaviour
             other.gameObject.SetActive(false);
             coins++;
             CoinText.text = coins.ToString();
+            CoinText2.text = coins.ToString();
         }
         else if (other.gameObject.CompareTag("Sky"))
         {
             return;
+        }
+    }
+    public static void CallAndroidMethod(string methodName, int score, int coins)
+    {
+        using (var clsUnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+        {
+            using (var objActivity = clsUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+            {
+                objActivity.Call(methodName, score, coins);
+            }
         }
     }
 }

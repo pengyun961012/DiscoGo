@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ColumnPool : MonoBehaviour
 {
@@ -16,11 +17,13 @@ public class ColumnPool : MonoBehaviour
     private int currentCoin = 0;
     public int counter = 0;
     public int max_last_index;
+    public Text DataText;
 
     private Vector2 objectPoolPosition = new Vector2(10f, -25f);     //A holding position for our unused columns offscreen.
     private float spawnXPosition = 0;
 
     private float timeSinceLastSpawned;
+    private int lyricsCounter = 0;
 
 
     void Start()
@@ -55,6 +58,16 @@ public class ColumnPool : MonoBehaviour
     void Update()
     {
         timeSinceLastSpawned += Time.deltaTime;
+        if (GameController.level == 1 && timeSinceLastSpawned >= GameController.instance.lyricTime[lyricsCounter] * 0.001f + 3f && !GameController.instance.gameClear && !GameController.instance.gameOver)
+        {
+            DataText.text = GameController.instance.lyrics[lyricsCounter];
+            lyricsCounter++;
+        }
+        if (timeSinceLastSpawned >= GameController.instance.time[GameController.instance.time.Count - 1] * 0.001f + 3f && !GameController.instance.gameClear)
+        {
+            BirdForeground.instance.GameClear();
+            return;
+        }
 
         if (GameController.instance.gameOver == false && counter < GameController.instance.time.Count && timeSinceLastSpawned >= (GameController.instance.time[counter]-GameController.instance.time[max_last_index])*0.001f)
         {
