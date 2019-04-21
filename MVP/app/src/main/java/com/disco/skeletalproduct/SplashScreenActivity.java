@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class SplashScreenActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
 
+public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

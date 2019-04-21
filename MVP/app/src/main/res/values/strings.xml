@@ -19,4 +19,9 @@
     <string name="facebook_app_id">222171932071488</string>
     <string name="fb_login_protocol_scheme">fb222171932071488</string>
     <string name="server_client_id">381295540440-iolgc0mo6oqcaaabft2piiivn4br8mes.apps.googleusercontent.com</string>
+    <string name="url">http://165.227.98.119/</string>
+    <string name="send_request">Send Request</string>
+    <string name="my_user_id">1</string>
+    <string name="remove">remove</string>
+    <string name="share">share</string>
 </resources>

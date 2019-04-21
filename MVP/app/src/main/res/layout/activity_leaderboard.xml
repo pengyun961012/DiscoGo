@@ -10,22 +10,6 @@
 
     <ImageButton
         android:id="@+id/profileImageButton"
-        android:transitionName="profileButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/round_avatar"
-        android:adjustViewBounds="true"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        android:background="?android:selectableItemBackground"/>
-
-    <ImageButton
-        android:id="@+id/playImageButton"
-        android:transitionName="playCircle"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -34,9 +18,25 @@
         android:background="?android:selectableItemBackground"
         android:padding="10dp"
         android:scaleType="fitCenter"
+        android:transitionName="profileButton"
         app:layout_constraintBottom_toTopOf="@+id/shopImageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/resume_black" />
+        app:srcCompat="@drawable/disk_black" />
+
+    <ImageButton
+        android:id="@+id/playImageButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:transitionName="playCircle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home_pink" />
 
     <ImageButton
         android:id="@+id/shopImageButton"
@@ -93,19 +93,6 @@
         android:text="Leaderboard"
         android:textSize="32dp"
         app:layout_constraintStart_toEndOf="@+id/profileImageButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/ranking"
-        style="?android:textAppearanceSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="Your Rank: "
-        android:textSize="24dp"
-        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView

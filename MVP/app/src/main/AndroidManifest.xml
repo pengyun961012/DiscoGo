@@ -63,7 +63,9 @@
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value"
+            />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -80,6 +82,13 @@
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PendingListActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
+            android:noHistory="true"
+            android:label="Friend Requests">
         </activity>
 
     </application>

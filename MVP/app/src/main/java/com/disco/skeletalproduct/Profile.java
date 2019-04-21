@@ -7,10 +7,10 @@ public class Profile {
     public int songScore;
     public int songDurationMinute;
     public int songDurationSecond;
-    public Date songTime;
+    public String songTime;
     public boolean isPlayed;
 
-    public Profile(String songName, int songScore, int songDurationMinute, int songDurationSecond, Date songTime){
+    public Profile(String songName, int songScore, int songDurationMinute, int songDurationSecond, String songTime){
         this.songName = songName;
         this.songScore = songScore;
         this.songDurationMinute = songDurationMinute;
@@ -39,7 +39,7 @@ public class Profile {
         return songDurationSecond;
     }
 
-    public Date getSongTime() {
+    public String getSongTime() {
         return songTime;
     }
 
@@ -55,7 +55,7 @@ public class Profile {
         this.songScore = songScore;
     }
 
-    public void setSongTime(Date songTime) {
+    public void setSongTime(String songTime) {
         this.songTime = songTime;
     }
 
@@ -66,4 +66,5 @@ public class Profile {
     public void setPlayed(boolean played) {
         isPlayed = played;
     }
+
 }

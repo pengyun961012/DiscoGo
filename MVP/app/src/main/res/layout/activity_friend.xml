@@ -5,26 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/brighter"
-    tools:context=".LeaderboardActivity">
+    tools:context=".FriendActivity">
 
     <ImageButton
         android:id="@+id/profileImageButton"
-        android:transitionName="profileButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/round_avatar"
-        android:adjustViewBounds="true"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        android:background="?android:selectableItemBackground"/>
-
-    <ImageButton
-        android:id="@+id/playImageButton"
-        android:transitionName="playCircle"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -33,9 +17,25 @@
         android:background="?android:selectableItemBackground"
         android:padding="10dp"
         android:scaleType="fitCenter"
+        android:transitionName="profileButton"
         app:layout_constraintBottom_toTopOf="@+id/shopImageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/resume_black" />
+        app:srcCompat="@drawable/disk_black" />
+
+    <ImageButton
+        android:id="@+id/playImageButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:transitionName="playCircle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home_pink" />
 
     <ImageButton
         android:id="@+id/shopImageButton"
@@ -95,33 +95,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="330dp"
+        android:id="@+id/friendSearchView"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_select"
+        android:queryHint="@string/prompt_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/friendRecyclerView"
-        android:layout_width="570dp"
+        android:layout_width="507dp"
         android:layout_height="272dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/shopImageButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintStart_toEndOf="@+id/shopImageButton" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginStart="180dp"
+        android:layout_marginStart="270dp"
         android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="user"
@@ -133,23 +134,23 @@
         android:id="@+id/textView4"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="80dp"
         android:gravity="center"
-        android:text="song"
+        android:text="best song"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:gravity="center"
-        android:text="album"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
+    <Button
+        android:id="@+id/requestButton"
+        style="?android:textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/button_select"
+        android:text="Requests"
+        app:layout_constraintEnd_toStartOf="@+id/friendSearchView"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

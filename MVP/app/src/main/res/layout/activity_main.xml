@@ -9,22 +9,6 @@
 
     <ImageButton
         android:id="@+id/profileImageButton"
-        android:transitionName="profileButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/round_avatar"
-        android:adjustViewBounds="true"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        android:background="?android:selectableItemBackground"/>
-
-    <ImageButton
-        android:id="@+id/playImageButton"
-        android:transitionName="playCircle"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -33,9 +17,25 @@
         android:background="?android:selectableItemBackground"
         android:padding="10dp"
         android:scaleType="fitCenter"
+        android:transitionName="profileButton"
         app:layout_constraintBottom_toTopOf="@+id/shopImageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/resume_black" />
+        app:srcCompat="@drawable/disk" />
+
+    <ImageButton
+        android:id="@+id/playImageButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:transitionName="playCircle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home_pink" />
 
     <ImageButton
         android:id="@+id/shopImageButton"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Profile"
+        android:text="Saved Songs"
         style="?android:textAppearanceSmall"
         android:textSize="32sp"
         app:layout_constraintStart_toEndOf="@+id/profileImageButton"
@@ -109,11 +109,11 @@
         style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="?android:selectableItemBackground"
+        android:background="@drawable/button_select"
         android:text="Sign In"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:transitionName="loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -122,7 +122,7 @@
         android:id="@+id/textView2"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="125dp"
         android:layout_marginTop="70dp"
         android:gravity="center"
         android:text="Song"
@@ -134,7 +134,7 @@
         android:id="@+id/textView6"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="70dp"
         android:gravity="center"
         android:text="Score"
@@ -143,24 +143,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView7"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="70dp"
-        android:gravity="center"
-        android:text="Duration"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="70dp"
         android:gravity="center"
         android:text="Time"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
